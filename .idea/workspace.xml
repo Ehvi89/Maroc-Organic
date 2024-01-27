@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a4534905-f512-461c-82f6-513fde87c628" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/images/06b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/images/87cbbe951ec68c4cd221e9c11fe6fe5a.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/images/ACFrOgCWzJOWYkhmVIrvPf4yz-WRmHLTe0gkOwr5PCMT-XjoYxEJFCU8CcHVTElyqYX2kjpMoD84_nOa7KM8wFVsV49XH4wV_J8J_0QzT20L52_VzUgGFCVyZ8bU9oe8UHF9_H8SbJYQ3Off6-qi.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/images/Business Proposal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/images/Logo_MAROC-ORGANIC-removebg-preview.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/images/original-66ba0b46f52d8faeab906f7d4599e954.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/images/original-6a80a123812a1f0932f2a22bbe082bad.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/logo.svg" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2bXPfud3JzE1Zccln6ErpYtG5Hx" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/PROBOOK/OneDrive/Documents/ASEDS_3/PFE",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a4534905-f512-461c-82f6-513fde87c628" name="Changes" comment="" />
+      <created>1706358557203</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706358557203</updated>
+      <workItem from="1706358558227" duration="12000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -1,13 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import './styles/index.css';
+import './styles/header.css'
 import reportWebVitals from './reportWebVitals';
+import Header from "./components/Header";
+import AddReport from "./components/AddReport";
+import Home from "./components/Home";
+import ProgramPlanning from "./components/ProgramPlanning";
+import PlanningVisites from "./components/PlanningVisites";
+import Error from "./components/Error";
+import Clients from "./components/Clients";
+import OrderPayementTracking from "./components/OrderPayementTracking";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+      <Router>
+          <Header/>
+          <Routes>
+              <Route path={"/"} element={<Home/>}/>
+              <Route path={"addReport"} element={<AddReport/>}/>
+              <Route path={"programPlanning"} element={<ProgramPlanning/>}/>
+              <Route path={"planningVisits"} element={<PlanningVisites/>}/>
+              <Route path={"clients"} element={<Clients/>}/>
+              <Route path={"orderPayementTracking"} element={<OrderPayementTracking/>}/>
+              <Route path="*" element={<Error/>} />
+          </Routes>
+      </Router>
   </React.StrictMode>
 );
 

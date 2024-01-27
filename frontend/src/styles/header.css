@@ -1,0 +1,34 @@
+.header header{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 2px #949694;
+    align-items: center;
+    padding: 0px 35px;
+}
+
+.logo-marocOrganic img{
+    height: 100px;
+}
+
+.list-menu ul{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+li{
+    list-style: none;
+    padding: 15px 25px !important;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(75,71,67);
+}
+
+.list-menu ul li a:hover{
+    color: #8FB570;
+}
+
+.list-menu ul .user a, .list-menu ul .user a:hover{
+    color: #F4F5F5;
+}
