@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
-import ReactTooltip from 'react-tooltip';
+import {useState} from "react";
 
 const Filter = styled.select`
     padding: 10px 15px;
@@ -48,6 +48,27 @@ const weeks = [
     { week: "24/03/2023 - 28/03/2023" },
     { week: "31/03/2023 - 03/04/2023" },
 ]
+
+
+function ShowRepport({ responsable }) {
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    return (
+        <div onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)} >
+            {responsable}
+            {showTooltip && <div className="tooltip">
+                Nom:
+                Type:
+                heure:
+                Durée:
+                Déjà client:
+                Personne:
+                Marque concurente
+            </div>}
+        </div>
+    );
+}
+
 function PlanningVisits(){
     const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
     const heures = ["09h00", "09h30", "10h00", "10h30", "11h00", "11h30", "12h00", "12h30", "14h00", "14h30"];
@@ -85,11 +106,8 @@ function PlanningVisits(){
                             {jours.map(jour => {
                                 const responsables = elementsHeure.filter(element => element.jour.toLowerCase() === jour.toLowerCase());
                                 return <td key={jour}>{responsables.map((responsable, index) =>
-                                    <Rapport key={index} data-tip data-for={`${responsable.responsable}-tooltip`} style={{backgroundColor: colorMap[responsable.responsable.toLowerCase()]}}>
-                                        {responsable.responsable}
-                                        <ReactTooltip id={`${responsable.responsable}-tooltip`} place="top" effect="solid">
-                                            <span>Informations sur {responsable.responsable}</span>
-                                        </ReactTooltip>
+                                    <Rapport style={{backgroundColor: colorMap[responsable.responsable.toLowerCase()]}}>
+                                        <ShowRepport key={index} responsable={responsable.responsable}/>
                                     </Rapport>
                                 )}</td>;
                             })}

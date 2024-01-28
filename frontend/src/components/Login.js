@@ -54,7 +54,7 @@ function Login({ onClose, onLogin }){
             <Overlay onClick={handleOverlayClick} />
             <Div>
                 <h2>Connexion</h2>
-                <Form onSubmit={handleSubmit}>
+                <Form className={"Form"} onSubmit={handleSubmit}>
                     <input type={"email"} placeholder={"E-mail"} value={email} onChange={(e) => setEmail(e.target.value)}/>
                     <input type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
                     <Link to={"#"}>Mot de passe oublié ?</Link>

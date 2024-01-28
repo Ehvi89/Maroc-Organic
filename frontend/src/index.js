@@ -1,9 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
+//Importations des styles
 import './styles/index.css';
 import './styles/header.css'
-import reportWebVitals from './reportWebVitals';
+import './styles/Form.css'
+
+//Importation des pages
 import Header from "./components/Header";
 import AddReport from "./components/AddReport";
 import Home from "./components/Home";
