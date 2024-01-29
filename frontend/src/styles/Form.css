@@ -17,8 +17,46 @@
     color: #E73541;
 }
 
-form input, input:focus-visible{
-    height: 30px;
+.AddReportForm input, .AddReportForm select, .AddReportForm textarea{
+    height: 20px;
     background: none;
     border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.AddReportForm input:focus{
+    border-color: #8FB570;
+}
+.AddReportForm{
+    align-content: center;
+    padding: 15px;
+}
+
+.AddReportForm label{
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+.AddReportForm select{
+    height: auto;
+}
+
+.image{
+    background: url("../assets/Design sans titre.png");
+}
+
+.AddReportForm input[type='submit']{
+    padding: 15px;
+    height: auto;
+    margin: 50px 15px 25px;
+    background: #F4F5F5;
+    width: 100%;
+}
+
+.AddReportForm h1{
+    font-size: 39px;
+    margin-bottom: 30px;
+    color: #F4F5F5;
+    text-decoration: beige;
 }

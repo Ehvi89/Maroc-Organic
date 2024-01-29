@@ -1,19 +1,50 @@
-import styled from 'styled-components'
 import {Link} from 'react-router-dom'
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import styled, { keyframes } from 'styled-components'
+
+const rotate = keyframes`
+    from {
+        transform: rotate(0deg);
+    }
+ 
+    to {
+    transform: rotate(360deg);
+    }
+`
+export const Loader = styled.div`
+    padding: 10px;
+    border: 6px solid #8FB570;
+    border-bottom-color: transparent;
+    border-radius: 22px;
+    animation: ${rotate} 1s infinite linear;
+    height: 0;
+    width: 0;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+`
+/*Récupérer le jour de la semaine en fonction de la date
+* // Créez une nouvelle date avec la date spécifiée
+const date = new Date('2023-12-06');
+
+// Récupérez le jour de la semaine (0 pour dimanche, 1 pour lundi, etc.)
+const dayOfWeek = date.getDay();
+
+// Tableau des noms des jours de la semaine
+const daysOfWeekNames = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+
+// Récupérez le nom du jour de la semaine en utilisant l'indice obtenu
+const dayName = daysOfWeekNames[dayOfWeek];
+
+console.log("Le 12/06/2023 était un " + dayName + ".");
+*/
 
 const Filter = styled.select`
     padding: 10px 15px;
   border-radius: 10px;
   margin: 50px;
   right: 0 !important;  
-`
-
-const Rapport = styled.div`
-    padding: 10px 15px;
-  border-radius: 5px;
-  width: 150px;
-  margin: 5px;
 `
 
 const elements = [
@@ -57,65 +88,102 @@ function ShowRepport({ responsable }) {
         <div onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)} >
             {responsable}
             {showTooltip && <div className="tooltip">
-                Nom:
-                Type:
-                heure:
-                Durée:
-                Déjà client:
-                Personne:
-                Marque concurente
+                <div>
+                    Nom:
+                </div>
+                <div>
+                    Type:
+                </div>
+                <div>
+                    Ville:
+                </div>
+                <div>
+                    heure:
+                </div>
+                <div>
+                    Durée:
+                </div>
+                <div>
+                    Déjà client:
+                </div>
+                <div>
+                    Personne:
+                </div>
+                <div>
+                    Marque concurente
+                </div>
             </div>}
         </div>
     );
 }
 
 function PlanningVisits(){
+    const [isDataLoading, setDataLoading] = useState(false)
+    const [surveyData, setSurveyData] = useState({})
+
+    /*useEffect(() => {
+        setDataLoading(true)
+        //fetch(`http://localhost:8000/survey`)
+            .then((response) => response.json())
+            .then(({ surveyData }) => {
+                setSurveyData(surveyData)
+                setDataLoading(false)
+            })
+    }, [])*/
+
     const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
     const heures = ["09h00", "09h30", "10h00", "10h30", "11h00", "11h30", "12h00", "12h30", "14h00", "14h30"];
 
     return (
         <div>
-            <div style={{display:"flex", justifyContent:"space-between"}}>
-                <Filter>
-                    {weeks.map((week, index) => (
-                        <option key={index}>{ week.week }</option>
-                    ))}
-                </Filter>
-                <button id={"btn"} style={{margin: "50px"}}>
-                    <Link to={"/addReport"}>Ajouter rapport</Link>
-                </button>
-            </div>
+            {isDataLoading ? (
+                <Loader />
+            ) : (
+                <div>
+                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <Filter>
+                            {weeks.map((week, index) => (
+                                <option key={index}>{week.week}</option>
+                            ))}
+                        </Filter>
+                        <button id={"btn"} style={{margin: "50px"}}>
+                            <Link to={"/addReport"}>Ajouter rapport</Link>
+                        </button>
+                    </div>
 
-            <table>
-                <thead>
-                <tr>
-                    <th>Heure</th>
-                    <th>Ville</th>
-                    {jours.map(jour => <th key={jour}>{jour}</th>)}
-                </tr>
-                </thead>
-                <tbody>
-                {heures.map((heure, index) => {
-                    const elementsHeure = elements.filter(element => element.heure === heure);
-                    const villes = [...new Set(elementsHeure.map(element => element.ville))];
+                    <div className={"conteneurTable"}>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Heure</th>
+                                {jours.map(jour => <th key={jour}>{jour}</th>)}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {heures.map((heure, index) => {
+                                const elementsHeure = elements.filter(element => element.heure === heure);
 
-                    return (
-                        <tr key={heure} style={{backgroundColor: index % 2 === 0 ? 'white' : '#f2f2f2'}}>
-                            <td>{heure}</td>
-                            <td>{villes.join(', ')}</td>
-                            {jours.map(jour => {
-                                const responsables = elementsHeure.filter(element => element.jour.toLowerCase() === jour.toLowerCase());
-                                return <td key={jour}>{responsables.map((responsable, index) =>
-                                    <Rapport style={{backgroundColor: colorMap[responsable.responsable.toLowerCase()]}}>
-                                        <ShowRepport key={index} responsable={responsable.responsable}/>
-                                    </Rapport>
-                                )}</td>;
+                                return (
+                                    <tr key={heure} style={{backgroundColor: index % 2 === 0 ? 'white' : '#f2f2f2'}}>
+                                        <td>{heure}</td>
+                                        {jours.map(jour => {
+                                            const responsables = elementsHeure.filter(element => element.jour.toLowerCase() === jour.toLowerCase());
+                                            return <td key={jour}>{responsables.map((responsable, index) =>
+                                                <div className={"cellule"}
+                                                     style={{backgroundColor: colorMap[responsable.responsable.toLowerCase()]}}>
+                                                    <ShowRepport key={index}
+                                                                 responsable={responsable.responsable.toUpperCase()}/>
+                                                </div>
+                                            )}</td>;
+                                        })}
+                                    </tr>
+                                );
                             })}
-                        </tr>
-                    );
-                })}
-                </tbody>
-            </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
