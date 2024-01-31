@@ -7,6 +7,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './styles/index.css';
 import './styles/header.css'
 import './styles/Form.css'
+import './styles/banner.css'
 
 //Importation des pages
 import Header from "./components/Header";

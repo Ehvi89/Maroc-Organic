@@ -3,35 +3,35 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom'
 
 const Div = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 10px 1000px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(to bottom, #8FB570 21%, #F5F4F4 21%);
-  text-align: center;
-  z-index: 2000;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 1000px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to bottom, #8FB570 21%, #F5F4F4 21%);
+    text-align: center;
+    z-index: 2000;
 `
+
 
 const Form = styled.form`
     display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  margin: 35px 25px 5px;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 35px 25px 5px;
 `
 
 const Overlay = styled.div`
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background-color: rgba(0, 0, 0, 0.5);
- z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1002;
 `;
 
 function Login({ onClose, onLogin }){
@@ -52,7 +52,7 @@ function Login({ onClose, onLogin }){
     return(
         <>
             <Overlay onClick={handleOverlayClick} />
-            <Div>
+            <Div className={'loginPopup'}>
                 <h2>Connexion</h2>
                 <Form className={"Form"} onSubmit={handleSubmit}>
                     <input type={"email"} placeholder={"E-mail"} value={email} onChange={(e) => setEmail(e.target.value)}/>

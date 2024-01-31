@@ -1,5 +1,8 @@
 import {useState} from "react";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 const Checkbox = styled.input.attrs({type: 'checkbox'})`
     margin: 10px;
@@ -7,7 +10,7 @@ const Checkbox = styled.input.attrs({type: 'checkbox'})`
 const Filter = styled.div`
     padding: 10px 15px;
   border-radius: 10px;
-  margin: 50px;
+  margin: auto;
 `
 const data = [
     {
@@ -150,9 +153,17 @@ function Clients(){
 
     return(
         <div>
-            <div style={{display:"flex", justifyContent:'space-between'}}>
+            <div style={{display:"flex", alignItems:'center', margin:"auto"}}>
                 <Filter className={"orderPayementFilter"}>
                     <button onClick={() => setShowFilters(!showFilters)}>Filtres</button>
+                    {showFilters && (
+                        <button style={{background: '#E73541'}} onClick={() => {
+                            setSelectedCategories([]);
+                            setSelectedVilles([]);
+                        }}>Effacer
+                        </button>
+                    )}
+
                     {showFilters && (
                         <div>
                             <div className={"categorie"}>
@@ -180,14 +191,15 @@ function Clients(){
                     )}
                 </Filter>
 
-                <button id={"btn"} style={{margin: '50px', padding:'10px 15px'}}>
-                    Ajouter client
+                <button className="responsive-button" id={'btn'} style={{margin: "50px auto"}}>
+                    <Link to={"/addClients"}><FontAwesomeIcon icon={faPlus}/></Link>
+                    <span><Link to={"/addClients"}>Ajouter un client</Link></span>
                 </button>
             </div>
 
             <div className={"conteneurTable"}>
                 <table>
-                <thead>
+                    <thead>
                     <tr>
                         <th>Nom</th>
                         <th>Categorie</th>

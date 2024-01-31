@@ -1,6 +1,8 @@
 import {Link} from 'react-router-dom'
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import styled, { keyframes } from 'styled-components'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const rotate = keyframes`
     from {
@@ -11,6 +13,7 @@ const rotate = keyframes`
     transform: rotate(360deg);
     }
 `
+
 export const Loader = styled.div`
     padding: 10px;
     border: 6px solid #8FB570;
@@ -43,7 +46,7 @@ console.log("Le 12/06/2023 était un " + dayName + ".");
 const Filter = styled.select`
     padding: 10px 15px;
   border-radius: 10px;
-  margin: 50px;
+  margin: auto;
   right: 0 !important;  
 `
 
@@ -58,12 +61,6 @@ const elements = [
     { ville: "Sale", heure: "10h30", jour: "Mardi", responsable: "Jean" },
     { ville: "Rabat", heure: "09h00", jour: "Vendredi", responsable: "Ali" }
 ];
-
-const colorMap = {
-    "ben": "yellow",
-    "ali": "orange",
-    "jean": "red"
-};
 
 const weeks = [
     { week: "14/01/2023 - 17/01/2023" },
@@ -140,16 +137,18 @@ function PlanningVisits(){
                 <Loader />
             ) : (
                 <div>
-                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                    <div style={{display: "flex"}}>
+                        <button className="responsive-button" id={'btn'} style={{margin: "50px auto"}}>
+                            <Link to={"/addReport"}><FontAwesomeIcon icon={faPlus} /></Link>
+                            <span><Link to={"/addReport"}>Ajouter rapport</Link></span>
+                        </button>
                         <Filter>
                             {weeks.map((week, index) => (
                                 <option key={index}>{week.week}</option>
                             ))}
                         </Filter>
-                        <button id={"btn"} style={{margin: "50px"}}>
-                            <Link to={"/addReport"}>Ajouter rapport</Link>
-                        </button>
                     </div>
+
 
                     <div className={"conteneurTable"}>
                         <table>
@@ -169,8 +168,7 @@ function PlanningVisits(){
                                         {jours.map(jour => {
                                             const responsables = elementsHeure.filter(element => element.jour.toLowerCase() === jour.toLowerCase());
                                             return <td key={jour}>{responsables.map((responsable, index) =>
-                                                <div className={"cellule"}
-                                                     style={{backgroundColor: colorMap[responsable.responsable.toLowerCase()]}}>
+                                                <div className={"cellule"}>
                                                     <ShowRepport key={index}
                                                                  responsable={responsable.responsable.toUpperCase()}/>
                                                 </div>

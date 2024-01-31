@@ -1,5 +1,8 @@
 import {useEffect, useState} from "react";
 import styled, { keyframes } from 'styled-components'
+import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 const rotate = keyframes`
     from {
@@ -26,7 +29,7 @@ export const Loader = styled.div`
 const Filter = styled.div`
     padding: 10px 15px;
   border-radius: 10px;
-  margin: 50px;
+  margin: auto;
 `
 const Checkbox = styled.input.attrs({type: 'checkbox'})`
     margin: 10px;
@@ -134,31 +137,48 @@ function OrderPayementTracking(){
                 <Loader />
             ) : (
                 <div>
-                    <Filter className={"orderPayementFilter"}>
-                        <button onClick={() => setShowFilters(!showFilters)}>Filtres</button>
-                        {showFilters && (
-                            <div>
-                                <div className={"categorie"}>
-                                    <p>Ville:</p>
-                                    {uniqueVilles.map(ville => (
-                                        <div key={ville}>
-                                            <label for={ville}>{ville}</label>
-                                            <Checkbox id={ville} value={ville} checked={selectedVilles.includes(ville)} onChange={() => setSelectedVilles(prev => prev.includes(ville) ? prev.filter(v => v !== ville) : [...prev, ville])} />
-                                        </div>
-                                    ))}
+                    <div style={{display:"flex", justifyContent:'space-between', alignItems:'top'}}>
+                        <Filter className={"orderPayementFilter"}>
+                            <button onClick={() => setShowFilters(!showFilters)}>Filtres</button>
+                            {showFilters && (
+                                <button style={{background: '#E73541'}} onClick={() => {
+                                    setSelectedModesPaiement([]);
+                                    setSelectedVilles([]);
+                                }}>Effacer</button>
+
+                            )}
+                            {showFilters && (
+                                <div>
+                                    <div className={"categorie"}>
+                                        <p>Ville:</p>
+                                        {uniqueVilles.map(ville => (
+                                            <div key={ville}>
+                                                <label for={ville}>{ville}</label>
+                                                <Checkbox id={ville} value={ville}
+                                                          checked={selectedVilles.includes(ville)}
+                                                          onChange={() => setSelectedVilles(prev => prev.includes(ville) ? prev.filter(v => v !== ville) : [...prev, ville])}/>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className={"categorie"}>
+                                        <p>Mode de paiement:</p>
+                                        {uniqueModesPaiement.map(modePaiement => (
+                                            <div key={modePaiement}>
+                                                <label for={modePaiement}>{modePaiement}</label>
+                                                <Checkbox id={modePaiement} value={modePaiement}
+                                                          checked={selectedModesPaiement.includes(modePaiement)}
+                                                          onChange={() => setSelectedModesPaiement(prev => prev.includes(modePaiement) ? prev.filter(m => m !== modePaiement) : [...prev, modePaiement])}/>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className={"categorie"}>
-                                    <p>Mode de paiement:</p>
-                                    {uniqueModesPaiement.map(modePaiement => (
-                                        <div key={modePaiement}>
-                                            <label for={modePaiement}>{modePaiement}</label>
-                                            <Checkbox id={modePaiement} value={modePaiement} checked={selectedModesPaiement.includes(modePaiement)} onChange={() => setSelectedModesPaiement(prev => prev.includes(modePaiement) ? prev.filter(m => m !== modePaiement) : [...prev, modePaiement])} />
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </Filter>
+                            )}
+                        </Filter>
+                        <button className="responsive-button" id={'btn'} style={{margin: "50px auto"}}>
+                            <Link to={"/addOrder"}><FontAwesomeIcon icon={faPlus}/></Link>
+                            <span><Link to={"/addOrder"}>Ajouter une commande</Link></span>
+                        </button>
+                    </div>
 
                     <div className={"conteneurTable"}>
                         <table>

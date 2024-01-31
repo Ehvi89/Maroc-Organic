@@ -1,10 +1,12 @@
 import banner from '../assets/Business Proposal.png';
+import mediaBanner from '../assets/06b.png'
 import {Link} from "react-router-dom";
+import Banner from "./Banner";
 
 function Home(){
     return(
         <div className="Home-body">
-            <img src={banner} alt="Banner Maroc Organic"/>
+            <div><Banner/></div>
             <div className="bottom-options">
                 <div>
                     <p>Ajouter un compte rendu</p>

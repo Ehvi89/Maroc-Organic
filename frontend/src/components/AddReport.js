@@ -90,11 +90,11 @@ function AddReport(){
                 <Row>
                     <Elmt>
                         <label>Nom du contact</label>
-                        <input type={"text"} placeholder={"Conctact"}/>
+                        <input type={"text"} placeholder={"Contact"}/>
                     </Elmt>
                     <Elmt>
                         <label>Numéro</label>
-                        <input type={"number"} placeholder={"Numéro"}/>
+                        <input type={"number"} placeholder={"Numéro whatsapp"}/>
                     </Elmt>
                 </Row>
 

@@ -5,6 +5,7 @@ const StyledInfo = styled.h1`
     font-size: 60px;
     text-align: center;
   margin: 30px;
+    width: 100%;
 `
 const StyledDiv = styled.div`
     display: flex;
