@@ -1,19 +1,22 @@
+// Import necessary modules
 import {Link} from 'react-router-dom'
 import {useState} from "react";
 import styled, { keyframes } from 'styled-components'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
+// Define keyframes for rotation
 const rotate = keyframes`
     from {
         transform: rotate(0deg);
     }
- 
+
     to {
-    transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 `
 
+// Define styled components
 export const Loader = styled.div`
     padding: 10px;
     border: 6px solid #8FB570;
@@ -27,29 +30,15 @@ export const Loader = styled.div`
     top: 50%;
     transform: translate(-50%, -50%);
 `
-/*Récupérer le jour de la semaine en fonction de la date
-* // Créez une nouvelle date avec la date spécifiée
-const date = new Date('2023-12-06');
-
-// Récupérez le jour de la semaine (0 pour dimanche, 1 pour lundi, etc.)
-const dayOfWeek = date.getDay();
-
-// Tableau des noms des jours de la semaine
-const daysOfWeekNames = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-
-// Récupérez le nom du jour de la semaine en utilisant l'indice obtenu
-const dayName = daysOfWeekNames[dayOfWeek];
-
-console.log("Le 12/06/2023 était un " + dayName + ".");
-*/
 
 const Filter = styled.select`
     padding: 10px 15px;
-  border-radius: 10px;
-  margin: auto;
-  right: 0 !important;  
+    border-radius: 10px;
+    margin: auto;
+    right: 0 !important;
 `
 
+// Data arrays
 const elements = [
     { ville: "Casa", heure: "10h30", jour: "lundi", responsable: "ben" },
     { ville: "Casa", heure: "10h30", jour: "lundi", responsable: "Jean" },
@@ -77,7 +66,7 @@ const weeks = [
     { week: "31/03/2023 - 03/04/2023" },
 ]
 
-
+// Component to show report information
 function ShowRepport({ responsable }) {
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -114,19 +103,24 @@ function ShowRepport({ responsable }) {
     );
 }
 
+// Main component
 function PlanningVisits(){
     const [isDataLoading, setDataLoading] = useState(false)
     const [surveyData, setSurveyData] = useState({})
 
+    // Uncomment the following block to fetch data from server
     /*useEffect(() => {
         setDataLoading(true)
-        //fetch(`http://localhost:8000/survey`)
+        fetch(`http://localhost:8000/survey`)
             .then((response) => response.json())
             .then(({ surveyData }) => {
                 setSurveyData(surveyData)
                 setDataLoading(false)
             })
     }, [])*/
+
+    const [editMode, setEditMode] = useState({});
+    const [currentInfo, setCurrentInfo] = useState({});
 
     const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
     const heures = ["09h00", "09h30", "10h00", "10h30", "11h00", "11h30", "12h00", "12h30", "14h00", "14h30"];
@@ -148,7 +142,6 @@ function PlanningVisits(){
                             ))}
                         </Filter>
                     </div>
-
 
                     <div className={"conteneurTable"}>
                         <table>
@@ -186,5 +179,5 @@ function PlanningVisits(){
     );
 }
 
-
+// Export PlanningVisits component
 export default PlanningVisits;

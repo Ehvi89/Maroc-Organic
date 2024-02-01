@@ -1,18 +1,22 @@
+// Import necessary modules
 import {useEffect, useState} from "react";
 import styled, { keyframes } from 'styled-components'
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
+// Define keyframes for rotation
 const rotate = keyframes`
     from {
         transform: rotate(0deg);
     }
- 
+
     to {
-    transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 `
+
+// Define styled components
 export const Loader = styled.div`
     padding: 10px;
     border: 6px solid #8FB570;
@@ -26,16 +30,18 @@ export const Loader = styled.div`
     top: 50%;
     transform: translate(-50%, -50%);
 `
+
 const Filter = styled.div`
     padding: 10px 15px;
-  border-radius: 10px;
-  margin: auto;
+    border-radius: 10px;
+    margin: auto;
 `
+
 const Checkbox = styled.input.attrs({type: 'checkbox'})`
     margin: 10px;
 `;
 
-
+// Data array
 const data = [
     {
         "date": "27/01/2022",
@@ -82,9 +88,9 @@ const data = [
         "#Colis+Presentoire": "2 colis",
         "Commentaire": "Cheque reçu le même jour de la livraison"
     },
-    // Plus d'objets ici...
 ];
 
+// Component to show check information
 function ShowCheckInformations({ dateReceptionCheque, dateEcheanceCheque, dateDepotABanque }) {
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -106,10 +112,12 @@ function ShowCheckInformations({ dateReceptionCheque, dateEcheanceCheque, dateDe
     );
 }
 
+// Main component
 function OrderPayementTracking(){
     const [isDataLoading, setDataLoading] = useState(false)
     const [surveyData, setSurveyData] = useState({})
 
+    // Uncomment the following block to fetch data from server
     /*useEffect(() => {
         setDataLoading(true)
         fetch(`http://localhost:8000/survey`)
@@ -119,6 +127,7 @@ function OrderPayementTracking(){
                 setDataLoading(false)
             })
     }, [])*/
+
     const uniqueVilles = [...new Set(data.map(row => row.ville))];
     const uniqueModesPaiement = [...new Set(data.map(row => row.modePaiement))];
 
@@ -177,78 +186,79 @@ function OrderPayementTracking(){
                         <button className="responsive-button" id={'btn'} style={{margin: "50px auto"}}>
                             <Link to={"/addOrder"}><FontAwesomeIcon icon={faPlus}/></Link>
                             <span><Link to={"/addOrder"}>Ajouter une commande</Link></span>
-                        </button>
-                    </div>
+                            </button>
+                            </div>
 
-                    <div className={"conteneurTable"}>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Client</th>
-                                <th>Ville</th>
-                                <th>Montant</th>
-                                <th>Paiement</th>
-                                <th>Mode de paiement</th>
-                                <th># de suivi - Logiphar</th>
-                                <th>Numéro de facture</th>
-                                <th>Termes du paiement</th>
-                                <th>Réception de la commande</th>
-                                <th># de colis + présentoir de la commande</th>
-                                <th>Commentaire</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {sortedData.map((row, index) => (
-                                <tr key={index}>
-                                    <td>{row.date}</td>
-                                    <td>
-                                        <div className={"cellule"}>{row.nom}</div>
-                                    </td>
-                                    <td>
-                                        <div className={"cellule"}>{row.ville}</div>
-                                    </td>
-                                    <td>
-                                        <div className={"cellule"}>{row.montant}</div>
-                                    </td>
-                                    <td>
-                                        <div className={"cellule"}>{row.Paiement}</div>
-                                    </td>
-                                    <td>
-                                        <div className={"cellule"}>
-                                            {row.modePaiement === "Cheque" ?
-                                                <ShowCheckInformations dateReceptionCheque={row.dateRecptionCheque}
-                                                                       dateEcheanceCheque={row.dateEcheanceCheque}
-                                                                       dateDepotABanque={row.dateDepotABanque}/> : row.modePaiement}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className={"cellule"}>{row["#SuiviLogiphar"]}</div>
-                                    </td>
-                                    <td>
-                                        <div className={"cellule"}>{row["#Facture"]}</div>
-                                    </td>
-                                    <td>
-                                        <div className={"cellule"}>{row.PayementTerms}</div>
-                                    </td>
-                                    <td>
-                                        <div className={"cellule"}>{row.ConfimReception}</div>
-                                    </td>
-                                    <td>
-                                        <div className={"cellule"}>{row["#Colis+Presentoire"]}</div>
-                                    </td>
-                                    <td>
-                                        <div className={"cellule"}>{row.Commentaire}</div>
-                                    </td>
+                            <div className={"conteneurTable"}>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Client</th>
+                                    <th>Ville</th>
+                                    <th>Montant</th>
+                                    <th>Paiement</th>
+                                    <th>Mode de paiement</th>
+                                    <th># de suivi - Logiphar</th>
+                                    <th>Numéro de facture</th>
+                                    <th>Termes du paiement</th>
+                                    <th>Réception de la commande</th>
+                                    <th># de colis + présentoir de la commande</th>
+                                    <th>Commentaire</th>
                                 </tr>
-                            ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {sortedData.map((row, index) => (
+                                    <tr key={index}>
+                                        <td>{row.date}</td>
+                                        <td>
+                                            <div className={"cellule"}>{row.nom}</div>
+                                        </td>
+                                        <td>
+                                            <div className={"cellule"}>{row.ville}</div>
+                                        </td>
+                                        <td>
+                                            <div className={"cellule"}>{row.montant}</div>
+                                        </td>
+                                        <td>
+                                            <div className={"cellule"}>{row.Paiement}</div>
+                                        </td>
+                                        <td>
+                                            <div className={"cellule"}>
+                                                {row.modePaiement === "Cheque" ?
+                                                    <ShowCheckInformations dateReceptionCheque={row.dateRecptionCheque}
+                                                                           dateEcheanceCheque={row.dateEcheanceCheque}
+                                                                           dateDepotABanque={row.dateDepotABanque}/> : row.modePaiement}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className={"cellule"}>{row["#SuiviLogiphar"]}</div>
+                                        </td>
+                                        <td>
+                                            <div className={"cellule"}>{row["#Facture"]}</div>
+                                        </td>
+                                        <td>
+                                            <div className={"cellule"}>{row.PayementTerms}</div>
+                                        </td>
+                                        <td>
+                                            <div className={"cellule"}>{row.ConfimReception}</div>
+                                        </td>
+                                        <td>
+                                            <div className={"cellule"}>{row["#Colis+Presentoire"]}</div>
+                                        </td>
+                                        <td>
+                                            <div className={"cellule"}>{row.Commentaire}</div>
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
                     </div>
                 </div>
             )}
-        </div>
-    )
-}
+                </div>
+                )
+            }
 
-export default OrderPayementTracking
+            // Export OrderPayementTracking component
+            export default OrderPayementTracking;

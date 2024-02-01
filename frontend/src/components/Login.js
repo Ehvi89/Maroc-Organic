@@ -1,7 +1,9 @@
+// Import necessary modules
 import {useState} from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom'
 
+// Define styled components
 const Div = styled.div`
     position: fixed;
     top: 50%;
@@ -14,7 +16,6 @@ const Div = styled.div`
     text-align: center;
     z-index: 2000;
 `
-
 
 const Form = styled.form`
     display: flex;
@@ -34,21 +35,25 @@ const Overlay = styled.div`
     z-index: 1002;
 `;
 
+// Define Login component
 function Login({ onClose, onLogin }){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    // Function to handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Vérifiez les informations de connexion
-        // Si elles sont valides, mettez à jour le state isAuthenticated
+        // Verify login information
+        // If valid, update isAuthenticated state
         onLogin();
     };
 
+    // Function to handle clicks on the overlay
     const handleOverlayClick = () => {
         onClose();
     };
 
+    // Return the JSX for the component
     return(
         <>
             <Overlay onClick={handleOverlayClick} />
@@ -65,4 +70,5 @@ function Login({ onClose, onLogin }){
     )
 }
 
-export default Login
+// Export Login component
+export default Login;

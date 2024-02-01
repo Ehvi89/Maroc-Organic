@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
+// Define styled components
 const Row = styled.div`
     display: flex;
     width: 80%;
     margin: auto;
     justify-content: center;
-`
+`;
 
 const Elmt = styled.div`
     display: flex;
@@ -13,13 +14,13 @@ const Elmt = styled.div`
     width: 100%;
     padding: 5px;
     background-color: rgba(255, 255, 255, 0.2);
-    //background-color: rgba(151, 181, 111, 0.2);
     border-radius: 10px;
     margin: 15px;
     color: #F4F5F5;
-`
+`;
 
-function AddReport(){
+// Main component
+function AddReport() {
     return (
         <div style={{
             background: "#8FB570",
@@ -30,9 +31,7 @@ function AddReport(){
             overflow: 'hidden'
         }}>
             <form style={{width: "58%"}} className={'AddReportForm'}>
-                <Row>
-                    <h1>Ajouter un rapport de visite</h1>
-                </Row>
+                <Row><h1>Ajouter un rapport de visite</h1></Row>
                 <Row>
                     <Elmt>
                         <label htmlFor={'client'}>Nom du client</label>
@@ -86,7 +85,6 @@ function AddReport(){
                         <textarea placeholder={"compte rendu"}/>
                     </Elmt>
                 </Row>
-
                 <Row>
                     <Elmt>
                         <label>Nom du contact</label>
@@ -97,7 +95,6 @@ function AddReport(){
                         <input type={"number"} placeholder={"Numéro whatsapp"}/>
                     </Elmt>
                 </Row>
-
                 <Row>
                     <Elmt>
                         <label>Contact MAROC ORGANIC entré dans le téléphone du client</label>
@@ -107,7 +104,6 @@ function AddReport(){
                         </select>
                     </Elmt>
                 </Row>
-
                 <Row>
                     <Elmt>
                         <label htmlFor={"follow"}>Client a follow sur Instagram</label>
@@ -117,15 +113,13 @@ function AddReport(){
                         </select>
                     </Elmt>
                 </Row>
-
                 <Row>
                     <input type={"submit"} value={"Enregistrer"}/>
                 </Row>
             </form>
             <div className={"image"} style={{width: "42%", overflow: 'hidden'}}></div>
         </div>
-    )
+    );
 }
 
-export default AddReport
-
+export default AddReport;

@@ -5,13 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4534905-f512-461c-82f6-513fde87c628" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/AddClient.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddOrder.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/AddReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddReport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/App.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Clients.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Clients.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/OrderPayementTracking.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/OrderPayementTracking.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/PlanningVisites.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PlanningVisites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/styles/Form.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/Form.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/banner.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/banner.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +30,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -70,7 +79,10 @@
       <updated>1706358557203</updated>
       <workItem from="1706358558227" duration="12000" />
       <workItem from="1706400441368" duration="6515000" />
-      <workItem from="1706451329984" duration="37228000" />
+      <workItem from="1706451329984" duration="40866000" />
+      <workItem from="1706628628785" duration="16840000" />
+      <workItem from="1706648335247" duration="14899000" />
+      <workItem from="1706729367591" duration="13763000" />
     </task>
     <servers />
   </component>

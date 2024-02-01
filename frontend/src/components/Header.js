@@ -1,55 +1,55 @@
-// Importez les modules nécessaires
+// Import necessary modules
 import logoMarocOragnic from "../assets/Logo_MAROC-ORGANIC-removebg-preview.png";
 import {Link, useLocation} from "react-router-dom";
 import Login from "./Login"
 import { useState, useEffect, useRef } from "react"
 
-// Définissez le composant Header
+// Define Header component
 function Header(){
-    // État pour gérer l'authentification de l'utilisateur
+    // State to manage user authentication
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    // État pour gérer l'affichage de la pop-up de connexion
+    // State to manage login popup display
     const [showLogin, setShowLogin] = useState(false);
-    // État pour gérer l'ouverture du menu burger
+    // State to manage burger menu opening
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    // Utilisez useRef pour obtenir une référence à l'élément racine
+    // Use useRef to get a reference to the root element
     const node = useRef();
 
-    // Fonction pour gérer la connexion de l'utilisateur
+    // Function to handle user login
     const handleLogin = () => {
         setIsAuthenticated(true);
         setShowLogin(false);
     };
 
-    // Récupérez l'URL de la page actuelle
+    // Get the URL of the current page
     const { pathname } = useLocation();
 
-    // Fonction pour gérer les clics en dehors du menu
+    // Function to handle clicks outside the menu
     const handleClickOutside = (event) => {
         if (node.current.contains(event.target)) {
-            // Le clic a eu lieu à l'intérieur du menu, donc ne faites rien
+            // The click happened inside the menu, so do nothing
             return;
         }
-        // Le clic a eu lieu en dehors du menu, donc fermez le menu
+        // The click happened outside the menu, so close the menu
         setIsMenuOpen(false);
     };
 
-    // Fonction pour gérer les clics sur l'overlay
+    // Function to handle clicks on the overlay
     const handleOverlayClick = () => {
-        // Le clic a eu lieu sur l'overlay, donc fermez le menu
+        // The click happened on the overlay, so close the menu
         setIsMenuOpen(false);
     };
 
-    // Ajoutez l'écouteur d'événements lorsque le composant est monté
+    // Add event listener when component is mounted
     useEffect(() => {
         document.addEventListener("click", handleClickOutside);
-        // Supprimez l'écouteur d'événements lorsque le composant est démonté
+        // Remove event listener when component is unmounted
         return () => {
             document.removeEventListener("click", handleClickOutside);
         };
     }, []);
 
-    // Retournez le JSX pour le composant
+    // Return the JSX for the component
     return(
         <div ref={node} className="header">
             <header>
@@ -85,5 +85,5 @@ function Header(){
     );
 }
 
-// Exportez le composant Header
+// Export Header component
 export default Header;

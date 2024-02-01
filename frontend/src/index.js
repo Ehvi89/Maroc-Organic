@@ -18,6 +18,8 @@ import PlanningVisites from "./components/PlanningVisites";
 import Error from "./components/Error";
 import Clients from "./components/Clients";
 import OrderPayementTracking from "./components/OrderPayementTracking";
+import AddOrder from "./components/AddOrder";
+import AddClient from "./components/AddClient";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -31,6 +33,8 @@ root.render(
               <Route path={"planningVisits"} element={<PlanningVisites/>}/>
               <Route path={"clients"} element={<Clients/>}/>
               <Route path={"orderPayementTracking"} element={<OrderPayementTracking/>}/>
+              <Route path={"addOrder"} element={<AddOrder/>}/>
+              <Route path={"addClients"} element={<AddClient/>}/>
               <Route path="*" element={<Error/>} />
           </Routes>
       </Router>

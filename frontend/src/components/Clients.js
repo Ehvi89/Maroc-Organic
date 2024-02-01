@@ -4,14 +4,17 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
+// Define styled components
 const Checkbox = styled.input.attrs({type: 'checkbox'})`
     margin: 10px;
 `;
 const Filter = styled.div`
     padding: 10px 15px;
-  border-radius: 10px;
-  margin: auto;
-`
+    border-radius: 10px;
+    margin: auto;
+`;
+
+// Data array
 const data = [
     {
         "nom": "ADDOHA",
@@ -50,7 +53,7 @@ const data = [
         "clientDragon": "non",
         "catalogue": "Dragon",
         "envoyeVia": "whatsapp",
-        "dateEnvoi": "09/23/2021",
+        "dateEnvoi": "23/09/2021",
         "fixe": "0522292978",
         "whatsappa": "0663490084",
         "nomContact": "Asmaa",
@@ -65,7 +68,7 @@ const data = [
         "clientDragon": "non",
         "catalogue": "Dragon, Emblica-je suis bio",
         "envoyeVia": "whatsapp, whatsapp",
-        "dateEnvoi": "09/22/2021, 14/09/2022",
+        "dateEnvoi": "22/09/2021, 14/09/2022",
         "fixe": "0535566705",
         "whatsappa": "0650165017",
         "nomContact": "Mme NEZHA",
@@ -75,7 +78,7 @@ const data = [
     }
 ];
 
-
+// Component to show catalogue informations
 function ShowCatalogueInformations({ catalogue, envoyeVia, dateEnvoi }) {
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -112,10 +115,10 @@ function ShowCatalogueInformations({ catalogue, envoyeVia, dateEnvoi }) {
                 </div>
             ))}
         </div>
-        );
+    );
 }
 
-
+// Component to show contact informations
 function ShowContactInformations({fixe, whatsapp, nomContact, fonction}) {
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -140,6 +143,7 @@ function ShowContactInformations({fixe, whatsapp, nomContact, fonction}) {
     );
 }
 
+// Main component
 function Clients(){
     const uniqueVilles = [...new Set(data.map(row => row.ville))];
     const uniqueCategories = [...new Set(data.map(row => row.categorie))];
@@ -170,17 +174,18 @@ function Clients(){
                                 <p>Ville:</p>
                                 {uniqueVilles.map(ville => (
                                     <div key={ville}>
-                                        <label for={ville}>{ville}</label>
+                                        <label htmlFor={ville}>{ville}</label>
                                         <Checkbox id={ville} value={ville} checked={selectedVilles.includes(ville)}
                                                   onChange={() => setSelectedVilles(prev => prev.includes(ville) ? prev.filter(v => v !== ville) : [...prev, ville])}/>
                                     </div>
                                 ))}
                             </div>
                             <div className={"categorie"}>
-                                <p>Categorie:</p>
+                                <p>Categorie:
+                                </p>
                                 {uniqueCategories.map(categorie => (
                                     <div key={categorie}>
-                                        <label for={categorie}>{categorie}</label>
+                                        <label htmlFor={categorie}>{categorie}</label>
                                         <Checkbox id={categorie} value={categorie}
                                                   checked={selectedCategories.includes(categorie)}
                                                   onChange={() => setSelectedCategories(prev => prev.includes(categorie) ? prev.filter(m => m !== categorie) : [...prev, categorie])}/>

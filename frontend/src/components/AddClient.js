@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import {useState} from "react";
 
-// Define styled components
+// Définition des composants styled
 const Row = styled.div`
     display: flex;
     width: 80%;
@@ -19,9 +20,42 @@ const Elmt = styled.div`
     color: #F4F5F5;
 `;
 
-// Main component
-function AddOrder() {
-    return (
+// Composant AddClient
+function AddClient() {
+    // État pour stocker les lignes
+    const [lines, setLines] = useState([]);
+
+    // Fonction pour ajouter une nouvelle ligne
+    const addCatalogue = (event) => {
+        event.preventDefault();
+        setLines([...lines, <Row style={{width:"100%"}}>
+            <Elmt>
+                <label htmlFor={"calatologue"}>Catalogue</label>
+                <select id={"catalogue"} required={true}>
+                    <option value={"dragon"}>Dragon</option>
+                    <option value={"emblica"}>Emblica-je suis bio</option>
+                    <option value={"cailleau"}>Cailleau</option>
+                    <option value={"terreDeCouleur"}>Terre de couleur</option>
+                </select>
+            </Elmt>
+            <Elmt>
+                <label htmlFor={"sentVia"}>Envoyé via</label>
+                <select id={"sentVia"} required={true}>
+                    <option value={"notSent"}>Pas envoyé</option>
+                    <option value={"whatsapp"}>Whatsapp</option>
+                    <option value={"mail"}>E-mail</option>
+                    <option value={"other"}>Autre</option>
+                </select>
+            </Elmt>
+            <Elmt>
+                <label htmlFor={"sentDate"}>Envoyé le</label>
+                <input type={"date"} id={"sentDate"}/>
+            </Elmt>
+        </Row>]);
+    };
+
+    // Retour du composant
+    return(
         <div style={{
             background: "#8FB570",
             width: '80%',
@@ -30,9 +64,10 @@ function AddOrder() {
             borderRadius: "30px",
             overflow: 'hidden'
         }}>
-            <div className={"image"} style={{width: "42%", overflow: 'hidden'}}></div>
-            <form style={{width: "58%"}} className={'AddReportForm'}>
-                <Row><h1>Ajouter une commande</h1></Row>
+            <form style={{width: "70%", margin:'auto'}} className={'AddReportForm'}>
+                <Row>
+                    <h1>Ajouter un client</h1>
+                </Row>
                 <Row>
                     <Elmt>
                         <label htmlFor={'client'}>Nom du client</label>
@@ -41,7 +76,7 @@ function AddOrder() {
                 </Row>
                 <Row>
                     <Elmt>
-                        <label>Type</label>
+                        <label>Catégorie</label>
                         <select required={true}>
                             <option>Pharmacie</option>
                             <option>Parapharmacie</option>
@@ -102,54 +137,45 @@ function AddOrder() {
                         </select>
                     </Elmt>
                     <Elmt>
-                        <label>Mode de paiement</label>
+                        <label>Client</label>
                         <select required={true}>
-                            <option>Espèce</option>
-                            <option>Chèque</option>
-                            <option>Carte banquaire</option>
+                            <option value={"aucun"}>Non définit</option>
+                            <option value={"clientDragon"}>Dragon</option>
+                            <option value={"clientTerre"}>Terre de couleur</option>
                         </select>
                     </Elmt>
                 </Row>
                 <Row>
+                    <input type={"button"} onClick={addCatalogue} value={"Ajouter un catalogue"}/>
+                </Row>
+                {lines.map((line, index) => (
+                    <Row key={index}>
+                        {line}
+                    </Row>
+                ))}
+                <Row>
                     <Elmt>
-                        <label htmlFor={"monney"}>Montant</label>
-                        <input type={"number"} name={"monney"} placeholder={"Montant"}/>
+                        <label htmlFor={"Nom"}>Nom</label>
+                        <input type={"text"} placeholder={"Nom du contact"}/>
                     </Elmt>
                     <Elmt>
-                        <label htmlFor={"paid"}>Paiement éffectué</label>
-                        <select id={"paid"}>
-                            <option>Non</option>
-                            <option>Oui</option>
-                        </select>
+                        <label htmlFor={"email"}>E-mail</label>
+                        <input type={"email"} placeholder={"exemple@exemple.gmail.com"}/>
                     </Elmt>
                 </Row>
                 <Row>
                     <Elmt>
-                        <label>Date de reception</label>
-                        <input type={"date"} placeholder={"Date de reception"}/>
+                        <label htmlFor={"fixe"}>Numéro fixe</label>
+                        <input type={"text"} id={"fixe"} placeholder={"Numéro fixe"}/>
                     </Elmt>
                     <Elmt>
-                        <label>Date d'échéance</label>
-                        <input type={"date"} placeholder={"Date d'échéance"}/>
-                    </Elmt>
-                    <Elmt>
-                        <label>Dépôt à la banque</label>
-                        <input type={"date"}/>
+                        <label htmlFor={"whatsapp"}>Numéro whatsapp</label>
+                        <input type={"text"} id={"whatsapp"} placeholder={"Numéro whatsapp"}/>
                     </Elmt>
                 </Row>
                 <Row>
                     <Elmt>
-                        <label>Présentoire</label>
-                        <input type={"number"} placeholder={"Nombre de présentoire"}/>
-                    </Elmt>
-                    <Elmt>
-                        <label>Nombre de colis</label>
-                        <input type={"number"} placeholder={"Nomde de colis"}/>
-                    </Elmt>
-                </Row>
-                <Row>
-                    <Elmt>
-                        <label>Termes de paiement</label>
+                        <label>Commentaire</label>
                         <textarea placeholder={"Termes de paiements"}/>
                     </Elmt>
                 </Row>
@@ -157,8 +183,8 @@ function AddOrder() {
                     <input type={"submit"} value={"Enregistrer"}/>
                 </Row>
             </form>
-        </div>
-    );
+    </div>
+    )
 }
 
-export default AddOrder;
+export default AddClient;

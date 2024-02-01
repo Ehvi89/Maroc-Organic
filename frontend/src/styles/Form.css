@@ -54,6 +54,14 @@
     width: 100%;
 }
 
+.AddReportForm input[type='button']{
+    padding: 15px;
+    height: auto;
+    margin: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 100%;
+}
+
 .AddReportForm h1{
     font-size: 39px;
     margin-bottom: 30px;
@@ -90,6 +98,10 @@
         margin: 50px auto 15px;
     }
 
+    .AddReportForm input[type='button']{
+        width: 95%;
+        margin: auto;
+    }
     .AddReportForm h1{
         font-size: 28px;
         text-align: center;
