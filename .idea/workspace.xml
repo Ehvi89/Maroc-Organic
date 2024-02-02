@@ -5,21 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4534905-f512-461c-82f6-513fde87c628" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/AddClient.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/controlleurs/client.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/controlleurs/orderPayment.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/controlleurs/report.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/controlleurs/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/models/Client.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/models/Order.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/models/Report.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/models/User.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/routes/stuff.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/routes/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/body-parser/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/body-parser/HISTORY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/body-parser/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/body-parser/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/body-parser/lib/types/json.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/body-parser/lib/types/json.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/body-parser/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/body-parser/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/raw-body/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/raw-body/HISTORY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/raw-body/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/raw-body/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/raw-body/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/raw-body/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/raw-body/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/raw-body/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddClient.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/AddOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddOrder.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/AddReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/App.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Clients.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Clients.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/OrderPayementTracking.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/OrderPayementTracking.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/PlanningVisites.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PlanningVisites.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/styles/Form.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/Form.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles/banner.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/banner.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +53,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KubernetesApiProvider">{
+  &quot;contexts&quot;: [
+    {
+      &quot;name&quot;: &quot;docker-desktop&quot;
+    }
+  ],
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="KubernetesSettings">
+    <option name="contextName" value="docker-desktop" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -47,6 +74,9 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2bXPfud3JzE1Zccln6ErpYtG5Hx" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -83,6 +113,8 @@
       <workItem from="1706628628785" duration="16840000" />
       <workItem from="1706648335247" duration="14899000" />
       <workItem from="1706729367591" duration="13763000" />
+      <workItem from="1706816185333" duration="12329000" />
+      <workItem from="1706836467973" duration="15740000" />
     </task>
     <servers />
   </component>

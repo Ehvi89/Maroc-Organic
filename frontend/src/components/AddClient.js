@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import {useState} from "react";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 // Définition des composants styled
 const Row = styled.div`
@@ -26,36 +26,73 @@ function AddClient() {
     const [lines, setLines] = useState([]);
 
     // Fonction pour ajouter une nouvelle ligne
-    const addCatalogue = (event) => {
-        event.preventDefault();
-        setLines([...lines, <Row style={{width:"100%"}}>
-            <Elmt>
-                <label htmlFor={"calatologue"}>Catalogue</label>
-                <select id={"catalogue"} required={true}>
-                    <option value={"dragon"}>Dragon</option>
-                    <option value={"emblica"}>Emblica-je suis bio</option>
-                    <option value={"cailleau"}>Cailleau</option>
-                    <option value={"terreDeCouleur"}>Terre de couleur</option>
-                </select>
-            </Elmt>
-            <Elmt>
-                <label htmlFor={"sentVia"}>Envoyé via</label>
-                <select id={"sentVia"} required={true}>
-                    <option value={"notSent"}>Pas envoyé</option>
-                    <option value={"whatsapp"}>Whatsapp</option>
-                    <option value={"mail"}>E-mail</option>
-                    <option value={"other"}>Autre</option>
-                </select>
-            </Elmt>
-            <Elmt>
-                <label htmlFor={"sentDate"}>Envoyé le</label>
-                <input type={"date"} id={"sentDate"}/>
-            </Elmt>
-        </Row>]);
+    const addCatalogue = () => {
+        setLines([...lines, {
+            catalogue: '',
+            sentVia: '',
+            sentDate: ''
+        }]);
     };
 
+    // Fonction pour gérer la soumission du formulaire
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const rawData = Object.fromEntries([...formData.entries()]);
+
+        // Créer un nouvel objet avec la structure désirée
+        const structuredData = {
+            client: rawData.client,
+            category: rawData.category,
+            city: rawData.city,
+            type: rawData.clientType,
+            catalogue: [],
+            contact: {
+                name: rawData.contactName,
+                fixe: rawData.fixedPhone,
+                whatsapp: rawData.whatsappPhone,
+                email: rawData.contactEmail
+            },
+            comment: rawData.comments
+        };
+
+        // les lignes de catalogue sont stockées dans un état appelé 'lines'
+        lines.forEach((_, index) => {
+            structuredData.catalogue.push({
+                name: rawData[`catalogue${index}`],
+                sentDate: rawData[`sentDate${index}`],
+                sentBy: rawData[`sentBy${index}`]
+            });
+        });
+
+
+        console.log(structuredData);
+
+        try {
+            const response = await fetch('http://localhost:5000/api/client', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(structuredData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Erreur lors de l\'envoi des données');
+            }
+
+            const result = await response.json();
+            console.log(result);
+            // Gérer la réponse de l'API si nécessaire
+        } catch (error) {
+            console.error('Erreur:', error);
+            // Gérer l'erreur si nécessaire
+        }
+    };
+
+
     // Retour du composant
-    return(
+    return (
         <div style={{
             background: "#8FB570",
             width: '80%',
@@ -64,28 +101,20 @@ function AddClient() {
             borderRadius: "30px",
             overflow: 'hidden'
         }}>
-            <form style={{width: "70%", margin:'auto'}} className={'AddReportForm'}>
+            <form onSubmit={handleSubmit} style={{width: "70%", margin:'auto'}} className={'AddReportForm'}>
                 <Row>
                     <h1>Ajouter un client</h1>
                 </Row>
                 <Row>
                     <Elmt>
                         <label htmlFor={'client'}>Nom du client</label>
-                        <input type={"text"} id={"client"} placeholder={"Nom du client"} required={true}/>
+                        <input type={"text"} id={"client"} name={"client"} placeholder={"Nom du client"} required={true}/>
                     </Elmt>
                 </Row>
                 <Row>
                     <Elmt>
-                        <label>Catégorie</label>
-                        <select required={true}>
-                            <option>Pharmacie</option>
-                            <option>Parapharmacie</option>
-                            <option>Epicerie fine</option>
-                        </select>
-                    </Elmt>
-                    <Elmt>
-                        <label>Ville</label>
-                        <select required={true}>
+                        <label htmlFor={'city'}>Ville</label>
+                        <select name={'city'} required={true}>
                             <option value="agadir">Agadir</option>
                             <option value="asilah">Asilah</option>
                             <option value="azrou">Azrou</option>
@@ -137,54 +166,83 @@ function AddClient() {
                         </select>
                     </Elmt>
                     <Elmt>
-                        <label>Client</label>
-                        <select required={true}>
+                        <label htmlFor={'category'}>Catégorie</label>
+                        <select name={"category"} required={true}>
+                            <option>Pharmacie</option>
+                            <option>Parapharmacie</option>
+                            <option>Epicerie fine</option>
+                        </select>
+                    </Elmt>
+                    <Elmt>
+                        <label htmlFor={'type'}>Client</label>
+                        <select name={"clientType"} required={true}>
                             <option value={"aucun"}>Non définit</option>
-                            <option value={"clientDragon"}>Dragon</option>
-                            <option value={"clientTerre"}>Terre de couleur</option>
+                            <option value={"Dragon"}>Dragon</option>
+                            <option value={"TerreDeCouleur"}>Terre de couleur</option>
                         </select>
                     </Elmt>
                 </Row>
                 <Row>
-                    <input type={"button"} onClick={addCatalogue} value={"Ajouter un catalogue"}/>
+                    <input type={"button"} onClick={addCatalogue} value={"Ajouter un catalogue"} />
                 </Row>
-                {lines.map((line, index) => (
+                {lines.map((_, index) => (
                     <Row key={index}>
-                        {line}
+                        <Elmt>
+                            <label htmlFor={`catalogue${index}`}>Catalogue</label>
+                            <select id={`catalogue${index}`} name={`catalogue${index}`} required={true}>
+                                <option value={"dragon"}>Dragon</option>
+                                <option value={"emblica"}>Emblica-je suis bio</option>
+                                <option value={"cailleau"}>Cailleau</option>
+                                <option value={"terreDeCouleur"}>Terre de couleur</option>
+                            </select>
+                        </Elmt>
+                        <Elmt>
+                            <label htmlFor={`sentBy${index}`}>Envoyé via</label>
+                            <select id={`sentBy${index}`} name={`sentBy${index}`} required={true}>
+                                <option value={"notSent"}>Pas envoyé</option>
+                                <option value={"whatsapp"}>Whatsapp</option>
+                                <option value={"email"}>E-mail</option>
+                                <option value={"other"}>Autre</option>
+                            </select>
+                        </Elmt>
+                        <Elmt>
+                            <label htmlFor={`sentDate${index}`}>Envoyé le</label>
+                            <input type={"date"} id={`sentDate${index}`} name={`sentDate${index}`} />
+                        </Elmt>
                     </Row>
                 ))}
                 <Row>
                     <Elmt>
                         <label htmlFor={"Nom"}>Nom</label>
-                        <input type={"text"} placeholder={"Nom du contact"}/>
+                        <input type={"text"} placeholder={"Nom du contact"} name={"contactName"}/>
                     </Elmt>
                     <Elmt>
                         <label htmlFor={"email"}>E-mail</label>
-                        <input type={"email"} placeholder={"exemple@exemple.gmail.com"}/>
+                        <input type={"email"} placeholder={"exemple@exemple.gmail.com"} name={"contactEmail"}/>
                     </Elmt>
                 </Row>
                 <Row>
                     <Elmt>
                         <label htmlFor={"fixe"}>Numéro fixe</label>
-                        <input type={"text"} id={"fixe"} placeholder={"Numéro fixe"}/>
+                        <input type={"tel"} id={"fixe"} placeholder={"Numéro fixe"} name={"fixedPhone"}/>
                     </Elmt>
                     <Elmt>
                         <label htmlFor={"whatsapp"}>Numéro whatsapp</label>
-                        <input type={"text"} id={"whatsapp"} placeholder={"Numéro whatsapp"}/>
+                        <input type={"tel"} id={"whatsapp"} placeholder={"Numéro whatsapp"} name={"whatsappPhone"}/>
                     </Elmt>
                 </Row>
                 <Row>
                     <Elmt>
                         <label>Commentaire</label>
-                        <textarea placeholder={"Termes de paiements"}/>
+                        <textarea placeholder={"Commentaire"} name={"comments"}/>
                     </Elmt>
                 </Row>
                 <Row>
-                    <input type={"submit"} value={"Enregistrer"}/>
+                    <input type={"submit"} value={"Enregistrer"} />
                 </Row>
             </form>
-    </div>
-    )
+        </div>
+    );
 }
 
 export default AddClient;

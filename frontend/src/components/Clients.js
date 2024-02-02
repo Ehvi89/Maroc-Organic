@@ -1,11 +1,12 @@
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Loader } from "./PlanningVisites";
 
 // Define styled components
-const Checkbox = styled.input.attrs({type: 'checkbox'})`
+const Checkbox = styled.input.attrs({ type: 'checkbox' })`
     margin: 10px;
 `;
 const Filter = styled.div`
@@ -14,102 +15,20 @@ const Filter = styled.div`
     margin: auto;
 `;
 
-// Data array
-const data = [
-    {
-        "nom": "ADDOHA",
-        "categorie": "Pharmacie",
-        "ville": "Casablanca",
-        "clientDragon": "non",
-        "catalogue": "",
-        "envoyeVia": "",
-        "dateEnvoi": "",
-        "fixe": "0522259669",
-        "whatsappa": "",
-        "nomContact": "",
-        "fonction": "",
-        "email": "",
-        "commentaire": ""
-    },
-    {
-        "nom": "EPICERIE M",
-        "categorie": "Epicerie fine",
-        "ville": "Casablanca",
-        "clientDragon": "oui",
-        "catalogue": "Dragon",
-        "envoyeVia": "whatsapp",
-        "dateEnvoi": "05/05/2022",
-        "fixe": "",
-        "whatsappa": "0644834834",
-        "nomContact": "",
-        "fonction": "",
-        "email": "",
-        "commentaire": "a demandé un dépôt de vente"
-    },
-    {
-        "nom": "PARA DU CHATEAU",
-        "categorie": "Parapharmacie",
-        "ville": "Dar Bouazza",
-        "clientDragon": "non",
-        "catalogue": "Dragon",
-        "envoyeVia": "whatsapp",
-        "dateEnvoi": "23/09/2021",
-        "fixe": "0522292978",
-        "whatsappa": "0663490084",
-        "nomContact": "Asmaa",
-        "fonction": "",
-        "email": "",
-        "commentaire": ""
-    },
-    {
-        "nom": "ETOILE BEAUTE",
-        "categorie": "Parapharmacie",
-        "ville": "Irfane",
-        "clientDragon": "non",
-        "catalogue": "Dragon, Emblica-je suis bio",
-        "envoyeVia": "whatsapp, whatsapp",
-        "dateEnvoi": "22/09/2021, 14/09/2022",
-        "fixe": "0535566705",
-        "whatsappa": "0650165017",
-        "nomContact": "Mme NEZHA",
-        "fonction": "",
-        "email": "",
-        "commentaire": ""
-    }
-];
-
-// Component to show catalogue informations
-function ShowCatalogueInformations({ catalogue, envoyeVia, dateEnvoi }) {
+// Component to show catalogue
+function ShowCatalogueInformations({ catalogue }) {
     const [showTooltip, setShowTooltip] = useState(false);
-
-    // Créer des tableaux pour chaque indice
-    const cataloguesArray = catalogue !== "" ? catalogue.split(',').map(c => c.trim()) : [];
-    const envoyesViaArray = envoyeVia !== "" ? envoyeVia.split(',').map(e => e.trim()) : [];
-    const datesEnvoiArray = dateEnvoi !== "" ? dateEnvoi.split(',').map(d => d.trim()) : [];
-
-    // Assurez-vous que les tableaux ont la même longueur
-    const maxLength = Math.max(cataloguesArray.length, envoyesViaArray.length, datesEnvoiArray.length);
-    if (cataloguesArray.length < maxLength) cataloguesArray.push(...new Array(maxLength - cataloguesArray.length).fill(''));
-    if (envoyesViaArray.length < maxLength) envoyesViaArray.push(...new Array(maxLength - envoyesViaArray.length).fill(''));
-    if (datesEnvoiArray.length < maxLength) datesEnvoiArray.push(...new Array(maxLength - datesEnvoiArray.length).fill(''));
-
-    // Créez un tableau pour chaque ensemble de données
-    const dataArray = Array.from({ length: maxLength }, (_, index) => ({
-        catalogue: cataloguesArray[index],
-        envoyeVia: envoyesViaArray[index],
-        dateEnvoi: datesEnvoiArray[index]
-    }));
 
     return (
         <div>
-            {dataArray.map(({ catalogue, envoyeVia, dateEnvoi  }, index) => (
+            {catalogue.map((item, index) => (
                 <div key={index} className={"clientShowToolTip"} onMouseEnter={() => setShowTooltip(true)}
                      onMouseLeave={() => setShowTooltip(false)}>
-                    <p>{catalogue}</p>
+                    <p>{item.name}</p>
                     {showTooltip && <div className="tooltip">
                         <div>
-                            {envoyeVia && <div>Envoyé via: {envoyeVia}</div>}
-                            {dateEnvoi && <div>Envoyé le: {dateEnvoi}</div>}
+                            {item.sentBy && <div>Envoyé via: {item.sentBy}</div>}
+                            {item.sentDate && <div>Envoyé le: {item.sentDate}</div>}
                         </div>
                     </div>}
                 </div>
@@ -119,144 +38,156 @@ function ShowCatalogueInformations({ catalogue, envoyeVia, dateEnvoi }) {
 }
 
 // Component to show contact informations
-function ShowContactInformations({fixe, whatsapp, nomContact, fonction}) {
+function ShowContactInformations({ contact }) {
     const [showTooltip, setShowTooltip] = useState(false);
 
     return (
         <div onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
             Contact
             {showTooltip && <div className="tooltip">
-                {fixe !== "" && (<div>
-                    Fixe: {fixe}
-                </div>)}
-                {whatsapp !== "" && (<div>
-                    Whatsapp: {whatsapp}
-                </div>)}
-                {nomContact !== "" && (<div>
-                    Nom: {nomContact}
-                </div>)}
-                { fonction !== "" && (<div>
-                    Fonction: {fonction}
-                </div>)}
+                {contact.fixe !== "" && (<div>Fixe: {contact.fixe}</div>)}
+                {contact.whatsapp !== "" && (<div>Whatsapp: {contact.whatsapp}</div>)}
+                {contact.name !== "" && (<div>Nom: {contact.name}</div>)}
             </div>}
         </div>
     );
 }
 
 // Main component
-function Clients(){
-    const uniqueVilles = [...new Set(data.map(row => row.ville))];
-    const uniqueCategories = [...new Set(data.map(row => row.categorie))];
+function Clients() {
+    const [isDataLoading, setDataLoading] = useState(false);
+    const [surveyData, setSurveyData] = useState([]); // Initialisez avec un tableau vide
+    const [pageNumber, setPageNumber] = useState(1); // État pour suivre la page actuelle
+    const itemsPerPage = 10; // Nombre d'éléments par page
+
+    useEffect(() => {
+        setDataLoading(true);
+        fetch(`http://localhost:5000/api/client?page=${pageNumber}&limit=${itemsPerPage}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((apiResponse) => {
+                // Extraire les données de l'API
+                const data = apiResponse.docs;
+                // Concaténez les nouvelles données avec celles existantes
+                setSurveyData(prevData => [...data]);
+                setDataLoading(false);
+            })
+            .catch((error) => {
+                console.error('There has been a problem with your fetch operation:', error);
+                setDataLoading(false);
+            });
+    }, [pageNumber]); // Dépendance de l'effet sur pageNumber
+
+    // Logique pour charger plus de données (par exemple, lorsqu'un bouton "Load More" est cliqué)
+    const loadMoreData = () => {
+        setPageNumber(prevPageNumber => prevPageNumber + 1);
+    };
+
+    console.log(surveyData)
+
+    const uniqueVilles = [...new Set(surveyData.map(row => row.city))];
+    const uniqueCategories = [...new Set(surveyData.map(row => row.category))];
 
     const [selectedVilles, setSelectedVilles] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [showFilters, setShowFilters] = useState(false);
 
-    const filteredData = data.filter(row => selectedVilles.length === 0 || selectedVilles.includes(row.ville))
-        .filter(row => selectedCategories.length === 0 || selectedCategories.includes(row.categorie));
+    const filteredData = surveyData.filter(row => selectedVilles.length === 0 || selectedVilles.includes(row.city))
+        .filter(row => selectedCategories.length === 0 || selectedCategories.includes(row.category));
 
     return(
         <div>
-            <div style={{display:"flex", alignItems:'center', margin:"auto"}}>
-                <Filter className={"orderPayementFilter"}>
-                    <button onClick={() => setShowFilters(!showFilters)}>Filtres</button>
-                    {showFilters && (
-                        <button style={{background: '#E73541'}} onClick={() => {
-                            setSelectedCategories([]);
-                            setSelectedVilles([]);
-                        }}>Effacer
+            {isDataLoading ? (
+                <Loader />
+            ) : (
+                <div>
+                    <div style={{display: "flex", alignItems: 'center', margin: "auto"}}>
+                        <Filter className={"orderPayementFilter"}>
+                            <button onClick={() => setShowFilters(!showFilters)}>Filtres</button>
+                            {showFilters && (
+                                <button style={{background: '#E73541'}} onClick={() => {
+                                    setSelectedCategories([]);
+                                    setSelectedVilles([]);
+                                }}>Effacer
+                                </button>
+                            )}
+
+                            {showFilters && (
+                                <div>
+                                    <div className={"categorie"}>
+                                        <p>Ville:</p>
+                                        {uniqueVilles.map(ville => (
+                                            <div key={ville}>
+                                                <label htmlFor={ville}>{ville}</label>
+                                                <Checkbox id={ville} value={ville}
+                                                          checked={selectedVilles.includes(ville)}
+                                                          onChange={() => setSelectedVilles(prev => prev.includes(ville) ? prev.filter(v => v !== ville) : [...prev, ville])}/>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className={"categorie"}>
+                                        <p>Categorie:
+                                        </p>
+                                        {uniqueCategories.map(categorie => (
+                                            <div key={categorie}>
+                                                <label htmlFor={categorie}>{categorie}</label>
+                                                <Checkbox id={categorie} value={categorie}
+                                                          checked={selectedCategories.includes(categorie)}
+                                                          onChange={() => setSelectedCategories(prev => prev.includes(categorie) ? prev.filter(m => m !== categorie) : [...prev, categorie])}/>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </Filter>
+
+                        <button className="responsive-button" id={'btn'} style={{margin: "50px auto"}}>
+                            <Link to={"/addClients"}><FontAwesomeIcon icon={faPlus}/></Link>
+                            <span><Link to={"/addClients"}>Ajouter un client</Link></span>
                         </button>
-                    )}
+                    </div>
 
-                    {showFilters && (
-                        <div>
-                            <div className={"categorie"}>
-                                <p>Ville:</p>
-                                {uniqueVilles.map(ville => (
-                                    <div key={ville}>
-                                        <label htmlFor={ville}>{ville}</label>
-                                        <Checkbox id={ville} value={ville} checked={selectedVilles.includes(ville)}
-                                                  onChange={() => setSelectedVilles(prev => prev.includes(ville) ? prev.filter(v => v !== ville) : [...prev, ville])}/>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className={"categorie"}>
-                                <p>Categorie:
-                                </p>
-                                {uniqueCategories.map(categorie => (
-                                    <div key={categorie}>
-                                        <label htmlFor={categorie}>{categorie}</label>
-                                        <Checkbox id={categorie} value={categorie}
-                                                  checked={selectedCategories.includes(categorie)}
-                                                  onChange={() => setSelectedCategories(prev => prev.includes(categorie) ? prev.filter(m => m !== categorie) : [...prev, categorie])}/>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                </Filter>
-
-                <button className="responsive-button" id={'btn'} style={{margin: "50px auto"}}>
-                    <Link to={"/addClients"}><FontAwesomeIcon icon={faPlus}/></Link>
-                    <span><Link to={"/addClients"}>Ajouter un client</Link></span>
-                </button>
-            </div>
-
-            <div className={"conteneurTable"}>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Categorie</th>
-                        <th>Ville</th>
-                        <th>Client dragon</th>
-                        <th>Catalogue</th>
-                        <th>Contact</th>
-                        <th>email</th>
-                        <th>Commentaire</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {filteredData.map((row, index) => (
-                        <tr>
-                            <td>
-                                <div className={"cellule"}>{row.nom}</div>
-                            </td>
-                            <td>
-                                <div className={"cellule"}>{row.categorie}</div>
-                            </td>
-                            <td>
-                                <div className={"cellule"}>{row.ville}</div>
-                            </td>
-                            <td>
-                                <div className={"cellule"}>{row.clientDragon}</div>
-                            </td>
-                            <td>
-                                <div className={"cellule"}>
-                                    <ShowCatalogueInformations catalogue={row.catalogue}
-                                                               envoyeVia={row.envoyeVia}
-                                                               dateEnvoi={row.dateEnvoi}/>
-                                </div>
-                            </td>
-                            <td>
-                                <div className={"cellule"}>
-                                    <ShowContactInformations fixe={row.fixe}
-                                                             whatsapp={row.whatsappa}
-                                                             nomContact={row.nomContact}
-                                                             fonction={row.fonction}/>
-                                </div>
-                            </td>
-                            <td>
-                                <div className={"cellule"}>{row.email}</div>
-                            </td>
-                            <td>
-                                <div className={"cellule"}>{row.Commentaire}</div>
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-            </div>
+                    <div className={"conteneurTable"}>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Categorie</th>
+                                <th>Ville</th>
+                                <th>Client</th>
+                                <th>Catalogue</th>
+                                <th>Contact</th>
+                                <th>email</th>
+                                <th>Commentaire</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {filteredData.map((row, index) => (
+                                <tr key={index} style={{backgroundColor: index % 2 === 0 ? 'white' : '#f2f2f2'}}>
+                                    <td className={'cellule'}>{row.client}</td>
+                                    <td className={'cellule'}>{row.category}</td>
+                                    <td className={'cellule'}>{row.city}</td>
+                                    <td className={'cellule'}>{row.type}</td>
+                                    <td className={'cellule'}>
+                                        <ShowCatalogueInformations catalogue={row.catalogue}/>
+                                    </td>
+                                    <td className={'cellule'}>
+                                        <ShowContactInformations contact={row.contact}/>
+                                    </td>
+                                    <td className={'cellule'}>{row.contact.email}</td>
+                                    <td className={'cellule'}>{row.comment}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <button onClick={loadMoreData}>Load More</button>
+                </div>
+            )}
         </div>
     );
 }

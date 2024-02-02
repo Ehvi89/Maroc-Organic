@@ -74,30 +74,14 @@ function ShowRepport({ responsable }) {
         <div onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)} >
             {responsable}
             {showTooltip && <div className="tooltip">
-                <div>
-                    Nom:
-                </div>
-                <div>
-                    Type:
-                </div>
-                <div>
-                    Ville:
-                </div>
-                <div>
-                    heure:
-                </div>
-                <div>
-                    Durée:
-                </div>
-                <div>
-                    Déjà client:
-                </div>
-                <div>
-                    Personne:
-                </div>
-                <div>
-                    Marque concurente
-                </div>
+                <div>Nom:</div>
+                <div>Type:</div>
+                <div>Ville:</div>
+                <div>heure:</div>
+                <div>Durée:</div>
+                <div>Déjà client:</div>
+                <div>Personne:</div>
+                <div>Marque concurente</div>
             </div>}
         </div>
     );

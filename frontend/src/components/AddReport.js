@@ -21,6 +21,7 @@ const Elmt = styled.div`
 
 // Main component
 function AddReport() {
+
     return (
         <div style={{
             background: "#8FB570",
