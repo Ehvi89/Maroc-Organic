@@ -16,7 +16,8 @@ const clientSchema = new mongoose.Schema(
             name: String,
             fixe: String,
             whatsapp: String,
-            email: String
+            address: String,
+            role: String
         },
         comment: String
     }

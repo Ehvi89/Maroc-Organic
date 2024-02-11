@@ -1,6 +1,7 @@
 const express = require('express');
 const stuffRoutes = require('./routes/stuff');
 const mongoose = require("mongoose");
+const userRoutes = require('./routes/user');
 
 const app = express();
 
@@ -32,5 +33,6 @@ mongoose.connect('mongodb://localhost:27017/MarocOrganic',
 
 // Utilisation des routes
 app.use('/api', stuffRoutes);
+app.use('/api', userRoutes);
 
 module.exports = app;

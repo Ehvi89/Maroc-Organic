@@ -17,7 +17,7 @@
     color: #E73541;
 }
 
-.AddReportForm input, .AddReportForm select, .AddReportForm textarea{
+.AddReportForm input, .AddReportForm select, .AddReportForm textarea, .AddUserForm input, .AddUserForm select{
     height: 20px;
     background: none;
     border: none;
@@ -28,25 +28,28 @@
 .AddReportForm input:focus{
     border-color: #8FB570;
 }
-.AddReportForm{
+.AddReportForm, .AddUserForm{
     align-content: center;
     padding: 15px;
+    width: 58%;
 }
 
-.AddReportForm label{
+.AddReportForm label, .AddUserForm label{
     font-size: 12px;
     padding: 5px 10px;
 }
 
-.AddReportForm select{
+.AddReportForm select, .AddUserForm select{
     height: auto;
 }
 
 .image{
     background: url("../assets/Design sans titre.png");
+    width: 42%;
+    overflow: hidden;
 }
 
-.AddReportForm input[type='submit']{
+.AddReportForm input[type='submit'], .AddUserForm input[type='submit']{
     padding: 15px;
     height: auto;
     margin: 50px 15px 25px;
@@ -69,10 +72,24 @@
     text-decoration: beige;
 }
 
+.AddUserForm p{
+    color: #F5F4F4;
+    font-size: 26px;
+    margin: -20px 0 10px 0;
+}
 
 @media screen and (max-width: 820px){
     .image {
         display: none;
+    }
+
+    .AddUserForm{
+        width: 90%;
+        margin: auto;
+    }
+    .AddUserForm p{
+        font-size: 24px;
+        margin: -20px 0 10px 0;
     }
 
     .AddReportForm{
@@ -80,21 +97,30 @@
         margin: auto !important;
     }
 
-    .AddReportForm div{
+    .modal-content{
+        position: fixed;
+        width: 80%;
+        margin: auto;
+        height: 80%;
+        overflow: auto;
+        border-radius: 15px;
+    }
+
+    .AddReportForm div, .modal-content div{
         display: flex;
         flex-direction: column;
         width: 100%;
         margin: 10px auto;
     }
 
-    .AddReportForm  div div{
+    .AddReportForm div div, .modal-content div div{
         display: flex;
         flex-direction: column;
         margin: 10px auto !important;
         width: 95%;
     }
 
-    .AddReportForm input[type='submit']{
+    .AddReportForm input[type='submit'], mo{
         width: 95%;
         margin: 50px auto 15px;
     }

@@ -5,37 +5,53 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4534905-f512-461c-82f6-513fde87c628" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/controlleurs/client.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/controlleurs/orderPayment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/controlleurs/report.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/controlleurs/user.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/Client.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/Order.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/Report.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/User.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/routes/stuff.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/routes/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/middleware/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/AuthContext.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/ConfirmationPopup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/CreateUser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/PaginationControls.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/SharedContext.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/changePassword.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/AddReport.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/Clients.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/DashBoard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/OrderPayementTracking.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/PlanningVisites.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/styles/options.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controlleurs/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controlleurs/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controlleurs/orderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controlleurs/orderPayment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controlleurs/report.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controlleurs/report.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controlleurs/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controlleurs/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/Client.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/Report.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Report.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/User.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/body-parser/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/body-parser/HISTORY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/body-parser/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/body-parser/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/body-parser/lib/types/json.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/body-parser/lib/types/json.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/body-parser/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/body-parser/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/raw-body/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/raw-body/HISTORY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/raw-body/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/raw-body/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/raw-body/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/raw-body/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/raw-body/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/raw-body/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddClient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddOrder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Clients.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Clients.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/OrderPayementTracking.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/OrderPayementTracking.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PlanningVisites.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PlanningVisites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/stuff.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/stuff.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AddClient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AddOrder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddReport.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AddUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Clients.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Error.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Error.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/OrderPayementTracking.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PlanningVisites.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ProgramPlanning.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/styles/Form.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/Form.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +61,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="TypeScript File" />
         <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
@@ -88,7 +105,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/PROBOOK/OneDrive/Documents/ASEDS_3/PFE&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/PROBOOK/OneDrive/Documents/ASEDS_3/PFE/Organic Maroc&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -99,6 +116,18 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\PROBOOK\OneDrive\Documents\ASEDS_3\PFE\Organic Maroc\backend\routes" />
+      <recent name="C:\Users\PROBOOK\OneDrive\Documents\ASEDS_3\PFE\Organic Maroc\backend\models" />
+      <recent name="C:\Users\PROBOOK\OneDrive\Documents\ASEDS_3\PFE\Organic Maroc\backend\controlleurs" />
+      <recent name="C:\Users\PROBOOK\OneDrive\Documents\ASEDS_3\PFE\Organic Maroc\backend" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\PROBOOK\OneDrive\Documents\ASEDS_3\PFE\Organic Maroc\frontend\src\pages" />
+      <recent name="C:\Users\PROBOOK\OneDrive\Documents\ASEDS_3\PFE\Organic Maroc\backend" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -114,7 +143,15 @@
       <workItem from="1706648335247" duration="14899000" />
       <workItem from="1706729367591" duration="13763000" />
       <workItem from="1706816185333" duration="12329000" />
-      <workItem from="1706836467973" duration="15740000" />
+      <workItem from="1706836467973" duration="49122000" />
+      <workItem from="1707068321397" duration="37036000" />
+      <workItem from="1707180136459" duration="4428000" />
+      <workItem from="1707184601276" duration="18859000" />
+      <workItem from="1707237089817" duration="43989000" />
+      <workItem from="1707355319839" duration="22963000" />
+      <workItem from="1707416444729" duration="75757000" />
+      <workItem from="1707575787951" duration="26150000" />
+      <workItem from="1707635240061" duration="5199000" />
     </task>
     <servers />
   </component>

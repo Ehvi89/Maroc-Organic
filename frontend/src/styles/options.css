@@ -1,0 +1,29 @@
+.burger-button {
+    display: inline-block;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.side-menu-option {
+    position: fixed;
+    top: 105px;
+    left: 0;
+    width: auto;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    z-index: 1005;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+
+/* Style pour le menu ouvert */
+.side-menu-option.open {
+    padding-top: 50px;
+    transform: translateX(0);
+}

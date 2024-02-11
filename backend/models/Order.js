@@ -3,18 +3,20 @@ const mongoosePagination = require('mongoose-paginate-v2');
 
 const orderschema = new mongoose.Schema(
     {
-        client: String,
+        date: {type: Date, required: true},
+        client: {type: String, required: true},
         city: String,
         amount: Number,
-        paymentConfirmation: Boolean,
-        paymentMethod: String,
+        paymentConfirmation: {type: Boolean, required: true},
+        paymentMethod: {type: String, required: true},
         chequeNumber: String,
         DateChequeReceived: Date,
         chequeDueDate: Date,
         DateChequeDepositedAtBank: Date,
-        trackingNumber: Number,
-        billNumber: String,
+        trackingNumber: {type: String, required: true, unique: true},
+        billNumber: {type: String, required: true, unique: true},
         paymentTerms: String,
+        receptionConfirmation: Boolean,
         numberPackagesAndDisplays: String,
         logipharPayment: String,
         comment: String

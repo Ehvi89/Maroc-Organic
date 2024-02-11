@@ -38,6 +38,24 @@ a{
     color: #E73541; /* Change to any color you like */
 }
 
+.menuConnecte{
+    position: absolute;
+    right: 0;
+    padding: 15px;
+    background: white;
+    width: 150px;
+    z-index: 1050;
+    border-radius:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:self-end;
+    margin-top: 18px;
+}
+
+.menuConnecte a:hover{
+    color: #8FB570 !important;
+}
+
 
 .burger-menu {
     display: none;
@@ -95,5 +113,11 @@ a{
     }
     .burger-menu {
         display: flex;
+    }
+
+    .menuConnecte{
+        left: 0;
+        align-items: normal;
+        width: auto;
     }
 }

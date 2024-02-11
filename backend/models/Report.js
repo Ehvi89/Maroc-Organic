@@ -1,25 +1,29 @@
 const mongoose = require("mongoose")
-const mongoosePagination = require('mongoose-paginate-v2');
-
 const reportSchema = new mongoose.Schema(
     {
-        author: String,
+        author: {
+            name: String,
+            email: String
+        },
         client: String,
+        city: String,
         type: String,
         date: Date,
         hour: String,
         duration: Number,
         person: String,
-        competingBrands: [String],
+        competingBrands: [{
+            name: String
+        }],
         contact:{
-            nom: String,
+            name: String,
             whatsapp:String
         },
+        alreadyClient: Boolean,
         contactMOGiven: Boolean,
-        clientFollow: Boolean
+        clientFollow: Boolean,
+        comment: String
     }
 );
-
-reportSchema.plugin(mongoosePagination);
 
 module.exports = mongoose.model('Report', reportSchema);
