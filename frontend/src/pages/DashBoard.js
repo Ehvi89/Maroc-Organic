@@ -128,7 +128,7 @@ function DashBoard({ onClose }) {
                                 >
                                     {hoveredRowId === row._id ? (
                                         <>
-                                            <td colSpan="4" style={{
+                                            <td colSpan="5" style={{
                                                 position: 'relative',
                                                 zIndex: 1,
                                                 backgroundColor: 'rgba(213,  53,  65,  0.85)',
