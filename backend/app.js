@@ -2,6 +2,7 @@ const express = require('express');
 const stuffRoutes = require('./routes/stuff');
 const mongoose = require("mongoose");
 const userRoutes = require('./routes/user');
+const path = require('path');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
     }
 });
 
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Connexion à MongoDB
 mongoose.connect('mongodb://marocorganic:marocorganic@marocorganic-2024-02-14-07-17-08.c56i8c6sidx3.eu-west-3.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&retryWrites=false',

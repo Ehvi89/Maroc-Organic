@@ -5,66 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4534905-f512-461c-82f6-513fde87c628" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/ResetPassword.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/tests/add.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/tests/banner.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/tests/changePassword.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/tests/createUser.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/tests/header.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/tests/login.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/tests/paginationControl.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/tests/popUpConfirmation.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controlleurs/orderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controlleurs/orderPayment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controlleurs/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controlleurs/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/middleware/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/Client.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Order.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/Report.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/Report.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/87cbbe951ec68c4cd221e9c11fe6fe5a.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/ACFrOgCWzJOWYkhmVIrvPf4yz-WRmHLTe0gkOwr5PCMT-XjoYxEJFCU8CcHVTElyqYX2kjpMoD84_nOa7KM8wFVsV49XH4wV_J8J_0QzT20L52_VzUgGFCVyZ8bU9oe8UHF9_H8SbJYQ3Off6-qi.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/Brand-Color-3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/Business Proposal.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/images.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/original-66ba0b46f52d8faeab906f7d4599e954.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/original-6a80a123812a1f0932f2a22bbe082bad.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/png-clipart-parsley-herbalism-plant-stem-leaf-superfood-leaf-leaf-vegetable-food.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/pngtree-blue-watercolor-splash-border-png-image_4973360.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/st-johns-wort-5991045_640.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/context/AuthContext.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Banner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ConfirmationPopup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ConfirmationPopup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/CreateUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CreateUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PaginationControls.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PaginationControls.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/SharedContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/context/SharedContext.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/changePassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/changePassword.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AddClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AddClient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AddOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AddOrder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AddReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AddReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AddUser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Clients.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Clients.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/DashBoard.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/DashBoard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Error.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Error.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/OrderPayementTracking.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/OrderPayementTracking.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/PlanningVisites.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/PlanningVisites.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles/Form.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/Form.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles/banner.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/banner.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/header.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,26 +56,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "21.6.1",
-    "javascript.nodejs.core.library.typings.version": "20.11.17",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/PROBOOK/OneDrive/Documents/ASEDS_3/PFE/Organic Maroc",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;21.6.1&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.11.17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/PROBOOK/OneDrive/Documents/ASEDS_3/PFE/Organic Maroc&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\PROBOOK\OneDrive\Documents\ASEDS_3\PFE\Organic Maroc\backend\routes" />
@@ -176,6 +120,8 @@
       <workItem from="1707871915421" duration="14278000" />
       <workItem from="1707956379463" duration="705000" />
       <workItem from="1707963798664" duration="19286000" />
+      <workItem from="1708010416077" duration="837000" />
+      <workItem from="1708011289775" duration="1181000" />
     </task>
     <servers />
   </component>
