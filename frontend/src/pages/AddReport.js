@@ -1,11 +1,12 @@
+// Importation des modules nécessaires
 import styled from "styled-components";
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { useAuth } from '../components/AuthContext';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from '../components/context/AuthContext';
 
-// Define styled components
+// Définition des composants styled
 const Row = styled.div`
     display: flex;
     width: 80%;
@@ -24,38 +25,44 @@ const Elmt = styled.div`
     color: #F4F5F5;
 `;
 
-// Main component
+// Composant principal pour ajouter un nouveau rapport de visite
 function AddReport() {
+    // État pour stocker la catégorie sélectionnée
     const [selectedCategory, setSelectedCategory] = useState('');
     const { authToken } = useAuth();
+    // État pour stocker les informations de l'utilisateur
     const [user, setUser] = useState(null);
+    // Hook pour la navigation
     const navigate = useNavigate();
 
+    // Effect pour mettre à jour l'état de l'utilisateur lorsque le token d'authentification change
     useEffect(() => {
-        // If authToken exists, set isAuthenticated to true
+        // Si authToken existe, récupère les données de l'utilisateur
         if (authToken) {
             const userData = window.localStorage.getItem('user');
-            // Correctly parse the user data using JSON.parse
+            // Parse correctement les données de l'utilisateur avec JSON.parse
             setUser(userData ? JSON.parse(userData) : null);
         } else {
-            setUser(null); // Clear the user state if authToken is not present
+            setUser(null); // Efface l'état de l'utilisateur si authToken n'est pas présent
         }
     }, [authToken]);
 
+    // Fonction pour gérer le changement de catégorie sélectionnée
     const handleSelectedCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
     };
 
-    // État pour stocker les lignes
+    // État pour stocker les lignes de marques concurrentes
     const [lines, setLines] = useState([]);
 
-    // Fonction pour ajouter une nouvelle ligne
+    // Fonction pour ajouter une nouvelle ligne de marque concurrente
     const addCompetingBrands = () => {
         setLines([...lines, {
             name: ''
         }]);
     };
 
+    // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (event) => {
         //event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -108,7 +115,6 @@ function AddReport() {
                 throw new Error('Erreur lors de l\'envoi des données');
             }
 
-            const result = await response.json();
             navigate('/planningVisits')
             // Gérer la réponse de l'API si nécessaire
         } catch (error) {
@@ -118,34 +124,7 @@ function AddReport() {
         }
     };
 
-    const TimeDropdown = ({ name, value, onChange }) => {
-        // Generate the available times
-        const times = [];
-        for (let hour =  9; hour <=  17; hour++) {
-            for (let minute =  0; minute <  60; minute +=  30) {
-                const time = `${hour}:${minute <  10 ? '0' : ''}${minute}`;
-                times.push(time);
-            }
-        }
-
-        return (
-            <select name={name} value={value} onChange={onChange} required={true}>
-                {times.map((time, index) => (
-                    <option key={index} value={time}>
-                        {time}
-                    </option>
-                ))}
-            </select>
-        );
-    };
-
-    const [visitTime, setVisitTime] = useState('09:00');
-
-    const handleTimeChange = (event) => {
-        setVisitTime(event.target.value);
-    };
-
-
+    // Retour du composant
     return (
         <div style={{
             background: "#8FB570",
@@ -160,7 +139,9 @@ function AddReport() {
                 <Row>
                     <Elmt>
                         <label htmlFor={'client'}>Nom du client</label>
-                        <input type={"text"} id={"client"} name={'client'} placeholder={"Nom du client"} required={true}/>
+                        <input type={"text"} id={"client"} name={'client'} placeholder={"Nom du client"} required={true}
+                               pattern="^[a-zA-Z\s]+$"
+                               title="Le nom doit contenir uniquement des lettres et des espaces"/>
                     </Elmt>
                     <Elmt>
                         <label htmlFor={'category'}>Type</label>
@@ -176,7 +157,7 @@ function AddReport() {
                     <Row>
                         <Elmt>
                             <label htmlFor={'category'}>Autre catégorie</label>
-                            <input type={"text"} name={'category'} placeholder={'Autre catégorie'}/>
+                            <input type={"text"} name={'category'} placeholder={'Autre catégorie'} required={true} pattern="^[a-zA-Z\s]+$" title="La catégorie doit contenir uniquement des lettres et des espaces"/>
                         </Elmt>
                     </Row>
                 )}
@@ -242,15 +223,15 @@ function AddReport() {
                 <Row>
                     <Elmt>
                         <label htmlFor={"duration"}>Durée de la visite</label>
-                        <input type={"number"} name={"duration"} placeholder={"min"}/>
+                        <input type={"number"} name={"duration"} placeholder={"min"} min={0} step={1} required={true} title="La durée de la visite doit être un entier positif"/>
                     </Elmt>
                     <Elmt>
                         <label htmlFor={'date'}>Date</label>
                         <input type={"date"} name={'date'} required={true}/>
                     </Elmt>
                     <Elmt>
-                        <label htmlFor={"alreadyClient"}>Déja client ?</label>
-                        <select id={"alreadyClient"} name={'alreadyClient'}>
+                        <label htmlFor={"alreadyClient"}>Déjà client ?</label>
+                        <select id={"alreadyClient"} name={'alreadyClient'} required={true}>
                             <option value={false}>Non</option>
                             <option value={true}>Oui</option>
                         </select>
@@ -259,7 +240,7 @@ function AddReport() {
                 <Row>
                     <Elmt>
                         <label htmlFor={'person'}>Personne rencontrée</label>
-                        <input type={"text"} name={'person'} placeholder={"Persone rencontréé"}/>
+                        <input type={"text"} name={'person'} placeholder={"Personne rencontrée"} required={true} pattern="^[a-zA-Z\s]+$" title="Le nom de la personne doit contenir uniquement des lettres et des espaces"/>
                     </Elmt>
                     <Elmt>
                         <label htmlFor={'competingBrands'}>Marques concurente</label>
@@ -280,11 +261,11 @@ function AddReport() {
                 <Row>
                     <Elmt>
                         <label htmlFor={'contactName'}>Nom du contact</label>
-                        <input type={"text"} name={'contactName'} placeholder={"Contact"}/>
+                        <input type={"text"} name={'contactName'} placeholder={"Contact"} required={true} pattern="^[a-zA-Z\s]+$" title="Le nom du contact doit contenir uniquement des lettres et des espaces"/>
                     </Elmt>
                     <Elmt>
-                        <label htmlFor={'contactName'}>Numéro</label>
-                        <input type={"number"} name={'contactNumber'} placeholder={"Numéro whatsapp"}/>
+                        <label htmlFor={'contactNumber'}>Numéro</label>
+                        <input type={"tel"} name={'contactNumber'} placeholder={"Numéro whatsapp"} pattern="^\d{10}$" title="Le numéro doit contenir 10 chiffres"/>
                     </Elmt>
                 </Row>
                 <Row>
@@ -300,7 +281,7 @@ function AddReport() {
                 <Row>
                     <Elmt>
                         <label htmlFor={"follow"}>Client a follow sur Instagram</label>
-                        <select name={"follow"}>
+                        <select name={"follow"} required={true}>
                             <option value={false}>Non</option>
                             <option value={true}>Oui</option>
                         </select>
@@ -315,4 +296,5 @@ function AddReport() {
     );
 }
 
+// Exportation du composant AddReport
 export default AddReport;

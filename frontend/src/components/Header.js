@@ -1,30 +1,28 @@
-// Import necessary modules
+// Importation des modules nécessaires
 import logoMarocOragnic from "../assets/Logo_MAROC-ORGANIC-removebg-preview.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import React, { useState, useEffect, useRef } from "react";
-import { useAuth } from "./AuthContext";
-import { useFunctions} from "./SharedContext";
+import { useAuth } from "./context/AuthContext";
 import ChangePassword from "./changePassword";
 
-// Define Header component
+// Définition du composant Header
 function Header() {
-    // State to manage user authentication
+    // État pour gérer l'authentification de l'utilisateur
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    // State to manage login popup display
+    // État pour gérer l'affichage du popup de connexion
     const [showLogin, setShowLogin] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
-    // State to manage burger menu opening
+    // État pour gérer l'ouverture du menu hamburger
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    // Use useRef to get a reference to the root element
+    // Utilisation d'useRef pour obtenir une référence à l'élément racine
     const node = useRef();
     const { authToken, removeToken, user } = useAuth();
     const navigate = useNavigate();
 
-
-    // Update the useEffect hook to set isAuthenticated based on the presence of authToken
+    // Mise à jour du hook useEffect pour définir isAuthenticated en fonction de la présence authToken
     useEffect(() => {
-        // If authToken exists, set isAuthenticated to true
+        // Si authToken existe, set isAuthenticated à true
         if (authToken) {
             setIsAuthenticated(true);
         } else {
@@ -32,43 +30,41 @@ function Header() {
         }
     }, [authToken]);
 
-    // Function to handle user login
-    const handleLogin = (userData) => {
+    // Fonction pour gérer la connexion de l'utilisateur
+    const handleLogin = () => {
         setIsAuthenticated(true);
         setShowLogin(false);
     };
 
     const handleLogout = () => {
-        removeToken(); // Remove the authentication token
-        setIsAuthenticated(false); // Update the authentication state
-        // Redirect the user to the home page or login page
-        // You can use useHistory from react-router-dom for this
+        removeToken(); // Supprime le token d'authentification
+        setIsAuthenticated(false); // Met à jour l'état d'authentification
+        // Redirige l'utilisateur vers la page d'accueil ou la page de connexion
     }
 
-    // Get the URL of the current page
+    // Obtention de l'URL de la page actuelle
     const { pathname } = useLocation();
 
-    // Function to handle clicks outside the menu
+    // Fonction pour gérer les clics en dehors du menu
     const handleClickOutside = (event) => {
         if (node.current && !node.current.contains(event.target)) {
-            // The click happened outside the menu, so close the menu
+            // Le clic s'est produit en dehors du menu, donc fermez le menu
             setIsMenuOpen(false);
         }
     };
 
-    // Add event listener when component is mounted
+    // Ajoutez un écouteur d'événements lorsque le composant est monté
     useEffect(() => {
         document.addEventListener("click", handleClickOutside);
-        // Remove event listener when component is unmounted
+        // Supprimez l'écouteur d'événements lorsque le composant est démonté
         return () => {
             document.removeEventListener("click", handleClickOutside);
         };
     }, []);
 
-
-    // Function to handle clicks on the overlay
+    // Fonction pour gérer les clics sur overlay
     const handleOverlayClick = () => {
-        // The click happened on the overlay, so close the menu
+        // Le clic s'est produit sur overlay, donc fermez le menu
         setIsMenuOpen(false);
         setIsEditing(false);
     };
@@ -85,7 +81,8 @@ function Header() {
         if (user.role === 'Stagiaire') {
             setShowError(true); // Affiche le message d'erreur
         } else {
-            // Redirige vers la page /planningVisits si l'utilisateur a les droits nécessaires
+            setIsMenuOpen(false);
+            // Redirige vers la page /planningVisits si l'utilisateur aux droits nécessaires
             navigate('/orderPayementTracking')
         }
     };
@@ -94,7 +91,7 @@ function Header() {
         setShowError(false); // Ferme le popup d'erreur
     };
 
-    // Return the JSX for the component
+    // Retourne le JSX pour le composant
     return (
         <div ref={node} className="header">
             <header>
@@ -140,19 +137,19 @@ function Header() {
                             </Link>
                         </li>
                         <li id="btn" className="user">
-                            {!isAuthenticated && <Link onClick={() => setShowLogin(true)}>Connexion</Link>}
+                            {!isAuthenticated && <Link onClick={() => setShowLogin(true)} to={'#'}>Connexion</Link>}
                             {isAuthenticated && <Link
-                                onClick={() => setShowMenu(!showMenu)}>{user?.name}</Link>} {/* Use optional chaining to safely access user properties */}
+                                onClick={() => setShowMenu(!showMenu)} to={'#'}>{user?.name}</Link>} {/* Use optional chaining to safely access user properties */}
                             {showMenu &&
                                 <div className={'menuConnecte'}>
                                     {user.role !== 'Administrateur' &&
-                                        <Link style={{margin: '5px', color:'black'}} onClick={() => {toggleEditMode(); setShowMenu(false)}} to={'#'}>Modifier</Link>}
+                                        <Link style={{margin: '5px', color:'black'}} onClick={() => {toggleEditMode(); setShowMenu(false)}} to={'#'}>Modifier l'utilisateur</Link>}
                                     {user.role === 'Administrateur' &&
                                         <Link style={{margin: '5px', color:'black'}} to={'/dashboard'} onClick={() => setShowMenu(false)}>DashBoard</Link>}
                                     <Link style={{margin: '5px', color:'#E73541'}} to={'/'} onClick={() => {
                                         handleLogout();
                                         setShowMenu(false)
-                                    }}>Deconnexion</Link>
+                                    }}>Déconnexion</Link>
                                 </div>
                             }
                         </li>

@@ -5,8 +5,8 @@ const orderschema = new mongoose.Schema(
     {
         date: {type: Date, required: true},
         client: {type: String, required: true},
-        city: String,
-        amount: Number,
+        city: {type: String, required: true},
+        amount: {type: Number, required: true},
         paymentConfirmation: {type: Boolean, required: true},
         paymentMethod: {type: String, required: true},
         chequeNumber: String,
@@ -16,7 +16,7 @@ const orderschema = new mongoose.Schema(
         trackingNumber: {type: String, required: true, unique: true},
         billNumber: {type: String, required: true, unique: true},
         paymentTerms: String,
-        receptionConfirmation: Boolean,
+        receptionConfirmation: { type: Boolean, require: true },
         numberPackagesAndDisplays: String,
         logipharPayment: String,
         comment: String

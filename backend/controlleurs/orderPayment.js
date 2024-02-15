@@ -105,7 +105,7 @@ exports.export2excel = async (req, res) => {
 
     worksheet.columns = [
         { header: "DATE", key: "date", width:   15 },
-        { header: "CLIENT", key: "name", width:   25 },
+        { header: "CLIENT", key: "client", width:   25 },
         { header: "VILLE", key: "city", width:   25 },
         { header: "MONTANT", key: "amount", width:   10 },
         { header: "MODE DE PAIEMENT", key: "paymentMethod", width:   15 },

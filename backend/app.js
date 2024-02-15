@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 
 
 // Connexion à MongoDB
-mongoose.connect('mongodb://localhost:27017/MarocOrganic',
+mongoose.connect('mongodb://marocorganic:marocorganic@marocorganic-2024-02-14-07-17-08.c56i8c6sidx3.eu-west-3.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&retryWrites=false',
     { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));

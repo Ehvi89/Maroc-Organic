@@ -1,10 +1,10 @@
-// Import necessary modules
-import {useEffect, useState} from 'react';
+// Importation des modules nécessaires
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom'
-import { useAuth } from './AuthContext';
+import { Link } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 
-// Define styled components
+// Définition des composants stylisés
 const Div = styled.div`
     position: fixed;
     top: 50%;
@@ -16,6 +16,8 @@ const Div = styled.div`
     background: linear-gradient(to bottom, #8FB570 21%, #F5F4F4 21%);
     text-align: center;
     z-index: 2000;
+    width: 40%;
+    max-width: 500px;
 `
 
 const Form = styled.form`
@@ -36,19 +38,20 @@ const Overlay = styled.div`
     z-index: 1002;
 `;
 
-// Define Login component
+// Définition du composant Login
 function Login({ onClose, onLogin }) {
+    // États pour gérer les champs de saisie de l'email et du mot de passe
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState(''); // New state for error message
-    const [submitted, setSubmitted] = useState(false); // New state to track form submission
+    // Nouvel état pour le message d'erreur
+    const [errorMessage, setErrorMessage] = useState('');
 
+    // Accès à la fonction setToken du contexte d'authentification
     const { setToken } = useAuth();
 
-    // Function to handle form submission
+    // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setSubmitted(true); // Mark the form as submitted
         try {
             const authData = {
                 email: email,
@@ -83,12 +86,12 @@ function Login({ onClose, onLogin }) {
         }
     };
 
-    // Function to handle clicks on the overlay
+    // Fonction pour gérer les clics sur l'overlay
     const handleOverlayClick = () => {
         onClose();
     };
 
-    // Effect to clear the error message after a delay
+    // Effet pour effacer le message d'erreur après un délai
     useEffect(() => {
         let timer;
         if (errorMessage) {
@@ -99,23 +102,27 @@ function Login({ onClose, onLogin }) {
         return () => clearTimeout(timer); // Clean up the timer on component unmount
     }, [errorMessage]);
 
-    // Return the JSX for the component
+    // Retourne le JSX pour le composant
     return (
         <>
             <Overlay onClick={handleOverlayClick} />
-            <Div className={'loginPopup'}>
+            <Div className="loginPopup">
                 <h2>Connexion</h2>
-                <Form className={"Form"} onSubmit={handleSubmit}>
-                    {errorMessage && <p style={{ color: '#E73541' }}>{errorMessage}</p>} {/* Conditionally render error message */}
-                    <input type={"email"} name={'email'} placeholder={"E-mail"} value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <input type="password" name={'password'} placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <Link to={"#"}>Mot de passe oublié ?</Link>
-                    <input type={"submit"} value={"Connexion"} />
+                <Form className="Form" onSubmit={handleSubmit}>
+                    {/* Affichage conditionnel du message d'erreur */}
+                    {errorMessage && <p style={{ color: '#E73541' }}>{errorMessage}</p>}
+                    {/* Champs de saisie pour l'email et le mot de passe */}
+                    <input type="email" name="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="password" name="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    {/* Lien pour réinitialiser le mot de passe */}
+                    <Link to="resetPasswordRequest" onClick={() => onClose()}>Mot de passe oublié ?</Link>
+                    {/* Bouton pour soumettre le formulaire */}
+                    <input type="submit" value="Connexion" />
                 </Form>
             </Div>
         </>
     );
 }
 
-// Export Login component
+// Exportation du composant Login
 export default Login;

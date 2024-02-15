@@ -1,16 +1,17 @@
-import React, {useEffect, useRef, useState} from "react";
+// Importation des modules nécessaires
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faPencilAlt, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
+import { faPencilAlt, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Loader } from "./PlanningVisites";
-import { useAuth } from '../components/AuthContext';
+import { useAuth } from '../components/context/AuthContext';
 import ConfirmPopup from "../components/ConfirmationPopup";
 import moment from "moment";
-import {useFunctions} from "../components/SharedContext";
+import { useFunctions } from "../components/context/SharedContext";
 import PaginationControls from "../components/PaginationControls";
 
-// Define styled components
+// Définition des composants styled
 const Checkbox = styled.input.attrs({ type: 'checkbox' })`
     margin: 10px;
 `;
@@ -20,6 +21,7 @@ const Filter = styled.div`
     margin: auto;
 `;
 
+// Composant pour afficher les informations du catalogue
 function ShowCatalogueInformations({ id, catalogue, isEditable }) {
     const [showTooltip, setShowTooltip] = useState(false);
     const [localCatalogue, setLocalCatalogue] = useState(catalogue);
@@ -125,14 +127,18 @@ function ShowCatalogueInformations({ id, catalogue, isEditable }) {
                                 <input ref={ref => inputRefs.current[index * 3 + 2] = ref} type="date"
                                        value={item.sentDate || ''}
                                        onChange={(e) => handleInputChange(index, 'sentDate', e.target.value)}
-                                       onBlur={() => updateDataOnServer([...localCatalogue])}/>
+                                       onBlur={() => updateDataOnServer([...localCatalogue])}
+                                       required
+                                       min={moment().subtract(1, 'year').format('YYYY-MM-DD')}
+                                       max={moment().format('YYYY-MM-DD')}
+                                       title="La date doit être comprise entre aujourd'hui et il y a un an"/>
                             </>
                         ) : (
                             <>
                                 {item.sentBy && <div>Envoyé via: {item.sentBy}</div>}
                                 {item.sentDate && <div>Envoyé le: {moment(item.sentDate).format('DD/MM/YYYY')}</div>}
                             </>
-                            )}
+                        )}
                     </div>}
 
                 </div>
@@ -160,8 +166,8 @@ function ShowCatalogueInformations({ id, catalogue, isEditable }) {
     );
 }
 
-// Component to show contact informations
-function ShowContactInformations({id, contact, isEditable}) {
+// Composant pour afficher les informations de contact
+function ShowContactInformations({ id, contact, isEditable }) {
     const [showTooltip, setShowTooltip] = useState(false);
     const [localContact, setLocalContact] = useState(contact);
     const inputRefs = useRef([null, null, null, null]); // Tableau de références pour les inputs
@@ -210,17 +216,23 @@ function ShowContactInformations({id, contact, isEditable}) {
                     <>
                         <input ref={ref => inputRefs.current[0] = ref} type="tel" placeholder="Fixe"
                                value={localContact.fixe} onChange={(e) => handleInputChange('fixe', e.target.value)}
-                               onBlur={() => updateDataOnServer('fixe', localContact.fixe)}/>
+                               onBlur={() => updateDataOnServer('fixe', localContact.fixe)}
+                               pattern="^\d{10}+$" title="Le numéro fixe doit contenir uniquement et 10 chiffres" />
                         <input ref={ref => inputRefs.current[1] = ref} type="tel" placeholder="Whatsapp"
                                value={localContact.whatsapp}
                                onChange={(e) => handleInputChange('whatsapp', e.target.value)}
-                               onBlur={() => updateDataOnServer('whatsapp', localContact.whatsapp)}/>
+                               onBlur={() => updateDataOnServer('whatsapp', localContact.whatsapp)}
+                               pattern="^\d{10}+$" title="Le numéro WhatsApp doit contenir uniquement et 10 chiffres" />
                         <input ref={ref => inputRefs.current[2] = ref} type="text" placeholder="Nom"
                                value={localContact.name} onChange={(e) => handleInputChange('name', e.target.value)}
-                               onBlur={() => updateDataOnServer('name', localContact.name)}/>
+                               onBlur={() => updateDataOnServer('name', localContact.name)}
+                               required
+                               pattern="^[a-zA-Z\s]+$" title="Le nom doit contenir uniquement des lettres et des espaces" />
                         <input ref={ref => inputRefs.current[3] = ref} type="text" placeholder="Fonction"
                                value={localContact.role} onChange={(e) => handleInputChange('role', e.target.value)}
-                               onBlur={() => updateDataOnServer('name', localContact.role)}/>
+                               onBlur={() => updateDataOnServer('name', localContact.role)}
+                               required
+                               pattern="^[a-zA-Z\s]+$" title="La fonction doit contenir uniquement des lettres et des espaces" />
                     </>
                 ) : (
                     <>
@@ -236,14 +248,12 @@ function ShowContactInformations({id, contact, isEditable}) {
 }
 
 
-// Main component
+// Composant principal pour afficher les clients
 function Clients() {
     const [isDataLoading, setDataLoading] = useState(false);
     const [surveyData, setSurveyData] = useState([]); // Initialize with an empty array
     const [pageNumber, setPageNumber] = useState(1); // State to track the current page
     const [totalPageNumber, setTotalPageNumber] = useState(1);
-    const [hasNextPage, setHasNextPage] = useState(false);
-    const [hasPrevPage, setHasPrevPage] = useState(false);
     const itemsPerPage = 10; // Number of items per page
     const [showFilters, setShowFilters] = useState(false);
     const { authToken } = useAuth();
@@ -271,32 +281,13 @@ function Clients() {
                 setSurveyData(prevData => [...data]);
                 setDataLoading(false);
                 setTotalPageNumber(apiResponse.totalPages);
-
-                setHasNextPage(apiResponse.hasNextPage);
-                setHasPrevPage(apiResponse.hasPrevPage);
+                setPageNumber(apiResponse.page)
             })
             .catch((error) => {
                 console.error('There has been a problem with your fetch operation:', error);
                 setDataLoading(false);
             });
-    }, [pageNumber]); // Dependency of the effect on pageNumber
-
-    // Logic to load more data (for example, when a "Load More" button is clicked)
-    const loadMoreData = () => {
-        setPageNumber(prevPageNumber => prevPageNumber + 1);
-    };
-
-    const loadLessData = () => {
-        setPageNumber(prevPageNumber => prevPageNumber - 1);
-    }
-
-    const handleFirst = () => {
-        setPageNumber(1);
-    };
-
-    const handleLast = () => {
-        setPageNumber(totalPageNumber);
-    };
+    }, [pageNumber, authToken]); // Dependency of the effect on pageNumber
 
     const uniqueVilles = [...new Set(surveyData.map(row => row.city))];
     const uniqueCategories = [...new Set(surveyData.map(row => row.category))];
@@ -436,48 +427,48 @@ function Clients() {
                             {filteredData.map((row, index) => (
                                 <tr key={index} style={{backgroundColor: index % 2 === 0 ? 'white' : '#f2f2f2'}}
                                     onMouseDown={(event) => handleMouseDown(event, row._id)}
-                                    onMouseUp={handleMouseUp}>
+                                    onMouseUp={handleMouseUp}
+                                    onClick={() => startEditingCell(row._id)}>
                                     <td className={'cellule'}>
                                         <div className={'contenu'}>
                                             {isEditing && editingCellId === row._id ? (
-                                                <input type="text" defaultValue={row.client}
-                                                       onBlur={(e) => updateCellValue(row._id, 'client', e.target.value)}/>
+                                                <>
+                                                    <input type="text" defaultValue={row.client}
+                                                           onBlur={(e) => updateCellValue(row._id, 'client', e.target.value)}
+                                                           required
+                                                           pattern="^[a-zA-Z\s]+$"
+                                                           title="Le nom du client doit contenir uniquement des lettres et des espaces"/>
+                                                    <div>
+                                                        <FontAwesomeIcon icon={faPencilAlt}
+                                                                         style={{position: 'absolute', right: '5%'}}/>
+                                                    </div>
+                                                </>
                                             ) : (
                                                 <span>{row.client}</span>
-                                            )}
-                                            {isEditing && editingCellId !== row._id && (
-                                                <button onClick={() => startEditingCell(row._id)}>
-                                                    <FontAwesomeIcon icon={faPencilAlt}/>
-                                                </button>
                                             )}
                                         </div>
                                     </td>
                                     <td className={'cellule'}>
                                         <div className={'contenu'}>
-                                            {row.category}
                                             {isEditing && editingCellId === row._id ? (
                                                 <select defaultValue={row.category}
                                                         onChange={(e) => updateCellValue(row._id, 'category', e.target.value)}
-                                                        onBlur={() => setEditingCellId(null)}>
+                                                        onBlur={() => setEditingCellId(null)}
+                                                        required>
                                                     <option value="Pharmacie">Pharmacie</option>
                                                     <option value="Parapharmacie">Parapharmacie</option>
                                                     <option value="Épicerie fine">Épicerie fine</option>
                                                 </select>
-                                            ) : null}
-                                            {isEditing && editingCellId !== row._id && (
-                                                <button onClick={() => startEditingCell(row._id)}>
-                                                    <FontAwesomeIcon icon={faPencilAlt}/>
-                                                </button>
-                                            )}
+                                            ) : <span>{row.category}</span>}
                                         </div>
                                     </td>
                                     <td className={'cellule'}>
                                         <div className={'contenu'}>
-                                            {row.city}
                                             {isEditing && editingCellId === row._id ? (
                                                 <select defaultValue={row.city}
                                                         onChange={(e) => updateCellValue(row._id, 'city', e.target.value)}
-                                                        onBlur={() => setEditingCellId(null)}>
+                                                        onBlur={() => setEditingCellId(null)}
+                                                        required>
                                                         <option value="Agadir">Agadir</option>
                                                         <option value="Asilah">Asilah</option>
                                                         <option value="Azrou">Azrou</option>
@@ -527,31 +518,21 @@ function Clients() {
                                                         <option value="Tiznit">Tiznit</option>
                                                         <option value="Zagora">Zagora</option>
                                                 </select>
-                                            ) : null}
-                                            {isEditing && editingCellId !== row._id && (
-                                                <button onClick={() => startEditingCell(row._id)}>
-                                                    <FontAwesomeIcon icon={faPencilAlt}/>
-                                                </button>
-                                            )}
+                                            ) : <span>{row.city}</span>}
                                         </div>
                                     </td>
                                     <td className={'cellule'}>
                                         <div className={'contenu'}>
-                                            {row.type}
                                             {isEditing && editingCellId === row._id ? (
                                                 <select defaultValue={row.type}
                                                         onChange={(e) => updateCellValue(row._id, 'type', e.target.value)}
-                                                        onBlur={() => setEditingCellId(null)}>
+                                                        onBlur={() => setEditingCellId(null)}
+                                                        required>
                                                     <option value={"aucun"}>Non définit</option>
                                                     <option value={"Dragon"}>Dragon</option>
                                                     <option value={"Terre de couleur"}>Terre de couleur</option>
                                                 </select>
-                                            ) : null}
-                                            {isEditing && editingCellId !== row._id && (
-                                                <button onClick={() => startEditingCell(row._id)}>
-                                                    <FontAwesomeIcon icon={faPencilAlt}/>
-                                                </button>
-                                            )}
+                                            ) : <span>{row.type}</span>}
                                         </div>
                                     </td>
                                     <td className={'cellule'}>
@@ -564,29 +545,25 @@ function Clients() {
                                     </td>
                                     <td className={'cellule'}>
                                         <div className={'contenu'}>
-                                            {row.contact.address}
                                             {isEditing && editingCellId === row._id ? (
                                                 <input type="text" defaultValue={row.contact.address}
-                                                       onBlur={(e) => updateCellValue(row._id, 'contact.email', e.target.value)}/>
-                                            ) : null}
-                                            {isEditing && editingCellId !== row._id && (
-                                                <button onClick={() => startEditingCell(row._id)}>
-                                                    <FontAwesomeIcon icon={faPencilAlt}/>
-                                                </button>)}
+                                                       onBlur={(e) => updateCellValue(row._id, 'contact.address', e.target.value)}
+                                                       required
+                                                       pattern="^[a-zA-Z0-9\s,-.]+$"
+                                                       title="L'adresse doit contenir uniquement des lettres, des chiffres, des espaces, des virgules, des tirets et des points"/>
+                                            ) : <span>{row.contact.address}</span>}
                                         </div>
                                     </td>
                                     <td className={'cellule'}>
                                         <div className={'contenu'}>
                                             {isEditing && editingCellId === row._id ? (
                                                 <textarea defaultValue={row.comment}
-                                                          onBlur={(e) => updateCellValue(row._id, 'comment', e.target.value)}/>
+                                                          onBlur={(e) => updateCellValue(row._id, 'comment', e.target.value)}
+                                                          required
+                                                          maxLength="500"
+                                                          title="Les commentaires ne peuvent pas dépasser  500 caractères"/>
                                             ) : (
                                                 <span>{row.comment}</span>
-                                            )}
-                                            {isEditing && editingCellId !== row._id && (
-                                                <button onClick={() => startEditingCell(row._id)}>
-                                                    <FontAwesomeIcon icon={faPencilAlt}/>
-                                                </button>
                                             )}
                                         </div>
                                     </td>
@@ -596,7 +573,7 @@ function Clients() {
                         </table>
                     </div>
 
-                    <PaginationControls currentPage={pageNumber} totalPages={totalPageNumber} onNext={loadMoreData} onPrevious={loadLessData}/>
+                    <PaginationControls currentPage={pageNumber} totalPages={totalPageNumber}/>
 
                 </div>
             )}
@@ -604,4 +581,5 @@ function Clients() {
     );
 }
 
+// Exportation du composant Clients
 export default Clients;

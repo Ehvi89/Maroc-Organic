@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './components/AuthContext'; // Assurez-vous que le chemin est correct
+import { AuthProvider } from './components/context/AuthContext'; // Assurez-vous que le chemin est correct
 
 // Importations des styles
 import './styles/index.css';
@@ -22,6 +22,7 @@ import OrderPayementTracking from "./pages/OrderPayementTracking";
 import AddOrder from "./pages/AddOrder";
 import AddClient from "./pages/AddClient";
 import DashBoard from "./pages/DashBoard";
+import ResetPassword from "./pages/ResetPassword";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -38,6 +39,7 @@ root.render(
                     <Route path={"addOrder"} element={<AddOrder/>}/>
                     <Route path={"addClients"} element={<AddClient/>}/>
                     <Route path={'dashboard'} element={<DashBoard/>} />
+                    <Route path="resetPasswordRequest" element={<ResetPassword/>} />
                     <Route path="*" element={<Error/>} />
                 </Routes>
             </Router>

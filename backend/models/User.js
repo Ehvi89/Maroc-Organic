@@ -7,7 +7,9 @@ const userSchema = mongoose.Schema({
   name: { type: String, required: true },
   role: { type: String, required: true},
   lastLogin: Date,
-  lastAction: String
+  lastAction: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: String
 });
 
 userSchema.plugin(uniqueValidator);

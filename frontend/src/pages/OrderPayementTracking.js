@@ -1,16 +1,16 @@
-// Import necessary modules
+// Importation des modules nécessaires
 import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from 'styled-components';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faPlus } from "@fortawesome/free-solid-svg-icons";
 import moment from 'moment';
-import { useAuth } from '../components/AuthContext';
+import { useAuth } from '../components/context/AuthContext';
 import ConfirmPopup from "../components/ConfirmationPopup";
-import { useFunctions } from "../components/SharedContext";
+import { useFunctions } from "../components/context/SharedContext";
 import PaginationControls from "../components/PaginationControls";
 
-// Define keyframes for rotation
+// Définition des animations keyframes pour rotation
 const rotate = keyframes`
     from {
         transform: rotate(0deg);
@@ -21,7 +21,7 @@ const rotate = keyframes`
     }
 `;
 
-// Define styled components
+// Définition des composants styled
 export const Loader = styled.div`
     padding:  10px;
     border:  6px solid #8FB570;
@@ -46,8 +46,8 @@ const Checkbox = styled.input.attrs({type: 'checkbox'})`
     margin: 10px;
 `;
 
-// Component to show check information
-function ShowCheckInformations({ numeroCheque, methodePaiement, dateReceptionCheque, dateEcheanceCheque, dateDepotABanque, isEditing, id, paymentMethod }) {
+// Composant pour afficher les informations de paiement
+function ShowInformations({ numeroCheque, methodePaiement, dateReceptionCheque, dateEcheanceCheque, dateDepotABanque, isEditing, id, paymentMethod }) {
     const [showTooltip, setShowTooltip] = useState(false);
     const { authToken, user } = useAuth();
     const [localInformation, setLocalInformation] = useState({
@@ -97,27 +97,30 @@ function ShowCheckInformations({ numeroCheque, methodePaiement, dateReceptionChe
             {showTooltip && <div className="tooltip">
                 {isEditing ? (
                     <div>
-                        <input type='date' value={localInformation.DateChequeReceived}
-                               onChange={(e) => handleInputChange('DateChequeReceived', e.target.value)}
-                               onBlur={() => updateDataOnServer('DateChequeReceived', localInformation.DateChequeReceived)}/>
-                        {paymentMethod === 'cheque' &&
+                        {paymentMethod === 'Chèque' ?
                             <div>
                                 <input type='number' value={localInformation.chequeNumber}
                                        onChange={(e) => handleInputChange('chequeNumber', e.target.value)}
                                        onBlur={() => updateDataOnServer('chequeNumber', localInformation.chequeNumber)}/>
+                                <input type='date' value={localInformation.DateChequeReceived}
+                                       onChange={(e) => handleInputChange('DateChequeReceived', e.target.value)}
+                                       onBlur={() => updateDataOnServer('DateChequeReceived', localInformation.DateChequeReceived)}/>
                                 <input type='date' value={localInformation.chequeDueDate}
                                        onChange={(e) => handleInputChange('chequeDueDate', e.target.value)}
                                        onBlur={() => updateDataOnServer('chequeDueDate', localInformation.chequeDueDate)}/>
                                 <input type='date' value={localInformation.DateChequeDepositedAtBank}
                                        onChange={(e) => handleInputChange('DateChequeDepositedAtBank', e.target.value)}
                                        onBlur={() => updateDataOnServer('DateChequeDepositedAtBank', localInformation.DateChequeDepositedAtBank)}/>
-                            </div>
+                            </div> :
+                            <input type='date' value={localInformation.DateChequeReceived}
+                                   onChange={(e) => handleInputChange('DateChequeReceived', e.target.value)}
+                                   onBlur={() => updateDataOnServer('DateChequeReceived', localInformation.DateChequeReceived)}/>
                         }
                         <button>Enregistrer</button>
                     </div>
                 ) : (
                     <div>
-                    {numeroCheque && (<div>Numéro du chèque: {numeroCheque}</div>)}
+                        {numeroCheque && (<div>Numéro du chèque: {numeroCheque}</div>)}
                         {dateReceptionCheque && (
                             <div>Date de reception: {moment(dateReceptionCheque).format('DD/MM/YYYY')}</div>)}
                         {dateEcheanceCheque && (
@@ -130,14 +133,12 @@ function ShowCheckInformations({ numeroCheque, methodePaiement, dateReceptionChe
     );
 }
 
-// Main component
+// Composant principal pour le suivi des paiements des commandes
 function OrderPayementTracking() {
     const [isDataLoading, setDataLoading] = useState(false);
     const [surveyData, setSurveyData] = useState([]); // Initialisez avec un tableau vide
     const [pageNumber, setPageNumber] = useState(1); // État pour suivre la page actuelle
     const [totalPageNumber, setTotalPageNumber] = useState(1)
-    const [hasNextPage, setHasNextPage] = useState(false);
-    const [hasPrevPage, setHasPrevPage] = useState(false);
     const itemsPerPage = 10; // Nombre d'éléments par page
     // État pour contrôler l'affichage de la pop-up
     const {authToken} = useAuth();
@@ -164,31 +165,12 @@ function OrderPayementTracking() {
                 setSurveyData(prevData => [...data]);
                 setDataLoading(false);
                 setTotalPageNumber(apiResponse.totalPages)
-
-                setHasNextPage(apiResponse.hasNextPage);
-                setHasPrevPage(apiResponse.hasPrevPage);
             })
             .catch((error) => {
                 console.error('There has been a problem with your fetch operation:', error);
                 setDataLoading(false);
             });
     }, [pageNumber, authToken]); // Dépendance de l'effet sur pageNumber
-
-    // Logique pour charger plus de données (par exemple, lorsqu'un bouton "Load More" est cliqué)
-    const loadMoreData = () => {
-        setPageNumber(prevPageNumber => prevPageNumber + 1);
-    };
-    const loadLessData = () => {
-        setPageNumber(prevPageNumber => prevPageNumber - 1);
-    }
-
-    const handleFirst = () => {
-        setPageNumber(1);
-    };
-
-    const handleLast = () => {
-        setPageNumber(totalPageNumber);
-    };
 
 
     const uniqueVilles = [...new Set(surveyData.map(row => row.city))];
@@ -224,7 +206,7 @@ function OrderPayementTracking() {
             });
 
             if (!response.ok) {
-                // Gérer les erreurs HTTP, par exemple en affichant un message d'erreur
+                // Gérer les erreurs HTTPS, par exemple en affichant un message d'erreur
                 const errorData = await response.json();
                 console.error('Error updating data:', errorData);
                 // Ici, vous pouvez également mettre à jour l'état de l'interface utilisateur pour informer l'utilisateur de l'échec
@@ -257,7 +239,7 @@ function OrderPayementTracking() {
                 <Loader />
             ) : (
                 <div>
-                    <div style={{display: "flex", justifyContent: 'space-between', alignItems: 'top', zIndex:'1000'}}>
+                    <div style={{display: "flex", justifyContent: 'space-between', alignItems: 'top'}}>
                         <Filter className={"orderPayementFilter"}>
                             <button onClick={() => setShowFilters(!showFilters)}>Filtres</button>
                             {showFilters && (
@@ -428,54 +410,54 @@ function OrderPayementTracking() {
                                                 <select defaultValue={row.city}
                                                         onBlur={(e) => updateCellValue(row._id, 'city', e.target.value)}
                                                         onClick={() => startEditingCell(row._id)}>
-                                                    <option value="agadir">Agadir</option>
-                                                    <option value="asilah">Asilah</option>
-                                                    <option value="azrou">Azrou</option>
-                                                    <option value="azilal">Azilal</option>
-                                                    <option value="azemour">Azemour</option>
-                                                    <option value="beniMellal">Beni Mellal</option>
-                                                    <option value="berkane">Berkane</option>
-                                                    <option value="benTaib">Ben Taib</option>
-                                                    <option value="casablanca">Casablanca</option>
-                                                    <option value="chefchaouen">Chefchaouen</option>
-                                                    <option value="darOuldZidouh">Dar Ould Zidouh</option>
-                                                    <option value="elJadida">El Jadida</option>
-                                                    <option value="erRachidia">Er Rachidia</option>
-                                                    <option value="essaouira">Essaouira</option>
-                                                    <option value="figuig">Figuig</option>
-                                                    <option value="fes">Fès</option>
-                                                    <option value="guelmim">Guelmim</option>
-                                                    <option value="alHoceima">Al Hoceima</option>
-                                                    <option value="ifrane">Ifrane</option>
-                                                    <option value="imouzer">Imouzer</option>
-                                                    <option value="imzouren">Imzouren</option>
-                                                    <option value="inzegen">Inzegen</option>
-                                                    <option value="kenitra">Kenitra</option>
-                                                    <option value="khemisset">Khemisset</option>
-                                                    <option value="khenifra">Khenifra</option>
-                                                    <option value="khouribga">Khouribga</option>
-                                                    <option value="ksarElKebir">Ksar el Kebir</option>
-                                                    <option value="larache">Larache</option>
-                                                    <option value="marrakech">Marrakech</option>
-                                                    <option value="meknes">Meknès</option>
-                                                    <option value="mohammedia">Mohammedia</option>
-                                                    <option value="nador">Nador</option>
-                                                    <option value="ouarzazate">Ouarzazate</option>
-                                                    <option value="ouezzane">Ouezzane</option>
-                                                    <option value="oujda">Oujda</option>
-                                                    <option value="rabat">Rabat</option>
-                                                    <option value="safi">Safi</option>
-                                                    <option value="salé">Salé</option>
-                                                    <option value="sefrou">Sefrou</option>
-                                                    <option value="settat">Settat</option>
-                                                    <option value="tangier">Tangier</option>
-                                                    <option value="tanTan">Tan Tan</option>
-                                                    <option value="tarfaya">Tarfaya (Cabo Juby)</option>
-                                                    <option value="taroudant">Taroudant</option>
-                                                    <option value="taza">Taza</option>
-                                                    <option value="tetouan">Tétouan</option>
-                                                    <option value="tiznit">Tiznit</option>
-                                                    <option value="zagora">Zagora</option>
+                                                    <option value="Agadir">Agadir</option>
+                                                    <option value="Asilah">Asilah</option>
+                                                    <option value="Azrou">Azrou</option>
+                                                    <option value="Azilal">Azilal</option>
+                                                    <option value="Azemour">Azemour</option>
+                                                    <option value="Beni Mellal">Beni Mellal</option>
+                                                    <option value="Berkane">Berkane</option>
+                                                    <option value="Ben Taib">Ben Taib</option>
+                                                    <option value="Casablanca">Casablanca</option>
+                                                    <option value="Chefchaouen">Chefchaouen</option>
+                                                    <option value="Dar Ould Zidouh">Dar Ould Zidouh</option>
+                                                    <option value="El Jadida">El Jadida</option>
+                                                    <option value="Er Rachidia">Er Rachidia</option>
+                                                    <option value="Essaouira">Essaouira</option>
+                                                    <option value="Figuig">Figuig</option>
+                                                    <option value="Fes">Fès</option>
+                                                    <option value="Guelmim">Guelmim</option>
+                                                    <option value="Al Hoceima">Al Hoceima</option>
+                                                    <option value="Ifrane">Ifrane</option>
+                                                    <option value="Imouzer">Imouzer</option>
+                                                    <option value="Imzouren">Imzouren</option>
+                                                    <option value="Inzegen">Inzegen</option>
+                                                    <option value="Kenitra">Kenitra</option>
+                                                    <option value="Khemisset">Khemisset</option>
+                                                    <option value="Khenifra">Khenifra</option>
+                                                    <option value="Khouribga">Khouribga</option>
+                                                    <option value="Ksar ElKebir">Ksar el Kebir</option>
+                                                    <option value="Larache">Larache</option>
+                                                    <option value="Marrakech">Marrakech</option>
+                                                    <option value="Meknes">Meknès</option>
+                                                    <option value="Mohammedia">Mohammedia</option>
+                                                    <option value="Nador">Nador</option>
+                                                    <option value="Ouarzazate">Ouarzazate</option>
+                                                    <option value="Ouezzane">Ouezzane</option>
+                                                    <option value="Oujda">Oujda</option>
+                                                    <option value="Rabat">Rabat</option>
+                                                    <option value="Safi">Safi</option>
+                                                    <option value="Salé">Salé</option>
+                                                    <option value="Sefrou">Sefrou</option>
+                                                    <option value="Settat">Settat</option>
+                                                    <option value="Tangier">Tangier</option>
+                                                    <option value="Tan Tan">Tan Tan</option>
+                                                    <option value="Tarfaya">Tarfaya (Cabo Juby)</option>
+                                                    <option value="Taroudant">Taroudant</option>
+                                                    <option value="Taza">Taza</option>
+                                                    <option value="Tetouan">Tétouan</option>
+                                                    <option value="Tiznit">Tiznit</option>
+                                                    <option value="Zagora">Zagora</option>
                                                 </select>
                                             ) : (
                                                 <span>{row.city}</span>
@@ -509,8 +491,8 @@ function OrderPayementTracking() {
                                     </td>
                                     <td>
                                         <div className={"cellule"}>
-                                            {row.paymentMethod === "cheque" ?
-                                                <ShowCheckInformations numeroCheque={row.chequeNumber}
+                                            {row.paymentMethod === "Chèque" ?
+                                                <ShowInformations numeroCheque={row.chequeNumber}
                                                                        methodePaiement={row.paymentMethod}
                                                                        dateReceptionCheque={row.DateChequeReceived}
                                                                        dateEcheanceCheque={row.chequeDueDate}
@@ -518,7 +500,7 @@ function OrderPayementTracking() {
                                                                        paymentMethod={row.paymentMethod}
                                                                        id={row._id}
                                                                        isEditing={isEditing}/> :
-                                                <ShowCheckInformations methodePaiement={row.paymentMethod}
+                                                <ShowInformations methodePaiement={row.paymentMethod}
                                                                        paymentMethod={row.paymentMethod}
                                                                        id={row._id}
                                                                        isEditing={isEditing}
@@ -584,12 +566,12 @@ function OrderPayementTracking() {
                             </tbody>
                         </table>
                     </div>
-                    <PaginationControls currentPage={pageNumber} totalPages={totalPageNumber} onNext={loadMoreData} onPrevious={loadLessData} onFirst={handleFirst} onLast={handleLast}/>
+                    <PaginationControls currentPage={pageNumber} totalPages={totalPageNumber} selectPage={setPageNumber}/>
                 </div>
             )}
         </div>
     )
 }
 
-// Export OrderPayementTracking component
+// Exportation du composant OrderPayementTracking
 export default OrderPayementTracking;

@@ -1,6 +1,9 @@
+// Importation des modules nécessaires
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useAuth } from '../components/AuthContext';
+import { useAuth } from '../components/context/AuthContext';
+import {useNavigate} from "react-router-dom";
+
 // Définition des composants styled
 const Row = styled.div`
     display: flex;
@@ -21,13 +24,14 @@ const Elmt = styled.div`
 `;
 
 
-// Composant AddClient
+// Composant pour ajouter un nouveau client
 function AddClient() {
-    // État pour stocker les lignes
+    // État pour stocker les lignes de catalogues
     const [lines, setLines] = useState([]);
     const { authToken, user } = useAuth();
+    const navigate = useNavigate();
 
-    // Fonction pour ajouter une nouvelle ligne
+    // Fonction pour ajouter une nouvelle ligne de catalogue
     const addCatalogue = () => {
         setLines([...lines, {
             catalogue: '',
@@ -52,7 +56,7 @@ function AddClient() {
                 name: rawData.contactName,
                 fixe: rawData.fixedPhone,
                 whatsapp: rawData.whatsappPhone,
-                address: rawData.adress,
+                address: rawData.address,
                 role: rawData.role
             },
             comment: rawData.comments,
@@ -61,15 +65,21 @@ function AddClient() {
 
         // les lignes de catalogue sont stockées dans un état appelé 'lines'
         lines.forEach((_, index) => {
-            structuredData.catalogue.push({
-                name: rawData[`catalogue${index}`],
-                sentDate: rawData[`sentDate${index}`],
-                sentBy: rawData[`sentBy${index}`]
-            });
+            const catalogueName = rawData[`catalogue${index}`];
+            const sentDate = rawData[`sentDate${index}`];
+            const sentBy = rawData[`sentBy${index}`];
+
+            // Vérifie si le nom n'est pas vide avant d'ajouter les données
+            if (catalogueName && catalogueName.trim().length >  0) {
+                structuredData.catalogue.push({
+                    name: catalogueName,
+                    sentDate: sentDate,
+                    sentBy: sentBy
+                });
+            }
         });
 
-
-        console.log(structuredData);
+        // console.log(structuredData);
 
         try {
             const response = await fetch('http://localhost:5000/api/client', {
@@ -87,6 +97,7 @@ function AddClient() {
 
             const result = await response.json();
             console.log(result);
+            navigate('/clients')
             // Gérer la réponse de l'API si nécessaire
         } catch (error) {
             console.error('Erreur:', error);
@@ -94,12 +105,20 @@ function AddClient() {
         }
     };
 
+    // Fonction pour gérer le changement de catégorie sélectionnée
     const handleSelectedCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
     };
-    // Créez un état pour stocker la valeur de l'input
+    // État pour stocker la catégorie sélectionnée
     const [selectedCategory, setSelectedCategory] = useState('');
 
+    // État pour stocker la méthode de contact sélectionnée
+    const [contactMethod, setContactMethod] = useState('email');
+
+    // Fonction pour gérer le changement de méthode de contact
+    const handleContactMethodChange = (event) => {
+        setContactMethod(event.target.value);
+    };
 
     // Retour du composant
     return (
@@ -233,27 +252,52 @@ function AddClient() {
                 <Row>
                     <Elmt>
                         <label htmlFor={"Nom"}>Nom</label>
-                        <input type={"text"} placeholder={"Nom du contact"} name={"contactName"}/>
+                        <input type={"text"} placeholder={"Nom du contact"} name={"contactName"} pattern="^[a-zA-Z\s]+$" title="Le nom doit contenir uniquement des lettres et des espaces"/>
                     </Elmt>
                     <Elmt>
-                        <label htmlFor={"adress"}>E-mail</label>
-                        <input type={"text"} placeholder={"exemple@exemple.gmail.com"} name={"contactEmail"}/>
+                        <label>Choisissez l'adress</label>
+                        <div style={{display:'flex', alignItems:'center', flexDirection:'row', margin:'auto'}}>
+                            <input type="radio" id="emailOption" name="contactMethod" value="email"
+                                   checked={contactMethod === 'email'} onChange={handleContactMethodChange}/>
+                            <label htmlFor="emailOption">E-mail</label>
+                        </div>
+                        <div style={{display:'flex', alignItems:'center', flexDirection: 'row', margin:'auto'}}>
+                            <input type="radio" id="physicalAddressOption" name="contactMethod" value="physicalAddress"
+                                   checked={contactMethod === 'physicalAddress'} onChange={handleContactMethodChange}/>
+                            <label htmlFor="physicalAddressOption">Adresse physique</label>
+                        </div>
                     </Elmt>
                 </Row>
+                {contactMethod === 'email' && (
+                    <Row>
+                        <Elmt>
+                            <label htmlFor={"address"}>E-mail</label>
+                            <input type={"email"} placeholder={"exemple@exemple.gmail.com"} name={"address"}  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Entrez une adresse e-mail valide"/>
+                        </Elmt>
+                    </Row>
+                )}
+                {contactMethod === 'physicalAddress' && (
+                    <Row>
+                        <Elmt>
+                            <label htmlFor={"address"}>Adresse physique</label>
+                            <input type={"text"} placeholder={"123 Rue de l'Exemple"} name={"address"} />
+                        </Elmt>
+                    </Row>
+                )}
                 <Row>
                     <Elmt>
                         <label htmlFor={"fixe"}>Numéro fixe</label>
-                        <input type={"tel"} id={"fixe"} placeholder={"Numéro fixe"} name={"fixedPhone"}/>
+                        <input type={"tel"} id={"fixe"} placeholder={"Numéro fixe"} name={"fixedPhone"} pattern="^\d{10}$" title="Le numéro fixe doit contenir  10 chiffres"/>
                     </Elmt>
                     <Elmt>
                         <label htmlFor={"whatsapp"}>Numéro whatsapp</label>
-                        <input type={"tel"} id={"whatsapp"} placeholder={"Numéro whatsapp"} name={"whatsappPhone"}/>
+                        <input type={"tel"} id={"whatsapp"} placeholder={"Numéro whatsapp"} name={"whatsappPhone"} pattern="^\d{10}$" title="Le numéro WhatsApp doit contenir  10 chiffres"/>
                     </Elmt>
                 </Row>
                 <Row>
                     <Elmt>
                         <label>Fonction</label>
-                        <textarea placeholder={"Fonction du contact"} name={"role"}/>
+                        <input type={'text'} placeholder={"Fonction du contact"} name={"role"}/>
                     </Elmt>
                 </Row>
                 <Row>
@@ -269,5 +313,5 @@ function AddClient() {
         </div>
     );
 }
-
+// Exportation du composant AddClient
 export default AddClient;

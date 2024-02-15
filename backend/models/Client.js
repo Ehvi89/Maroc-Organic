@@ -3,9 +3,9 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 const clientSchema = new mongoose.Schema(
     {
-        client: String,
-        category: String,
-        city: String,
+        client: {type: String, required: true},
+        category: {type: String, required: true},
+        city: {type: String, required: true},
         type: String,
         catalogue:[{
             name: String,

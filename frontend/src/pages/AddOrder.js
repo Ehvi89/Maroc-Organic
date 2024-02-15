@@ -1,8 +1,10 @@
+// Importation des modules nécessaires
 import styled from "styled-components";
-import {useRef, useState} from "react";
-import {useAuth} from '../components/AuthContext';
+import { useRef, useState } from "react";
+import { useAuth } from '../components/context/AuthContext';
+import {useNavigate} from "react-router-dom";
 
-// Define styled components
+// Définition des composants styled
 const Row = styled.div`
     display: flex;
     width: 80%;
@@ -23,21 +25,28 @@ const Elmt = styled.div`
 
 
 // Main component
+// Composant principal pour ajouter une nouvelle commande
 function AddOrder() {
+    // État pour stocker la méthode de paiement sélectionnée
     const [paymentMethod, setPaymentMethod] = useState('');
+    const navigate = useNavigate();
     const { authToken, user } = useAuth();
-    const trackingCounter = useRef(0); // Utilisez useRef pour conserver la valeur entre les rendus
+    // Utilisation d'useRef pour conserver la valeur du compteur entre les rendus
+    const trackingCounter = useRef(0);
 
+    // Fonction pour gérer le changement de méthode de paiement
     const handlePaymentMethodChange = (event) => {
         setPaymentMethod(event.target.value);
     };
 
+    // Fonction pour générer un numéro de facture unique
     const generateUniqueBillNumber = () => {
         const now = new Date();
         const timestamp = now.toISOString().replace(/[-:.]/g, '').substring(0,  14);
         return `Fac-${timestamp}`;
     };
 
+    // Fonction pour générer un numéro de suivi unique
     const generateUniqueTrackingNumber = () => {
         trackingCounter.current++; // Incrémentez le compteur
         const now = new Date();
@@ -45,12 +54,13 @@ function AddOrder() {
         return `${timestamp}-${trackingCounter.current}`;
     };
 
+    // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (event) => {
         //event.preventDefault(); // Empêchez le comportement par défaut du formulaire
         const formData = new FormData(event.currentTarget);
         const rawData = Object.fromEntries([...formData.entries()]);
 
-        // Validez les données du formulaire  ici si nécessaire
+        // Validez les données du formulaire ici si nécessaire
 
         const structuredData = {
             date: `${new Date().toISOString().slice(0, 10)}`,
@@ -66,7 +76,7 @@ function AddOrder() {
             trackingNumber: generateUniqueTrackingNumber(),
             billNumber: generateUniqueBillNumber(),
             paymentTerms: rawData.paymentTerms,
-            numberPackagesAndDisplays: `${rawData.package ? `${rawData.package} colis` : ''}${rawData.display ? `${rawData.display} présentoir` : ''}`,
+            numberPackagesAndDisplays: `${rawData.package ? `${rawData.package} colis` : ''} ${rawData.display ? `${rawData.display} présentoir` : ''}`,
             comment: rawData.comment,
             receptionConfirmation: false,
             userEmail: user.email
@@ -91,6 +101,7 @@ function AddOrder() {
 
             const result = await response.json();
             console.log(result);
+            navigate('/orderPayementTracking')
             // Gérer la réponse de l'API si nécessaire
         } catch (error) {
             console.error('Erreur:', error);
@@ -99,6 +110,7 @@ function AddOrder() {
         }
     };
 
+    // Retour du composant
     return (
         <div style={{
             background: "#8FB570",
@@ -114,7 +126,9 @@ function AddOrder() {
                 <Row>
                     <Elmt>
                         <label htmlFor={'client'}>Nom du client</label>
-                        <input type={"text"} id={"client"} name={'client'} placeholder={"Nom du client"} required={true}/>
+                        <input type={"text"} id={"client"} name={'client'} placeholder={"Nom du client"} required={true}
+                               pattern="^[a-zA-Z\s]+$"
+                               title="Le nom doit contenir uniquement des lettres et des espaces"/>
                     </Elmt>
                 </Row>
                 <Row>
@@ -173,19 +187,19 @@ function AddOrder() {
                     </Elmt>
                     <Elmt>
                         <label htmlFor={"paid"}>Paiement éffectué</label>
-                        <select id={"paid"} name={'paid'}>
+                        <select id={"paid"} name={'paid'} required={true}>
                             <option value={false}>Non</option>
                             <option value={true}>Oui</option>
                         </select>
                     </Elmt>
 
                 </Row>
-                {paymentMethod !== 'cheque' ? (
+                {paymentMethod !== 'Chèque' ? (
                     <div style={{width:'100%'}}>
                         <Row>
                             <Elmt>
                                 <label htmlFor={"amount"}>Montant</label>
-                                <input type={"number"} name={"amount"} placeholder={"Montant"}/>
+                                <input type={"number"} name={"amount"} placeholder={"Montant"} required/>
                             </Elmt>
                             <Elmt>
                                 <label htmlFor={'paymentMethod'}>Mode de paiement</label>
@@ -193,9 +207,9 @@ function AddOrder() {
                                         onChange={handlePaymentMethodChange} required={true}>
                                     <option value="">Sélectionnez une option</option>
                                     <option value="Espèce">Espèce</option>
-                                    <option value="Carte banquaire">Carte banquaire</option>
-                                    <option value="cheque">Chèque</option>
-                                    <option value={"Virement"}>Virement</option>
+                                    <option value="Chèque">Chèque</option>
+                                    <option value="Carte bancaire">Carte bancaire</option>
+                                    <option value='Virement'>Virement</option>
                                 </select>
                             </Elmt>
                         </Row>
@@ -211,16 +225,17 @@ function AddOrder() {
                         <Row>
                             <Elmt>
                                 <label htmlFor={"amount"}>Montant</label>
-                                <input type={"number"} name={"amount"} placeholder={"Montant"}/>
+                                <input type={"number"} name={"amount"} placeholder={"Montant"} required/>
                             </Elmt>
                             <Elmt>
                                 <label htmlFor={'paymentMethod'}>Mode de paiement</label>
                                 <select name={'paymentMethod'} value={paymentMethod}
                                         onChange={handlePaymentMethodChange} required={true}>
                                     <option value="">Sélectionnez une option</option>
-                                    <option value="cash">Espèce</option>
-                                    <option value="cheque">Chèque</option>
-                                    <option value="card">Carte banquaire</option>
+                                    <option value="Espèce">Espèce</option>
+                                    <option value="Chèque">Chèque</option>
+                                    <option value="Carte bancaire">Carte bancaire</option>
+                                    <option value='Virement'>Virement</option>
                                 </select>
                             </Elmt>
                         </Row>
@@ -240,32 +255,32 @@ function AddOrder() {
                                 <input type={"date"} name={'dueDate'} placeholder={"Date d'échéance"}/>
                             </Elmt>
                             <Elmt>
-                                <label htmlFor={'dateDeposite'}>Dépôt à la banque</label>
-                                <input type={"date"} name={'dateDeposite'}/>
+                                <label htmlFor={'dateDeposit'}>Dépôt à la banque</label>
+                                <input type={"date"} name={'dateDeposit'}/>
                             </Elmt>
                         </Row>
                     </div>
                 )}
                 <Row>
                     <Elmt>
-                        <label htmlFor={'display'}>Présentoire</label>
-                        <input type={"number"} name={'display'} placeholder={"Nombre de présentoire"}/>
+                        <label htmlFor={'display'}>Présentoir</label>
+                        <input type={"number"} name={'display'} placeholder={"Nombre de présentoir"} min={0} step={1} required={true} title="Le nombre de présentoire doit être un entier positif"/>
                     </Elmt>
                     <Elmt>
                         <label htmlFor={'package'}>Nombre de colis</label>
-                        <input type={"number"} name={'package'} placeholder={"Nomde de colis"}/>
+                        <input type={"number"} name={'package'} placeholder={"Nombre de colis"} min={0} step={1} required={true} title="Le nombre de colis doit être un entier positif"/>
                     </Elmt>
                 </Row>
                 <Row>
                     <Elmt>
                         <label htmlFor={'payementTerms'}>Termes de paiement</label>
-                        <textarea name={'paymentTerms'} placeholder={"Termes de paiements"}/>
+                        <textarea name={'paymentTerms'} placeholder={"Termes de paiements"} maxLength={500} title="Les termes de paiement ne doivent pas dépasser  500 caractères"/>
                     </Elmt>
                 </Row>
                 <Row>
                     <Elmt>
                         <label htmlFor={"comment"}>Commentaire</label>
-                        <textarea name={'comment'} placeholder={"Commentaire"}/>
+                        <textarea name={'comment'} placeholder={"Commentaire"} maxLength={500} title="Le commentaire ne doit pas dépasser  500 caractères"/>
                     </Elmt>
                 </Row>
                 <Row>
@@ -276,4 +291,5 @@ function AddOrder() {
     );
 }
 
+// Exportation du composant AddOrder
 export default AddOrder;

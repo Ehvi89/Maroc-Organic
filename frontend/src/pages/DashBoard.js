@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useAuth } from "../components/AuthContext";
-import { useFunctions } from "../components/SharedContext";
+import { useAuth } from "../components/context/AuthContext";
+import { useFunctions } from "../components/context/SharedContext";
 import CreateUser from "../components/CreateUser";
 import ConfirmPopup from "../components/ConfirmationPopup";
 import ChangePassword from "../components/changePassword";
@@ -30,15 +30,6 @@ const Conteneur = styled.div`
         justify-content: space-evenly;
         margin: auto;
     }
-`;
-const Overlay = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1002;
 `;
 
 function DashBoard({ onClose }) {
@@ -70,8 +61,6 @@ function DashBoard({ onClose }) {
                 console.error('There has been a problem with your fetch operation:', error);
             });
     }, [authToken])
-
-    const { handleUpdateUser } = useFunctions();
 
     const handleOverlayClick = () => {
         setShowModificationForm(false);
@@ -123,6 +112,7 @@ function DashBoard({ onClose }) {
                             <tr>
                                 <th>Nom</th>
                                 <th>E-mail</th>
+                                <th>Rôle</th>
                                 <th>Dernière connexion</th>
                                 <th>Dernière action</th>
                             </tr>
@@ -167,6 +157,7 @@ function DashBoard({ onClose }) {
                                                 }}>
                                                     <td style={{color: 'rgba(0, 0, 0, 0.2)'}}>{row.name}</td>
                                                     <td style={{color: 'rgba(0, 0, 0, 0.2)'}}>{row.email}</td>
+                                                    <td style={{color: 'rgba(0, 0, 0, 0.2)'}}>{row.role}</td>
                                                     <td style={{color: 'rgba(0, 0, 0, 0.2)'}}>{new Date(row.lastLogin).toLocaleString('fr-FR', {
                                                         day: '2-digit',
                                                         month: '2-digit',
@@ -185,6 +176,7 @@ function DashBoard({ onClose }) {
                                         <>
                                             <td>{row.name}</td>
                                             <td>{row.email}</td>
+                                            <td>{row.role}</td>
                                             <td>
                                                 {new Date(row.lastLogin).toLocaleString('fr-FR', {
                                                     day: '2-digit',

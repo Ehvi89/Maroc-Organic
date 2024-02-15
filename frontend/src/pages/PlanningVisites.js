@@ -1,13 +1,13 @@
-// Import necessary modules
-import {Link} from 'react-router-dom'
-import React, {useEffect, useState} from "react";
-import styled, { keyframes } from 'styled-components'
-import {faPencil, faPlus, faTrash} from '@fortawesome/free-solid-svg-icons'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { useAuth } from '../components/AuthContext';
-import {useFunctions} from "../components/SharedContext";
+// Importation des modules nécessaires
+import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+import { faPencil, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from '../components/context/AuthContext';
+import { useFunctions } from "../components/context/SharedContext";
 
-// Define keyframes for rotation
+// Définition des animations keyframes pour rotation
 const rotate = keyframes`
     from {
         transform: rotate(0deg);
@@ -16,9 +16,9 @@ const rotate = keyframes`
     to {
         transform: rotate(360deg);
     }
-`
+`;
 
-// Define styled components
+// Définition des composants styled
 export const Loader = styled.div`
     padding: 10px;
     border: 6px solid #8FB570;
@@ -53,11 +53,9 @@ const Elmt = styled.div`
     margin: auto;
 `;
 
-// const weeks = []
-
+// Composant pour afficher les détails d'un rapport individuel
 function ShowReport({ report, user }) {
     const [localReport, setLocalReport] = useState(report);
-    const [isEditable, setIsEditable] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
     const { authToken } = useAuth();
 
@@ -87,7 +85,6 @@ function ShowReport({ report, user }) {
                 },
                 body: JSON.stringify(updatedReport),
             });
-            setIsEditable(false); // Basculer vers le mode affichage après la mise à jour
         } catch (error) {
             console.error('Error updating data:', error);
         }
@@ -105,7 +102,7 @@ function ShowReport({ report, user }) {
             });
 
             if (!response.ok) {
-                // Gérer les erreurs HTTP, par exemple en affichant un message d'erreur
+                // Gérer les erreurs HTTPS, par exemple en affichant un message d'erreur
                 const errorData = await response.json();
                 console.error('Error deleting data:', errorData);
                 // Ici, vous pouvez également mettre à jour l'état de l'interface utilisateur pour informer l'utilisateur de l'échec
@@ -154,7 +151,7 @@ function ShowReport({ report, user }) {
     return (
         <div onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
             {report.author.email === user.email && showTooltip ?
-                (<div style={{display: "flex", justifyContent:'space-between', alignItems:'center'}}>
+                (<div style={{display: "flex", justifyContent:'space-between', alignItems:'center', fontWeight: 'bold'}}>
                     {`${report.author.name}`.toUpperCase()}
                     <div className={'options'}>
                         <button onClick={openModal}><FontAwesomeIcon icon={faPencil}/></button>
@@ -162,31 +159,98 @@ function ShowReport({ report, user }) {
                     </div>
                 </div>):
                 (
-                    `${report.author.name}`.toUpperCase()
+                    <div style={{fontWeight: 'bold', textAlign:'center'}}>
+                        {`${report.author.name}`.toUpperCase()}
+                    </div>
                 )
             }
             {showTooltip && (
-                <div>
-                    {report.client && (<div>Client: {report.client}</div>)}
-                    {report.type && (<div>Type: {report.type}</div>)}
-                    {report.city && (<div>Ville: {report.city}</div>)}
-                    {report.hour && (<div>Heure: {report.hour}</div>)}
-                    {report.duration && (<div>Durée: {report.duration} min</div>)}
-                    {report.person && (<div>Personne rencontrée: {report.person}</div>)}
-                    {report.contact.name && (<div>Nom contact: {report.contact.name}</div>)}
-                    {report.contact.whatsapp && (<div>Whatsapp: {report.contact.whatsapp}</div>)}
-                    {report.follow && (<div>Client a follow: {report.follow === 'true' ? 'Oui' : 'Non'}</div>)}
-                    {report.contactMOGiven && (<div>Contact MO donnée: {report.contactMOGiven === 'true' ? 'Oui' : 'Non'}</div>)}
-                    {report.comment && (<div>Commentaire: {report.comment}</div>)}
-
-                    {report.alreadyClient && (
-                        <div>Déjà client: {report.alreadyClient === 'true' ? 'Oui' : 'Non'}</div>)}
-                    {report.competingBrands !== [] && (
-                        <div>Marque concurente: {report.competingBrands.map((elmt, index) => (
-                            <p key={index}>{elmt.name}</p>
-                        ))}</div>
+                <section className="report-section">
+                    {report.client && (
+                        <div className="report-item">
+                            <label>Client:</label>
+                            <p>{report.client}</p>
+                        </div>
                     )}
-                </div>
+                    {report.type && (
+                        <div className="report-item">
+                            <label>Type:</label>
+                            <p>{report.type}</p>
+                        </div>
+                    )}
+                    {report.city && (
+                        <div className="report-item">
+                            <label>Ville:</label>
+                            <p>{report.city}</p>
+                        </div>
+                    )}
+                    <div style={{display:'flex', justifyContent:'center', width:'105%'}}>
+                        {report.hour && (
+                            <div className="report-item">
+                                <label>Heure:</label>
+                                <p>{report.hour}</p>
+                            </div>
+                        )}
+                        {report.duration && (
+                            <div className="report-item">
+                                <label>Durée:</label>
+                                <p>{report.duration} min</p>
+                            </div>
+                        )}
+                    </div>
+                    {report.person && (
+                        <div className="report-item">
+                            <label>Personne rencontrée:</label>
+                            <p>{report.person}</p>
+                        </div>
+                    )}
+                    {report.contact.name && (
+                        <div className="report-item">
+                            <label>Nom contact:</label>
+                            <p>{report.contact.name}</p>
+                        </div>
+                    )}
+                    {report.contact.whatsapp && (
+                        <div className="report-item">
+                            <label>Whatsapp:</label>
+                            <p>{report.contact.whatsapp}</p>
+                        </div>
+                    )}
+                    {report.clientFollow && (
+                        <div className="report-item">
+                            <label>Client a follow:</label>
+                            <p>{report.clientFollow === true ? 'Oui' : 'Non'}</p>
+                        </div>
+                    )}
+                    {report.contactMOGiven && (
+                        <div className="report-item">
+                            <label>Contact MO donnée:</label>
+                            <p>{report.contactMOGiven === true ? 'Oui' : 'Non'}</p>
+                        </div>
+                    )}
+                    {report.comment && (
+                        <div className="report-item">
+                            <label>Commentaire:</label>
+                            <p>{report.comment}</p>
+                        </div>
+                    )}
+                    {report.alreadyClient && (
+                        <div className="report-item">
+                            <label>Déjà client:</label>
+                            <p>{report.alreadyClient === true ? 'Oui' : 'Non'}</p>
+                        </div>
+                    )}
+                    {report.competingBrands && report.competingBrands.length > 0 && (
+                        <div className="report-item">
+                            <label>Marques concurrentes:</label>
+                            <ul>
+                                {report.competingBrands.map((brand, index) => (
+                                    <li key={index}>{brand.name}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </section>
             )}
             {showModal && (
                 <div className="modal">
@@ -202,14 +266,18 @@ function ShowReport({ report, user }) {
                                     <label htmlFor={'client'}>Client</label>
                                     <input type="text" name="client" value={localReport.client}
                                            onChange={handleInputChange}
-                                           onBlur={updateDataOnServer}/>
+                                           onBlur={updateDataOnServer}
+                                           required
+                                           pattern="^[a-zA-Z\s]+$"
+                                           title="Le nom du client doit contenir uniquement des lettres et des espaces"/>
+
                                 </Elmt>
                                 <Elmt>
                                     <label htmlFor={'type'}>Catégorie</label>
                                     <select name="type" value={localReport.type} onChange={(event) => {
                                         handleInputChange(event);
                                         handleSelectedCategoryChange(event);
-                                    }}>
+                                    }} required>
                                         <option value={'Pharmacie'}>Pharmacie</option>
                                         <option value={'Parapharmacie'}>Parapharmacie</option>
                                         <option value={'Epicerie fine'}>Epicerie fine</option>
@@ -221,7 +289,7 @@ function ShowReport({ report, user }) {
                             {selectedCategory === 'other' && (
                                 <Row>
                                     <Elmt>
-                                        <input type={"text"} name={'type'} value={localReport.type}
+                                    <input type={"text"} name={'type'} value={localReport.type}
                                                placeholder={'Autre catégorie'}
                                                onChange={handleInputChange}/>
                                     </Elmt>
@@ -230,7 +298,7 @@ function ShowReport({ report, user }) {
                             <Row>
                                 <Elmt>
                                     <label htmlFor={'city'}>Ville</label>
-                                    <select name="city" value={localReport.city} onChange={handleInputChange}>
+                                    <select name="city" value={localReport.city} onChange={handleInputChange} required>
                                             <option value="Agadir">Agadir</option>
                                             <option value="Asilah">Asilah</option>
                                             <option value="Azrou">Azrou</option>
@@ -291,26 +359,33 @@ function ShowReport({ report, user }) {
                                 <Elmt>
                                     <label htmlFor={'hour'}>Heure</label>
                                     <input type="time" name="hour" value={localReport.hour}
-                                           onChange={handleInputChange}/>
+                                           onChange={handleInputChange}
+                                           required/>
                                 </Elmt>
                                 <Elmt>
                                     <label htmlFor={'duration'}>Durée</label>
                                     <input type="number" name="duration" value={localReport.duration}
-                                           onChange={handleInputChange}/>
+                                           onChange={handleInputChange}
+                                           min="0"
+                                           step="1"
+                                           title="La durée doit être un nombre positif"/>
                                 </Elmt>
                             </Row>
                             <Row>
                                 <Elmt>
                                     <label htmlFor={'person'}>Personne rencontrée</label>
                                     <input type="text" name="person" value={localReport.person}
-                                           onChange={handleInputChange}/>
+                                           onChange={handleInputChange}
+                                           pattern="^[a-zA-Z\s]+$"
+                                           title="Le nom de la personne doit contenir uniquement des lettres et des espaces"/>
+
                                 </Elmt>
                                 <Elmt>
                                     <label htmlFor={'alreadyClient'}>Déjà client</label>
                                     <select name="alreadyClient" value={localReport.alreadyClient}
                                             onChange={handleInputChange}>
-                                        <option value="true">Oui</option>
-                                        <option value="false">Non</option>
+                                        <option value={true}>Oui</option>
+                                        <option value={false}>Non</option>
                                     </select>
                                 </Elmt>
                             </Row>
@@ -330,22 +405,30 @@ function ShowReport({ report, user }) {
                             <Row>
                                 <Elmt>
                                     <label htmlFor={'report'}>Compte rendu</label>
-                                    <textarea name={'report'} placeholder={"compte rendu"} value={localReport.comment}
-                                              onChange={handleInputChange}/>
+                                    <textarea name="report" placeholder="compte rendu" value={localReport.comment}
+                                              onChange={handleInputChange}
+                                              maxLength="500"
+                                              title="Le compte rendu ne peut pas dépasser  500 caractères"/>
                                 </Elmt>
                             </Row>
                             <Row>
                                 <Elmt>
                                     <label htmlFor={'contactName'}>Nom du contact</label>
-                                    <input type={"text"} name={'contactName'} placeholder={"Contact"}
+                                    <input type="text" name="contactName" placeholder="Contact"
                                            value={localReport.contact.name}
-                                           onChange={handleInputChange}/>
+                                           onChange={handleInputChange}
+                                           pattern="^[a-zA-Z\s]+$"
+                                           title="Le nom du contact doit contenir uniquement des lettres et des espaces"/>
+
                                 </Elmt>
                                 <Elmt>
                                     <label htmlFor={'contactName'}>Numéro</label>
-                                    <input type={"number"} name={'contactNumber'} placeholder={"Numéro whatsapp"}
+                                    <input type="tel" name="contactNumber" placeholder="Numéro whatsapp"
                                            value={localReport.contact.whatsapp}
-                                           onChange={handleInputChange}/>
+                                           onChange={handleInputChange}
+                                           pattern="^\d{10}+$"
+                                           title="Le numéro doit contenir 10 chiffres"/>
+
                                 </Elmt>
                             </Row>
                             <Row>
@@ -374,7 +457,6 @@ function ShowReport({ report, user }) {
                                 <button onClick={updateDataOnServer}>Enregistrer</button>
                             </Row>
                         </form>
-
                     </div>
                 </div>
             )}
@@ -383,49 +465,66 @@ function ShowReport({ report, user }) {
 }
 
 
-// Main component
+// Composant principal pour le planning des visites
 function PlanningVisits() {
+    // État pour indiquer si les données sont en cours de chargement
     const [isDataLoading, setDataLoading] = useState(false);
-    const [surveyData, setSurveyData] = useState([]); // Initialisez avec un tableau vide
+    // État pour stocker les données des rapports
+    const [surveyData, setSurveyData] = useState([]);
+    // État pour stocker la semaine et l'année sélectionnées
     const [selectedWeek, setSelectedWeek] = useState(null);
     const [selectedYear, setSelectedYear] = useState(null);
+    // État pour stocker la liste des semaines filtrables
     const [weeksFilter, setWeeksFilter] = useState(null);
-    const {authToken, user} = useAuth();
-    const {export2excel} = useFunctions();
+    // Récupération du token d'authentification et de l'utilisateur depuis le contexte
+    const { authToken, user } = useAuth();
+    // Récupération des fonctions partagées depuis le contexte
+    const { export2excel } = useFunctions();
 
-    async function fetchWeeksList() {
-        try {
-            const response = await fetch('http://localhost:5000/api/report/weeks', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`
-                }
-            });
+    // Timestamp pour déclencher le rechargement des données
+    const [loadTimestamp, setLoadTimestamp] = useState(Date.now());
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch weeks list');
-            }
-
-            const weeksList = await response.json();
-            setWeeksFilter(weeksList);
-
-            // Set the first week as the default selection
-            if (weeksList.length > 0) {
-                setSelectedWeek(weeksList[0].week);
-                setSelectedYear(weeksList[0].year);
-            }
-        } catch (error) {
-            console.error('Error fetching weeks list:', error);
-        }
-    }
-
-// Call this function when the component mounts or when necessary
+    // Effet pour charger la liste des semaines lors du montage du composant
     useEffect(() => {
+        // Définition de la fonction asynchrone à l'intérieur d'useEffect
+        const fetchWeeksList = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/report/weeks', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch weeks list');
+                }
+
+                const weeksList = await response.json();
+                setWeeksFilter(weeksList);
+
+                // Set the first week as the default selection
+                if (weeksList.length >  0) {
+                    setSelectedWeek(weeksList[0].week);
+                    setSelectedYear(weeksList[0].year);
+                }
+            } catch (error) {
+                console.error('Error fetching weeks list:', error);
+            }
+        };
+
+        // Appel immédiat de la fonction asynchrone
         fetchWeeksList();
-        // No cleanup needed for this effect since it only runs once
-    }, []); // Empty dependency array means this effect runs once on mount
+
+    }, []);
 
 
+    // Effet pour déclencher le rechargement des données lorsque nécessaire
+    useEffect(() => {
+        setLoadTimestamp(Date.now());
+    }, [weeksFilter]);
+
+    // Effet pour charger les données des rapports
     useEffect(() => {
         setDataLoading(true);
         const url = new URL(`http://localhost:5000/api/report?week=${selectedWeek}&year=${selectedYear}`);
@@ -447,14 +546,28 @@ function PlanningVisits() {
                 const data = apiResponse.docs.flatMap(doc => doc.reports); // Flatten the array of reports
                 // Update the survey data with the new data
                 setSurveyData(data);
+                // Extraction des heures uniques
+                const uniqueHours = Array.from(new Set(data.map(record => record.hour)));
+
+                // Tri des heures dans l'ordre croissant
+                const sortedUniqueHours = uniqueHours.sort((a, b) => {
+                    const timeA = a.split(':').map(Number);
+                    const timeB = b.split(':').map(Number);
+                    return timeA[0] - timeB[0] || timeA[1] - timeB[1];
+                });
+
+                // Mise à jour de l'état avec les heures triées
+                setHeures(sortedUniqueHours);
+
                 setDataLoading(false);
             })
             .catch((error) => {
                 console.error('There has been a problem with your fetch operation:', error);
                 setDataLoading(false);
             });
-    }, [selectedWeek, selectedYear, authToken]); // Specify the dependencies
+    }, [selectedWeek, selectedYear, authToken, loadTimestamp]); // Specify the dependencies
 
+    // Fonction pour gérer la sélection de la semaine
     const handleWeekSelection = (event) => {
         //event.preventDefault();
         const selectedValue = event.target.value;
@@ -463,9 +576,14 @@ function PlanningVisits() {
         setSelectedYear(year);
     };
 
+    // État pour stocker les heures uniques
+    const [heures, setHeures] = useState([]);
 
-    const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
-    const heures = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "17:00"];
+    // Liste des jours de la semaine
+    const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
+    // Divisez les heures en deux groupes : avant et après  13h
+    const beforeNoonHours = heures.filter(heure => parseInt(heure.slice(0,  2)) <  13);
+    const afternoonHours = heures.filter(heure => parseInt(heure.slice(0,  2)) >=  13);
 
     return (
         <div>
@@ -478,13 +596,13 @@ function PlanningVisits() {
                             <Link to={"/addReport"}><FontAwesomeIcon icon={faPlus}/></Link>
                             <span><Link to={"/addReport"}>Ajouter rapport</Link></span>
                         </button>
-                        <Filter onChange={handleWeekSelection}>
+                        <Filter value={`${selectedYear}-${selectedWeek}`} onChange={handleWeekSelection}>
                             {weeksFilter && weeksFilter.map((week, index) => {
                                 // Calculez la date de début de la semaine ISO (lundi)
-                                const startOfWeek = new Date(week.year, 0, 1 + ((week.week - 1) * 7));
+                                const startOfWeek = new Date(week.year,  0,  1 + ((week.week -  1) *  7));
                                 // Calculez la date de fin de la semaine ISO (vendredi)
                                 const endOfWeek = new Date(startOfWeek.getTime());
-                                endOfWeek.setDate(startOfWeek.getDate() + 4);
+                                endOfWeek.setDate(startOfWeek.getDate() +  4);
                                 // Formattez les dates en français
                                 const formattedStartDate = startOfWeek.toLocaleDateString('fr-FR');
                                 const formattedEndDate = endOfWeek.toLocaleDateString('fr-FR');
@@ -495,6 +613,7 @@ function PlanningVisits() {
                                 );
                             })}
                         </Filter>
+
                     </div>
 
                     <button onClick={() => export2excel('report')} className={'editButton'}>
@@ -510,19 +629,63 @@ function PlanningVisits() {
                             </tr>
                             </thead>
                             <tbody>
-                            {heures.map((heure, index) => {
+                            {beforeNoonHours.map((heure, index) => {
                                 const elementsHeure = surveyData.filter(element => element.hour === heure);
+
+                                // Créez une cellule de plage horaire seulement pour la première heure
+                                const timeRangeCell = index ===  0 ? (
+                                    <td rowSpan={beforeNoonHours.length} style={{ textAlign: 'center' }}>
+                                        08:00 -  13:00
+                                    </td>
+                                ) : null;
 
                                 return (
                                     <tr key={`heure-${heure}`}
-                                        style={{backgroundColor: index % 2 === 0 ? 'white' : '#f2f2f2'}}>
-                                        <td>{heure}</td>
+                                        style={{backgroundColor: index %   2 ===   0 ? 'white' : '#f2f2f2'}}>
+                                        {timeRangeCell}
                                         {jours.map(jour => {
-                                            // Filtrer les éléments pour le jour spécifique
                                             const rapports = elementsHeure.filter(element => {
                                                 const elementDate = new Date(element.date);
-                                                const elementDayOfWeek = elementDate.getUTCDay(); // Retourne 0 pour dimanche, 1 pour lundi, etc.
-                                                return elementDayOfWeek === jours.indexOf(jour) + 1; // +1 car getUTCDay() commence à 0
+                                                const elementDayOfWeek = elementDate.getUTCDay();
+                                                return elementDayOfWeek === jours.indexOf(jour) +   1;
+                                            });
+
+                                            return (
+                                                <td key={`jour-${jour}`}>
+                                                    {rapports.map((rapport, index) => (
+                                                        <div className={"cellule"} key={`rapport-${index}`}>
+                                                            <ShowReport report={rapport} user={user}/>
+                                                        </div>
+                                                    ))}
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
+                                );
+                            })}
+
+                            {/* Séparateur optionnel pour distinguer les deux groupes d'heures */}
+                            <tr>
+                                <td colSpan={jours.length + 1} style={{textAlign:'center'}}>Pause déjeuné</td>
+                            </tr>
+                            {afternoonHours.map((heure, index) => {
+                                const elementsHeure = surveyData.filter(element => element.hour === heure);
+
+                                const timeRangeCell = index ===  0 ? (
+                                    <td rowSpan={afternoonHours.length} style={{ textAlign: 'center' }}>
+                                        14:00 -  18:00
+                                    </td>
+                                ) : null;
+
+                                return (
+                                    <tr key={`heure-${heure}`}
+                                        style={{backgroundColor: index %  2 ===  0 ? 'white' : '#f2f2f2'}}>
+                                        {timeRangeCell}
+                                        {jours.map(jour => {
+                                            const rapports = elementsHeure.filter(element => {
+                                                const elementDate = new Date(element.date);
+                                                const elementDayOfWeek = elementDate.getUTCDay();
+                                                return elementDayOfWeek === jours.indexOf(jour) +  1;
                                             });
 
                                             return (
@@ -547,5 +710,5 @@ function PlanningVisits() {
     );
 }
 
-// Export PlanningVisits component
+// Exportation du composant PlanningVisits
 export default PlanningVisits;
