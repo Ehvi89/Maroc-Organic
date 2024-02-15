@@ -25,7 +25,10 @@ app.use((req, res, next) => {
     }
 });
 
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
+
 
 // Connexion à MongoDB
 mongoose.connect('mongodb://localhost:27017/MarocOrganic',
