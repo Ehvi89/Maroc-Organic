@@ -25,8 +25,6 @@ app.use((req, res, next) => {
     }
 });
 
-app.use(express.static(path.join(__dirname, "../frontend/build")))
-
 
 // Connexion à MongoDB
 mongoose.connect('mongodb://localhost:27017/MarocOrganic',
@@ -37,5 +35,12 @@ mongoose.connect('mongodb://localhost:27017/MarocOrganic',
 // Utilisation des routes
 app.use('/api', stuffRoutes);
 app.use('/api', userRoutes);
+
+app.use(express.static(path.join(__dirname, "../frontend/build")))
+
+// Route catch-all pour capturer toutes les autres requêtes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
 
 module.exports = app;

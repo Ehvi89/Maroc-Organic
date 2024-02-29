@@ -62,9 +62,17 @@ function AddReport() {
         }]);
     };
 
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    const handleFormChange = () => {
+        const form = document.querySelector('.AddReportForm');
+        const isValid = form.checkValidity();
+        setIsFormValid(isValid);
+    };
+
     // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (event) => {
-        //event.preventDefault();
+        event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const rawData = Object.fromEntries([...formData.entries()]);
 
@@ -134,7 +142,7 @@ function AddReport() {
             borderRadius: "30px",
             overflow: 'hidden'
         }}>
-            <form onSubmit={handleSubmit} style={{width: "58%"}} className={'AddReportForm'}>
+            <form onSubmit={handleSubmit} onChange={handleFormChange} style={{width: "58%"}} className={'AddReportForm'}>
                 <Row><h1>Ajouter un rapport de visite</h1></Row>
                 <Row>
                     <Elmt>
@@ -240,7 +248,7 @@ function AddReport() {
                 <Row>
                     <Elmt>
                         <label htmlFor={'person'}>Personne rencontrée</label>
-                        <input type={"text"} name={'person'} placeholder={"Personne rencontrée"} required={true} pattern="^[a-zA-Z\s]+$" title="Le nom de la personne doit contenir uniquement des lettres et des espaces"/>
+                        <input type={"text"} name={'person'} placeholder={"Personne rencontrée"} pattern="^[a-zA-Z\s]+$" title="Le nom de la personne doit contenir uniquement des lettres et des espaces"/>
                     </Elmt>
                     <Elmt>
                         <label htmlFor={'competingBrands'}>Marques concurente</label>
@@ -261,7 +269,7 @@ function AddReport() {
                 <Row>
                     <Elmt>
                         <label htmlFor={'contactName'}>Nom du contact</label>
-                        <input type={"text"} name={'contactName'} placeholder={"Contact"} required={true} pattern="^[a-zA-Z\s]+$" title="Le nom du contact doit contenir uniquement des lettres et des espaces"/>
+                        <input type={"text"} name={'contactName'} placeholder={"Contact"} pattern="^[a-zA-Z\s]+$" title="Le nom du contact doit contenir uniquement des lettres et des espaces"/>
                     </Elmt>
                     <Elmt>
                         <label htmlFor={'contactNumber'}>Numéro</label>
@@ -288,7 +296,7 @@ function AddReport() {
                     </Elmt>
                 </Row>
                 <Row>
-                    <input type={"submit"} value={"Enregistrer"}/>
+                    <input type={"submit"} value={"Enregistrer"} className={isFormValid ? "valid-submit" : ""}/>
                 </Row>
             </form>
             <div className={"image"}></div>

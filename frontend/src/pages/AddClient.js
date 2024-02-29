@@ -40,8 +40,17 @@ function AddClient() {
         }]);
     };
 
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    const handleFormChange = () => {
+        const form = document.querySelector('.AddReportForm');
+        const isValid = form.checkValidity();
+        setIsFormValid(isValid);
+    };
+
     // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (event) => {
+        event.preventDefault(); // Empêchez le comportement par défaut du formulaire
         const formData = new FormData(event.currentTarget);
         const rawData = Object.fromEntries([...formData.entries()]);
 
@@ -130,7 +139,7 @@ function AddClient() {
             borderRadius: "30px",
             overflow: 'hidden'
         }}>
-            <form onSubmit={handleSubmit} style={{width: "70%", margin:'auto'}} className={'AddReportForm'}>
+            <form onSubmit={handleSubmit} onChange={handleFormChange} style={{width: "70%", margin:'auto'}} className={'AddReportForm'}>
                 <Row>
                     <h1>Ajouter un client</h1>
                 </Row>
@@ -272,7 +281,9 @@ function AddClient() {
                     <Row>
                         <Elmt>
                             <label htmlFor={"address"}>E-mail</label>
-                            <input type={"email"} placeholder={"exemple@exemple.gmail.com"} name={"address"}  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Entrez une adresse e-mail valide"/>
+                            <input type={"email"} placeholder={"exemple@exemple.gmail.com"} name={"address"}
+                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                   title="Entrez une adresse e-mail valide"/>
                         </Elmt>
                     </Row>
                 )}
@@ -307,7 +318,7 @@ function AddClient() {
                     </Elmt>
                 </Row>
                 <Row>
-                    <input type={"submit"} value={"Enregistrer"} />
+                    <input type={"submit"} value={"Enregistrer"} className={isFormValid ? "valid-submit" : ""}/>
                 </Row>
             </form>
         </div>

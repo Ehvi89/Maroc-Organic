@@ -21,6 +21,14 @@ const Filter = styled.div`
     margin: auto;
 `;
 
+const Overlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+`;
+
 // Composant pour afficher les informations du catalogue
 function ShowCatalogueInformations({ id, catalogue, isEditable }) {
     const [showTooltip, setShowTooltip] = useState(false);
@@ -144,7 +152,7 @@ function ShowCatalogueInformations({ id, catalogue, isEditable }) {
                 </div>
             ))}
             {/* Bouton pour ajouter un nouvel élément */}
-            {isEditable && (
+            {isEditable && id && (
                 <button
                     style={{padding: '5px', color: '#8FB570', margin: '0   50%', borderRadius: '10px'}}
                     onClick={async () => {
@@ -339,6 +347,10 @@ function Clients() {
 
     const { handleMouseDown, handleMouseUp, handleConfirm, handleCancel, showPopup, export2excel } = useFunctions();
 
+    // Fonction pour gérer les clics sur l'overlay
+    const handleOverlayClick = () => {
+        setShowFilters(false);
+    };
 
     return (
         <div>
@@ -346,6 +358,9 @@ function Clients() {
                 <Loader />
             ) : (
                 <div>
+                    {showFilters &&
+                        <Overlay onClick={handleOverlayClick}/>
+                    }
                     <div style={{display: "flex", alignItems: 'center', margin: "auto"}}>
                         <Filter className={"orderPayementFilter"}>
                             <button onClick={() => setShowFilters(!showFilters)}>Filtres</button>
@@ -444,7 +459,7 @@ function Clients() {
                                                     </div>
                                                 </>
                                             ) : (
-                                                <span>{row.client}</span>
+                                                <span>{row.client.toUpperCase()}</span>
                                             )}
                                         </div>
                                     </td>
@@ -469,61 +484,61 @@ function Clients() {
                                                         onChange={(e) => updateCellValue(row._id, 'city', e.target.value)}
                                                         onBlur={() => setEditingCellId(null)}
                                                         required>
-                                                        <option value="Agadir">Agadir</option>
-                                                        <option value="Asilah">Asilah</option>
-                                                        <option value="Azrou">Azrou</option>
-                                                        <option value="Azilal">Azilal</option>
-                                                        <option value="Azemour">Azemour</option>
-                                                        <option value="Beni Mellal">Beni Mellal</option>
-                                                        <option value="Berkane">Berkane</option>
-                                                        <option value="Ben Taib">Ben Taib</option>
-                                                        <option value="Casablanca">Casablanca</option>
-                                                        <option value="Chefchaouen">Chefchaouen</option>
-                                                        <option value="Dar Ould Zidouh">Dar Ould Zidouh</option>
-                                                        <option value="El Jadida">El Jadida</option>
-                                                        <option value="Er Rachidia">Er Rachidia</option>
-                                                        <option value="Essaouira">Essaouira</option>
-                                                        <option value="Figuig">Figuig</option>
-                                                        <option value="Fes">Fès</option>
-                                                        <option value="Guelmim">Guelmim</option>
-                                                        <option value="Al Hoceima">Al Hoceima</option>
-                                                        <option value="Ifrane">Ifrane</option>
-                                                        <option value="Imouzer">Imouzer</option>
-                                                        <option value="Imzouren">Imzouren</option>
-                                                        <option value="Inzegen">Inzegen</option>
-                                                        <option value="Kenitra">Kenitra</option>
-                                                        <option value="Khemisset">Khemisset</option>
-                                                        <option value="Khenifra">Khenifra</option>
-                                                        <option value="Khouribga">Khouribga</option>
-                                                        <option value="Ksar ElKebir">Ksar el Kebir</option>
-                                                        <option value="Larache">Larache</option>
-                                                        <option value="Marrakech">Marrakech</option>
-                                                        <option value="Meknes">Meknès</option>
-                                                        <option value="Mohammedia">Mohammedia</option>
-                                                        <option value="Nador">Nador</option>
-                                                        <option value="Ouarzazate">Ouarzazate</option>
-                                                        <option value="Ouezzane">Ouezzane</option>
-                                                        <option value="Oujda">Oujda</option>
-                                                        <option value="Rabat">Rabat</option>
-                                                        <option value="Safi">Safi</option>
-                                                        <option value="Salé">Salé</option>
-                                                        <option value="Sefrou">Sefrou</option>
-                                                        <option value="Settat">Settat</option>
-                                                        <option value="Tangier">Tangier</option>
-                                                        <option value="Tan Tan">Tan Tan</option>
-                                                        <option value="Tarfaya">Tarfaya (Cabo Juby)</option>
-                                                        <option value="Taroudant">Taroudant</option>
-                                                        <option value="Taza">Taza</option>
-                                                        <option value="Tetouan">Tétouan</option>
-                                                        <option value="Tiznit">Tiznit</option>
-                                                        <option value="Zagora">Zagora</option>
+                                                    <option value="Agadir">Agadir</option>
+                                                    <option value="Asilah">Asilah</option>
+                                                    <option value="Azrou">Azrou</option>
+                                                    <option value="Azilal">Azilal</option>
+                                                    <option value="Azemour">Azemour</option>
+                                                    <option value="Beni Mellal">Beni Mellal</option>
+                                                    <option value="Berkane">Berkane</option>
+                                                    <option value="Ben Taib">Ben Taib</option>
+                                                    <option value="Casablanca">Casablanca</option>
+                                                    <option value="Chefchaouen">Chefchaouen</option>
+                                                    <option value="Dar Ould Zidouh">Dar Ould Zidouh</option>
+                                                    <option value="El Jadida">El Jadida</option>
+                                                    <option value="Er Rachidia">Er Rachidia</option>
+                                                    <option value="Essaouira">Essaouira</option>
+                                                    <option value="Figuig">Figuig</option>
+                                                    <option value="Fes">Fès</option>
+                                                    <option value="Guelmim">Guelmim</option>
+                                                    <option value="Al Hoceima">Al Hoceima</option>
+                                                    <option value="Ifrane">Ifrane</option>
+                                                    <option value="Imouzer">Imouzer</option>
+                                                    <option value="Imzouren">Imzouren</option>
+                                                    <option value="Inzegen">Inzegen</option>
+                                                    <option value="Kenitra">Kenitra</option>
+                                                    <option value="Khemisset">Khemisset</option>
+                                                    <option value="Khenifra">Khenifra</option>
+                                                    <option value="Khouribga">Khouribga</option>
+                                                    <option value="Ksar ElKebir">Ksar el Kebir</option>
+                                                    <option value="Larache">Larache</option>
+                                                    <option value="Marrakech">Marrakech</option>
+                                                    <option value="Meknes">Meknès</option>
+                                                    <option value="Mohammedia">Mohammedia</option>
+                                                    <option value="Nador">Nador</option>
+                                                    <option value="Ouarzazate">Ouarzazate</option>
+                                                    <option value="Ouezzane">Ouezzane</option>
+                                                    <option value="Oujda">Oujda</option>
+                                                    <option value="Rabat">Rabat</option>
+                                                    <option value="Safi">Safi</option>
+                                                    <option value="Salé">Salé</option>
+                                                    <option value="Sefrou">Sefrou</option>
+                                                    <option value="Settat">Settat</option>
+                                                    <option value="Tangier">Tangier</option>
+                                                    <option value="Tan Tan">Tan Tan</option>
+                                                    <option value="Tarfaya">Tarfaya (Cabo Juby)</option>
+                                                    <option value="Taroudant">Taroudant</option>
+                                                    <option value="Taza">Taza</option>
+                                                    <option value="Tetouan">Tétouan</option>
+                                                    <option value="Tiznit">Tiznit</option>
+                                                    <option value="Zagora">Zagora</option>
                                                 </select>
                                             ) : <span>{row.city}</span>}
                                         </div>
                                     </td>
                                     <td className={'cellule'}>
                                         <div className={'contenu'}>
-                                            {isEditing && editingCellId === row._id ? (
+                                        {isEditing && editingCellId === row._id ? (
                                                 <select defaultValue={row.type}
                                                         onChange={(e) => updateCellValue(row._id, 'type', e.target.value)}
                                                         onBlur={() => setEditingCellId(null)}

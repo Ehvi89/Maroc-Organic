@@ -54,9 +54,18 @@ function AddOrder() {
         return `${timestamp}-${trackingCounter.current}`;
     };
 
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    const handleFormChange = () => {
+        const form = document.querySelector('.AddReportForm');
+        const isValid = form.checkValidity();
+        setIsFormValid(isValid);
+    };
+
     // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (event) => {
-        //event.preventDefault(); // Empêchez le comportement par défaut du formulaire
+        event.preventDefault(); // Empêchez le comportement par défaut du formulaire
+
         const formData = new FormData(event.currentTarget);
         const rawData = Object.fromEntries([...formData.entries()]);
 
@@ -121,7 +130,8 @@ function AddOrder() {
             overflow: 'hidden'
         }}>
             <div className={"image"} style={{width: "42%", overflow: 'hidden'}}></div>
-            <form  onSubmit={handleSubmit} style={{width: "58%"}} className={'AddReportForm'}>
+            <form onSubmit={handleSubmit} onChange={handleFormChange} style={{width: "58%"}}
+                  className={'AddReportForm'}>
                 <Row><h1>Ajouter une commande</h1></Row>
                 <Row>
                     <Elmt>
@@ -195,7 +205,7 @@ function AddOrder() {
 
                 </Row>
                 {paymentMethod !== 'Chèque' ? (
-                    <div style={{width:'100%'}}>
+                    <div style={{width: '100%'}}>
                         <Row>
                             <Elmt>
                                 <label htmlFor={"amount"}>Montant</label>
@@ -220,8 +230,8 @@ function AddOrder() {
                             </Elmt>
                         </Row>
                     </div>
-                ): (
-                    <div style={{width:'100%'}}>
+                ) : (
+                    <div style={{width: '100%'}}>
                         <Row>
                             <Elmt>
                                 <label htmlFor={"amount"}>Montant</label>
@@ -264,11 +274,13 @@ function AddOrder() {
                 <Row>
                     <Elmt>
                         <label htmlFor={'display'}>Présentoir</label>
-                        <input type={"number"} name={'display'} placeholder={"Nombre de présentoir"} min={0} step={1} required={true} title="Le nombre de présentoire doit être un entier positif"/>
+                        <input type={"number"} name={'display'} placeholder={"Nombre de présentoir"} min={0} step={1}
+                               title="Le nombre de présentoire doit être un entier positif"/>
                     </Elmt>
                     <Elmt>
                         <label htmlFor={'package'}>Nombre de colis</label>
-                        <input type={"number"} name={'package'} placeholder={"Nombre de colis"} min={0} step={1} required={true} title="Le nombre de colis doit être un entier positif"/>
+                        <input type={"number"} name={'package'} placeholder={"Nombre de colis"} min={0} step={1}
+                               title="Le nombre de colis doit être un entier positif"/>
                     </Elmt>
                 </Row>
                 <Row>
@@ -280,11 +292,10 @@ function AddOrder() {
                 <Row>
                     <Elmt>
                         <label htmlFor={"comment"}>Commentaire</label>
-                        <textarea name={'comment'} placeholder={"Commentaire"} maxLength={500} title="Le commentaire ne doit pas dépasser  500 caractères"/>
-                    </Elmt>
+                        <textarea name={'comment'} placeholder={"Commentaire"} maxLength={500} title="Le commentaire ne doit pas dépasser  500 caractères"/>                    </Elmt>
                 </Row>
                 <Row>
-                    <input type={"submit"} value={"Enregistrer"}/>
+                    <input type={"submit"} value={"Enregistrer"}  className={isFormValid ? "valid-submit" : ""}/>
                 </Row>
             </form>
         </div>

@@ -108,54 +108,87 @@ exports.export2excel = async (req, res) => {
     const clients = await Client.find();
 
     worksheet.columns = [
-        {header: 'NOM', key: 'client', width: 15},
-        {header: 'CATEGORIES', key: 'category', width: 20},
-        {header: 'VILLE', key: 'city', width: 15},
-        {header: 'TYPE', key: 'type', width: 20},
-        {header: `CATALOGUE SENT: ${clients[0].catalogue[0].name}`, key: 'catalogue[0].sentBy', width: 25},
-        {header: 'DATE SENT', key: 'catalogue[0].sentDate', width: 25},
-        {header: `CATALOGUE SENT: ${clients[0].catalogue[1].name}`, key: 'catalogue[1].sentBy', width: 25},
-        {header: 'DATE SENT', key: 'catalogue[1].sentDate', width: 25},
-        {header: 'TELEPHONE FIXE', key: 'contact.fixe', width: 25},
-        {header: 'TELEPHONE WHATSAPP', key: 'contact.whatsapp', width: 25},
-        {header: 'NOM DU CONTACT', key: 'contact.name', width: 25},
-        {header: 'FONCTION', key: 'contact.role', width: 20},
-        {header: 'ADDRESS', key: 'contact.address', width: 25},
-        {header: 'COMMENTAIRE', key: 'comment', width: 100},
-    ]
+        {header: 'NOM', key: 'client', width:  15},
+        {header: 'CATEGORIES', key: 'category', width:  20},
+        {header: 'VILLE', key: 'city', width:  15},
+        {header: 'TYPE', key: 'type', width:  20},
+        {header: `CATALOGUE SENT: ${clients[0].catalogue[0].name}`, key: 'catalogue[0].sentBy', width:  25},
+        {header: 'DATE SENT', key: 'catalogue[0].sentDate', width:  25},
+        {header: `CATALOGUE SENT: ${clients[0].catalogue[1].name}`, key: 'catalogue[1].sentBy', width:  25},
+        {header: 'DATE SENT', key: 'catalogue[1].sentDate', width:  25},
+        {header: 'TELEPHONE FIXE', key: 'contact.fixe', width:  25},
+        {header: 'TELEPHONE WHATSAPP', key: 'contact.whatsapp', width:  25},
+        {header: 'NOM DU CONTACT', key: 'contact.name', width:  25},
+        {header: 'FONCTION', key: 'contact.role', width:  20},
+        {header: 'ADDRESS', key: 'contact.address', width:  25},
+        {header: 'COMMENTAIRE', key: 'comment', width:  100},
+    ];
 
-    clients.forEach((client) => {
-        let flattenedClient = Object.assign({}, client);
-        console.log(flattenedClient );
+    // Obtenez la première ligne (ligne d'en-tête)
+    const headerRow = worksheet.getRow(1);
 
-        flattenedClient['client'] = client.client;
-        flattenedClient['category'] = client.category;
-        flattenedClient['city'] = client.city;
-        flattenedClient['type'] = client.type;
-
-        if (client.contact) {
-            flattenedClient['contact.fixe'] = client.contact.fixe;
-            flattenedClient['contact.whatsapp'] = client.contact.whatsapp;
-            flattenedClient['contact.role'] = client.contact.role;
-            flattenedClient['contact.name'] = client.contact.name;
-            flattenedClient['contact.address'] = client.contact.address;
-        }
-
-        if (client.catalogue && Array.isArray(client.catalogue)) {
-            if (client.catalogue[0]) {
-                flattenedClient['catalogue[0].sentBy'] = client.catalogue[0].sentBy;
-                flattenedClient['catalogue[0].sentDate'] = client.catalogue[0].sentDate;
-            }
-            if (client.catalogue[1]) {
-                flattenedClient['catalogue[1].sentBy'] = client.catalogue[1].sentBy;
-                flattenedClient['catalogue[1].sentDate'] = client.catalogue[1].sentDate;
-            }
-        }
-
-        worksheet.addRow(flattenedClient);
+    // Ajoutez des styles aux titres de colonnes
+    worksheet.columns.forEach(column => {
+        const headerCell = headerRow.getCell(column.key);
+        headerCell.font = { bold: true };
+        headerCell.alignment = { horizontal: 'center', vertical: 'middle' };
+        headerCell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: '8FB750' }
+        };
+        headerCell.border = {
+            top: { style: 'thin' },
+            left: { style: 'thin' },
+            bottom: { style: 'thin' },
+            right: { style: 'thin' }
+        };
     });
 
+    clients.forEach((client, index) => {
+        const rowData = {
+            client: client.client,
+            category: client.category,
+            city: client.city,
+            type: client.type,
+            'catalogue[0].sentBy': client.catalogue[0]?.sentBy,
+            'catalogue[0].sentDate': client.catalogue[0]?.sentDate,
+            'catalogue[1].sentBy': client.catalogue[1]?.sentBy,
+            'catalogue[1].sentDate': client.catalogue[1]?.sentDate,
+            'contact.fixe': client.contact?.fixe,
+            'contact.whatsapp': client.contact?.whatsapp,
+            'contact.name': client.contact?.name,
+            'contact.role': client.contact?.role,
+            'contact.address': client.contact?.address,
+            comment: client.comment,
+        };
 
+        const row = worksheet.addRow(rowData);
+
+        row.eachCell({ includeEmpty: true }, (cell) => {
+            cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' }
+            };
+
+            // Alterner les couleurs de fond des lignes
+            if (index %   2 ===   0) {
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFFFFFFF' } // Blanc
+                };
+            } else {
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'F5F4F4' } // Gris clair
+                };
+            }
+        });
+    });
 
     res.setHeader(
         "Content-Type",

@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
 // Utilisation d'une variable d'environnement pour le secret JWT
-const JWT_SECRET = process.env.JWT_SECRET || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVGRlaG9oZmFhaGMgdWhhZXV1aWdyaWdhZXlmZ3llamZhYmtqZmlhdmhlY3Zhamh2amRndnhhdmtqaHZmZXlmdmFqa2FlY3ZldXZja3FoY2IgcWdmdXFlZnZhaHZicWhwYXY4NDY1NDY1NGU2ZjQ2cTRlZjZmZWdxNno2Z3pyaDZxaHF6NjQ2cTU0djMifQ.eyJzdWIiOiIxMjM0NTg3Njg0ODE0ODA4MDg3ZW1kKsO5bcO5c2x4a2xqZmthbGtuZmplYiBjbmVoa2FrYmZhamdoYWplbWp2YjY3ODkwIiwibmFtZSI6IkVob2x5IEFiYmxpIE1pZXNzYW4gU2FtdWVsIFZpYW5ubmV5IC0gTWFyb2MgT3JnYW5pYyIsImlhdCI6MS41MTYyMzkwMjIwMTUxODQ2ZSszM30.jzqCqaO9UHoAlUMG_uLA93DoYzr1mOPlIg1nb8fOQfM';
+const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 
 // Fonction d'aide pour mettre à jour le champ lastAction d'User
 const updateUserLastAction = async (userEmail, actionDescription) => {
@@ -232,20 +232,20 @@ function generateResetToken() {
 
 async function sendResetPasswordEmail(email, token) {
     // Configurez votre transport d'e-mail avec nodemailer
-    let transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         service: 'gmail', // ou un autre service d'e-mail
         auth: {
-            user: 'eholysamuel89@gmail.com', // Utilisez des variables d'environnement pour les informations sensibles
-            pass: 'jwzb lxov viky qpqx',
+            user: 'eholysamuel89@gmail.com',
+            pass: 'yfqn mspg rxrh yabp',
         },
     });
 
     // Créez le contenu de l'e-mail
     let mailOptions = {
-        from: '"no-reply" <no-reply@gmail.com>',
+        from: '"no-reply" <eholysamuel89@gmail.com>',
         to: email,
         subject: 'Réinitialisation de votre mot de passe',
-        html: `Veuillez cliquer sur le lien suivant pour réinitialiser votre mot de passe :<a href="http://localhost:3000/resetPasswordRequest?token=${token}&email=${email}">Réinitialiser le mot de passe</a><br/>Si vous n'avez pas demandé cette réinitialisation, ignorez ce message.`
+        html: `MAROC ORGANIC <br/>Veuillez cliquer sur le lien suivant pour réinitialiser votre mot de passe :<a href="http://localhost:3000/resetPasswordRequest?token=${token}&email=${email}">Réinitialiser le mot de passe</a><br/><br/>Si vous n'avez pas demandé cette réinitialisation, ignorez ce message.`
     };
 
     // Envoyez l'e-mail

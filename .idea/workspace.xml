@@ -4,7 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4534905-f512-461c-82f6-513fde87c628" name="Changes" comment="" />
+    <list default="true" id="a4534905-f512-461c-82f6-513fde87c628" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controlleurs/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controlleurs/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controlleurs/orderPayment.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controlleurs/orderPayment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controlleurs/report.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controlleurs/report.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controlleurs/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controlleurs/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/middleware/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AddClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AddClient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AddOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AddOrder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AddReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AddReport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Clients.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Clients.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/OrderPayementTracking.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/OrderPayementTracking.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/PlanningVisites.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/PlanningVisites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/Form.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/Form.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -120,7 +136,12 @@
       <workItem from="1708015076350" duration="1384000" />
       <workItem from="1708018569158" duration="211000" />
       <workItem from="1708020973048" duration="1268000" />
-      <workItem from="1708036949846" duration="913000" />
+      <workItem from="1708036949846" duration="6859000" />
+      <workItem from="1708045249780" duration="9361000" />
+      <workItem from="1708901730387" duration="897000" />
+      <workItem from="1708965289040" duration="6693000" />
+      <workItem from="1708979662250" duration="6882000" />
+      <workItem from="1709190096865" duration="4105000" />
     </task>
     <servers />
   </component>

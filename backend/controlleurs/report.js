@@ -1,7 +1,6 @@
 const exceljs = require('exceljs');
 const Report = require("../models/Report");
 const User = require('../models/User');
-const Order = require("../models/Order");
 
 exports.getWeeksList = async (req, res, next) => {
     try {
@@ -216,16 +215,16 @@ exports.export2excel = async (req, res) => {
             { header: "CLIENT", key: "client", width:  25 },
             { header: "CATEGORIE", key: "type", width:  25 },
             { header: "VILLE", key: "city", width:  25 },
-            { header: "DEJA CLIENT", key: "alreadyClient", width:  10 },
+            { header: "DEJA CLIENT", key: "alreadyClient", width:  25 },
             { header: "RESPONSABLE", key: "author.name", width:  25 },
-            { header: "HEURE DE LA VISITE", key: "hour", width:  15 },
-            { header: "DUREE DE LA VISITE", key: "duration", width:  10 },
-            { header: "PERSONNE RENCONTREE", key: "person", width:  15 },
+            { header: "HEURE DE LA VISITE", key: "hour", width:  25 },
+            { header: "DUREE DE LA VISITE", key: "duration", width:  25 },
+            { header: "PERSONNE RENCONTREE", key: "person", width:  25 },
             { header: "MARQUES CONCURENTES", key: "competingBrands", width:  25 },
-            { header: "NUMERO WHATSAPP", key: "contact.whatsapp", width:  15 },
+            { header: "NUMERO WHATSAPP", key: "contact.whatsapp", width:  25 },
             { header: "NOM DU CONTACT", key: "contact.name", width:  25 },
-            { header: "CONTACT MAROC ORGANIC entré dans le tel du client?", key: "contactMOGiven", width:  10 },
-            { header: "CLIENT A FOLLOW SUR INSTAGRAM", key: "clientFollow", width:  10 },
+            { header: "CONTACT MAROC ORGANIC entré dans le tel du client?", key: "contactMOGiven", width:  25 },
+            { header: "CLIENT A FOLLOW SUR INSTAGRAM", key: "clientFollow", width:  25 },
             { header: "COMPTE RENDUE", key: "comment", width:  100 },
         ];
 
@@ -247,15 +246,36 @@ exports.export2excel = async (req, res) => {
                 day: 'numeric', month: 'short', year: 'numeric'
             }).replace(/[-/]/g, '.'); // Replace slashes and dashes with spaces
 
-// Create a worksheet for the week
+            // Create a worksheet for the week
             const worksheet = workbook.addWorksheet(`${formattedStartDate} - ${formattedEndDate}`);
 
 
             worksheet.columns = columns;
 
+            // Obtenez la première ligne (ligne d'en-tête)
+            const headerRow = worksheet.getRow(1);
+
+            // Ajoutez des styles aux titres de colonnes
+            columns.forEach(column => {
+                const headerCell = headerRow.getCell(column.key);
+                headerCell.font = { bold: true };
+                headerCell.alignment = { horizontal: 'center', vertical: 'middle' };
+                headerCell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: '8FB750' }
+                };
+                headerCell.border = {
+                    top: { style: 'thin' },
+                    left: { style: 'thin' },
+                    bottom: { style: 'thin' },
+                    right: { style: 'thin' }
+                };
+            });
+
             // Add the reports to the worksheet
-            reports.forEach(report => {
-                worksheet.addRow({
+            reports.forEach((report, index) => {
+                const row = worksheet.addRow({
                     date: report.date,
                     day: days[report.date.getDay()],
                     client: report.client,
@@ -272,6 +292,30 @@ exports.export2excel = async (req, res) => {
                     contactMOGiven: report.contactMOGiven ? 'Oui' : 'Non',
                     clientFollow: report.clientFollow ? 'Oui' : 'Non',
                     comment: report.comment
+                });
+
+                row.eachCell({ includeEmpty: true },(cell) => {
+                    cell.border = {
+                        top: { style: 'thin' },
+                        left: { style: 'thin' },
+                        bottom: { style: 'thin' },
+                        right: { style: 'thin' }
+                    };
+
+                    // Alterner les couleurs de fond des lignes
+                    if (index %  2 ===  0) {
+                        cell.fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: { argb: 'FFFFFFFF' }
+                        };
+                    } else {
+                        cell.fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: { argb: 'F5F4F4' }
+                        };
+                    }
                 });
             });
         });

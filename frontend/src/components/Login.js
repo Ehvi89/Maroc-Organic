@@ -16,7 +16,7 @@ const Div = styled.div`
     background: linear-gradient(to bottom, #8FB570 21%, #F5F4F4 21%);
     text-align: center;
     z-index: 2000;
-    width: 40%;
+    width: 80%;
     max-width: 500px;
 `
 
@@ -58,7 +58,7 @@ function Login({ onClose, onLogin }) {
                 password: password
             };
 
-            const response = await fetch(`http://localhost:5000/api/login`, {
+            const response = await fetch(`http://35.180.29.117/api/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

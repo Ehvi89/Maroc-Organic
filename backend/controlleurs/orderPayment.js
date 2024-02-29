@@ -104,29 +104,29 @@ exports.export2excel = async (req, res) => {
     const worksheet = workbook.addWorksheet("Order");
 
     worksheet.columns = [
-        { header: "DATE", key: "date", width:   15 },
-        { header: "CLIENT", key: "client", width:   25 },
-        { header: "VILLE", key: "city", width:   25 },
-        { header: "MONTANT", key: "amount", width:   10 },
-        { header: "MODE DE PAIEMENT", key: "paymentMethod", width:   15 },
-        { header: "N° DU CHEQUE", key: "chequeNumber", width:   20 },
-        { header: "DATE DE RECEPTION CHEQUE/VIREMENT", key: "DateChequeReceived", width:   15 },
-        { header: "DATE D'ÉCHÉANCE DU CHEQUE", key: "chequeDueDate", width:   15 },
-        { header: "DATE DU DEPÔT DU CHEQUE A LA BANQUE", key: "DateChequeDepositedAtBank", width:   15 },
-        { header: "PAIEMENT", key: "paymentConfirmation", width:   10 },
-        { header: "N° DE SUIVI", key: "trackingNumber", width:   20 }, // Corrected typo here
-        { header: "FACTURE", key: "billNumber", width:   20 },
-        { header: "RECEPTION DE LA COMMANDE", key: "receptionConfirmation", width:   10 },
+        { header: "DATE", key: "date", width:  15 },
+        { header: "CLIENT", key: "client", width:  25 },
+        { header: "VILLE", key: "city", width:  25 },
+        { header: "MONTANT", key: "amount", width:  25 },
+        { header: "MODE DE PAIEMENT", key: "paymentMethod", width:  25 },
+        { header: "N° DU CHEQUE", key: "chequeNumber", width:  25 },
+        { header: "DATE DE RECEPTION CHEQUE/VIREMENT", key: "DateChequeReceived", width:  25 },
+        { header: "DATE D'ÉCHÉANCE DU CHEQUE", key: "chequeDueDate", width:  25 },
+        { header: "DATE DU DEPÔT DU CHEQUE A LA BANQUE", key: "DateChequeDepositedAtBank", width:  25 },
+        { header: "PAIEMENT", key: "paymentConfirmation", width:  25 },
+        { header: "N° DE SUIVI", key: "trackingNumber", width:  25 },
+        { header: "FACTURE", key: "billNumber", width:  25 },
+        { header: "RECEPTION DE LA COMMANDE", key: "receptionConfirmation", width:  25 },
         { header: "TERMES DE PAIEMENT", key: "paymentTerms", width:  75 },
-        { header: "# DE COLIS LOGIPHARS + PRESENTOIRS DANS LA COMMANDE", key: "numberPackagesAndDisplays", width:   20 },
-        { header: "PAIEMENT LOGIPHAR", key: "logipharPayment", width:   10 },
-        { header: "COMMENTAIRE", key: "comment", width: 150 },
+        { header: "# DE COLIS LOGIPHARS + PRESENTOIRS DANS LA COMMANDE", key: "numberPackagesAndDisplays", width:  25 },
+        { header: "PAIEMENT LOGIPHAR", key: "logipharPayment", width:  25 },
+        { header: "COMMENTAIRE", key: "comment", width:  150 },
     ];
 
     try {
         let orders = await Order.find(); // Await the Promise returned by Order.find()
 
-        // Convert boolean values to "Yes" or "No" for paymentConfirmation
+        // Convert boolean values to "Yes" or "No" for paymentConfirmation and receptionConfirmation
         orders = orders.map(order => {
             return {
                 ...order._doc, // Spread the rest of the order object
@@ -135,8 +135,50 @@ exports.export2excel = async (req, res) => {
             };
         });
 
-        orders.forEach((order) => {
-            worksheet.addRow(order);
+        // Ajoutez des styles aux titres de colonnes
+        worksheet.columns.forEach(column => {
+            const headerCell = worksheet.getRow(1).getCell(column.key);
+            headerCell.font = { bold: true };
+            headerCell.alignment = { horizontal: 'center', vertical: 'middle' };
+            headerCell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: '8FB750' }
+            };
+            headerCell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' }
+            };
+        });
+
+        orders.forEach((order, index) => {
+            const row = worksheet.addRow(order);
+
+            row.eachCell({ includeEmpty: true },(cell) => {
+                cell.border = {
+                    top: { style: 'thin' },
+                    left: { style: 'thin' },
+                    bottom: { style: 'thin' },
+                    right: { style: 'thin' }
+                };
+
+                // Alterner les couleurs de fond des lignes
+                if (index %  2 ===  0) {
+                    cell.fill = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: 'FFFFFFFF' }
+                    };
+                } else {
+                    cell.fill = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: 'F5F4F4' }
+                    };
+                }
+            });
         });
 
         res.setHeader(
@@ -145,7 +187,7 @@ exports.export2excel = async (req, res) => {
         );
         res.setHeader(
             "Content-Disposition",
-            "attachment; filename=" + "Orders.xlsx"
+            "attachment; filename=" + encodeURIComponent("Orders.xlsx")
         );
 
         await workbook.xlsx.write(res);

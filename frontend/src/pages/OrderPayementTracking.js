@@ -21,6 +21,14 @@ const rotate = keyframes`
     }
 `;
 
+const Overlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+`;
+
 // Définition des composants styled
 export const Loader = styled.div`
     padding:  10px;
@@ -233,49 +241,59 @@ function OrderPayementTracking() {
     };
     const { handleMouseDown, handleMouseUp, handleConfirm, handleCancel, showPopup, export2excel } = useFunctions();
 
+    // Fonction pour gérer les clics sur l'overlay
+    const handleOverlayClick = () => {
+        setShowFilters(false);
+    };
+
     return(
         <div>
             {isDataLoading ? (
                 <Loader />
             ) : (
                 <div>
+                    {showFilters &&
+                        <Overlay onClick={handleOverlayClick}/>
+                    }
                     <div style={{display: "flex", justifyContent: 'space-between', alignItems: 'top'}}>
                         <Filter className={"orderPayementFilter"}>
                             <button onClick={() => setShowFilters(!showFilters)}>Filtres</button>
                             {showFilters && (
-                                <div className={'filter'}>
-                                    <Link to="#" onClick={(e) => {
-                                        e.preventDefault(); // Empêche le comportement par défaut du lien
-                                        setSelectedPaymentMethod([]);
-                                        setSelectedVilles([]);
-                                    }}>
-                                        Effacer les filtres
-                                    </Link>
-                                    <div>
-                                        <div className={"categorie"}>
-                                            <p>Ville:</p>
-                                            {uniqueVilles.map(ville => (
-                                                <div key={ville}>
-                                                    <label htmlFor={ville}>{ville}</label>
-                                                    <Checkbox id={ville} value={ville}
-                                                              checked={selectedVilles.includes(ville)}
-                                                              onChange={() => setSelectedVilles(prev => prev.includes(ville) ? prev.filter(v => v !== ville) : [...prev, ville])}/>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <div className={"categorie"}>
-                                            <p>Mode de paiement:</p>
-                                            {uniqueModesPaiement.map(modePaiement => (
-                                                <div key={modePaiement}>
-                                                    <label htmlFor={modePaiement}>{modePaiement}</label>
-                                                    <Checkbox id={modePaiement} value={modePaiement}
-                                                              checked={selectedPaymentMethod.includes(modePaiement)}
-                                                              onChange={() => setSelectedPaymentMethod(prev => prev.includes(modePaiement) ? prev.filter(m => m !== modePaiement) : [...prev, modePaiement])}/>
-                                                </div>
-                                            ))}
+                                <>
+                                    <div className={'filter'}>
+                                        <Link to="#" onClick={(e) => {
+                                            e.preventDefault(); // Empêche le comportement par défaut du lien
+                                            setSelectedPaymentMethod([]);
+                                            setSelectedVilles([]);
+                                        }}>
+                                            Effacer les filtres
+                                        </Link>
+                                        <div>
+                                            <div className={"categorie"}>
+                                                <p>Ville:</p>
+                                                {uniqueVilles.map(ville => (
+                                                    <div key={ville}>
+                                                        <label htmlFor={ville}>{ville}</label>
+                                                        <Checkbox id={ville} value={ville}
+                                                                  checked={selectedVilles.includes(ville)}
+                                                                  onChange={() => setSelectedVilles(prev => prev.includes(ville) ? prev.filter(v => v !== ville) : [...prev, ville])}/>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div className={"categorie"}>
+                                                <p>Mode de paiement:</p>
+                                                {uniqueModesPaiement.map(modePaiement => (
+                                                    <div key={modePaiement}>
+                                                        <label htmlFor={modePaiement}>{modePaiement}</label>
+                                                        <Checkbox id={modePaiement} value={modePaiement}
+                                                                  checked={selectedPaymentMethod.includes(modePaiement)}
+                                                                  onChange={() => setSelectedPaymentMethod(prev => prev.includes(modePaiement) ? prev.filter(m => m !== modePaiement) : [...prev, modePaiement])}/>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </>
                             )}
                         </Filter>
 
@@ -347,7 +365,7 @@ function OrderPayementTracking() {
                                     <td className={'cellule'}>
                                         <div className={'contenu'}>
                                             {isEditing && editingCellId === row._id ? (
-                                                <select defaultValue={row.client}
+                                                <select defaultValue={row.client.toUpperCase()}
                                                         onBlur={(e) => updateCellValue(row._id, 'city', e.target.value)}
                                                         onClick={() => startEditingCell(row._id)}>
                                                     <option value="agadir">Agadir</option>

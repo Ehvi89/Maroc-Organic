@@ -585,6 +585,13 @@ function PlanningVisits() {
     const beforeNoonHours = heures.filter(heure => parseInt(heure.slice(0,  2)) <  13);
     const afternoonHours = heures.filter(heure => parseInt(heure.slice(0,  2)) >=  13);
 
+    // Fonction pour obtenir le lundi de la semaine ISO pour une date donnée
+    function getMondayOfISOWeek(date) {
+        const day = date.getDay();
+        const diff = date.getDate() - day + (day ===  0 ? -6 :  1); // Ajuste pour le cas où le jour est dimanche
+        return new Date(date.setDate(diff));
+    }
+
     return (
         <div>
             {isDataLoading ? (
@@ -599,13 +606,16 @@ function PlanningVisits() {
                         <Filter value={`${selectedYear}-${selectedWeek}`} onChange={handleWeekSelection}>
                             {weeksFilter && weeksFilter.map((week, index) => {
                                 // Calculez la date de début de la semaine ISO (lundi)
-                                const startOfWeek = new Date(week.year,  0,  1 + ((week.week -  1) *  7));
+                                const startOfWeek = getMondayOfISOWeek(new Date(week.year,  0,  1 + ((week.week -  1) *  7)));
+
                                 // Calculez la date de fin de la semaine ISO (vendredi)
                                 const endOfWeek = new Date(startOfWeek.getTime());
                                 endOfWeek.setDate(startOfWeek.getDate() +  4);
+
                                 // Formattez les dates en français
                                 const formattedStartDate = startOfWeek.toLocaleDateString('fr-FR');
                                 const formattedEndDate = endOfWeek.toLocaleDateString('fr-FR');
+
                                 return (
                                     <option key={index} value={`${week.year}-${week.week}`}>
                                         {`Semaine du ${formattedStartDate} au ${formattedEndDate}`}
